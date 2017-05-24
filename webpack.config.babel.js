@@ -2,7 +2,7 @@ import webpack from 'webpack';
 import path from 'path';
 
 const config = {
-  entry: './client/src/app',
+  entry: './web/src/app',
   output: {
     path: path.join(__dirname, 'public/dist'),
     filename: 'bundle.js'
@@ -10,7 +10,7 @@ const config = {
   module: {
     rules: [
       { test: /\.(js|jsx)$/,
-        include: path.join(__dirname, 'client/src'),
+        include: path.join(__dirname, 'web/src'),
         exclude: ['node_modules'],
         use: [
           { loader: 'babel-loader',
