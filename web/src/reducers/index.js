@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux';
 import headerReducer from './headerReducer';
+import createEventFormReducer from './createEventFormReducer';
 
-const allreducers = combineReducers({
-  header: headerReducer
+const allReducers = combineReducers({
+  header: headerReducer,
+  createEventForm: createEventFormReducer
 });
 
-export default allreducers;
+export default allReducers;
