@@ -1,30 +1,57 @@
 import React, { Component } from 'react';
+import { RaisedButton, TextField, Card } from 'material-ui';
 
 class CreateEventForm extends Component {
-  state = {
-    eventName: this.props.eventName || ''
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(e) {
-    this.setState({ eventName: e.target.value });
+    this.props.updateForm(e.target.name, e.target.value);
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
   }
 
   render() {
-    const { handleSubmit } = this.props;
-
     return (
-      <div>
-        <form onSubmit={handleSubmit}>
-          <input name="eventName"
-                 value={this.state.eventName}
-                 onChange={this.handleChange.bind(this)}/>
-          {/* <input name="time" value={this.state.time} />
-          <input name="location" value={this.state.location} />
-          <input name="description" value={this.state.description} />
-          <input name="groupSize" value={this.state.groupSize} /> */}
-          <button type="submit">Create Event</button>
-        </form>
-      </div>
+      <Card className="createEventForm">
+        <label> Event Name: </label>
+        <TextField
+          name="eventName"
+          value={this.props.createEventForm.eventName}
+          autoFocus
+          onChange={this.handleChange}/>
+        <br />
+        <label> Time: </label>
+        <TextField
+          name="time"
+          value={this.props.createEventForm.time}
+          onChange={this.handleChange}/>
+        <br />
+        <label> Location: </label>
+        <TextField
+          name="location"
+          value={this.props.createEventForm.location}
+          onChange={this.handleChange}/>
+        <br />
+        <label> Description: </label>
+        <TextField
+          name="description"
+          value={this.props.createEventForm.description}
+          onChange={this.handleChange}/>
+        <br />
+        <label> Group Size: </label>
+        <TextField
+          name="groupSize"
+          value={this.props.createEventForm.groupSize}
+          onChange={this.handleChange} />
+        <br />
+        <RaisedButton label="Create Event" secondary={true} onTouchTap={this.handleSubmit} />
+      </Card>
     );
   }
 }
