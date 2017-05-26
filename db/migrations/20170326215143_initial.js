@@ -26,11 +26,11 @@ exports.up = function (knex, Promise) {
     }),
     knex.schema.createTableIfNotExists('events', function(table) {
       table.increments('id').unsigned().primary();
-      table.string('event_name', 8).notNullable();
+      table.string('event_name', 30).notNullable();
       table.dateTime('time').notNullable();
       table.string('location', 30).notNullable();
-      table.string('category', 20).notNullable();
-      table.string('description', 500).nullable();
+      table.string('category', 30).notNullable();
+      table.string('description', 100).nullable();
       table.string('image', 100).nullable();
       table.integer('like_count').nullable();
       table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
