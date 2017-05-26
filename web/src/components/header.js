@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { AppBar } from 'material-ui';
 
 class Header extends Component {
   constructor(props) {
@@ -12,10 +13,11 @@ class Header extends Component {
   render () {
     return (
 			<div>
-        <div>{this.props.header}</div>
+        <AppBar title="Community" />
+        {/* <div>{this.props.header}</div>
         <button onClick={this.handleClick.bind(this)}>
           Click
-        </button>
+        </button> */}
 			</div>
     );
   }

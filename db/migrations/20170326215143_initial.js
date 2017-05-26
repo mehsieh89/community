@@ -17,14 +17,40 @@ exports.up = function (knex, Promise) {
       table.string('password', 100).nullable();
       table.string('salt', 100).nullable();
       table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
-    })
+    }),
+    knex.schema.createTableIfNotExists('comments', function(table) {
+      table.increments('id').unsigned().primary();
+      table.string('text', 500).notNullable();
+      table.integer('event_id').references('events.id').onDelete('CASCADE');
+      table.integer('commenter_id').references('profiles.id').onDelete('CASCADE');
+    }),
+    knex.schema.createTableIfNotExists('events', function(table) {
+      table.increments('id').unsigned().primary();
+      table.string('event_name', 8).notNullable();
+      table.dateTime('time').notNullable();
+      table.string('location', 30).notNullable();
+      table.string('category', 20).notNullable();
+      table.string('description', 500).nullable();
+      table.string('image', 100).nullable();
+      table.integer('like_count').nullable();
+      table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
+    }),
+    knex.schema.createTableIfNotExists('events_profiles', function(table) {
+      table.increments('id').unsigned().primary();
+      table.boolean('is_attending').defaultTo(false);
+      table.boolean('liked').defaultTo(false);
+      table.integer('event_id').references('events.id').onDelete('CASCADE');
+      table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
+    }),
   ]);
 };
 
 exports.down = function (knex, Promise) {
   return Promise.all([
     knex.schema.dropTable('auths'),
-    knex.schema.dropTable('profiles')
+    knex.schema.dropTable('comments'),
+    knex.schema.dropTable('events'),
+    knex.schema.dropTable('events_profiles'),
+    knex.schema.dropTable('profiles'),
   ]);
 };
-
