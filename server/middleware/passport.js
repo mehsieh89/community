@@ -111,13 +111,13 @@ passport.use('local-login', new LocalStrategy({
       });
   }));
 
-passport.use('google', new GoogleStrategy({
-  clientID: config.Google.clientID,
-  clientSecret: config.Google.clientSecret,
-  callbackURL: config.Google.callbackURL
-},
-  (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
-);
+// passport.use('google', new GoogleStrategy({
+//   clientID: config.Google.clientID,
+//   clientSecret: config.Google.clientSecret,
+//   callbackURL: config.Google.callbackURL
+// },
+//   (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
+// );
 
 passport.use('facebook', new FacebookStrategy({
   clientID: config.Facebook.clientID,
@@ -127,7 +127,8 @@ passport.use('facebook', new FacebookStrategy({
 },
   (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
 );
-//
+
+
 // // REQUIRES PERMISSIONS FROM TWITTER TO OBTAIN USER EMAIL ADDRESSES
 // passport.use('twitter', new TwitterStrategy({
 //   consumerKey: config.Twitter.consumerKey,
