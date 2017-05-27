@@ -1,13 +1,15 @@
 # Project Name
 
-The project description
+Community
+
+What if I told you there's an app that scans your surrounding and lets you know all of the events happening around you? 
 
 ## Team
 
-- teamMember
-- teamMember
-- teamMember
-- teamMember
+- Ramsha A. Mushtaq
+- Mel Hsieh
+- Khoa Dang Vo
+- Yvonne Zhang
 
 ## Roadmap
 
@@ -87,5 +89,3 @@ To run server: `yarn run start`
 To run tests: `yarn run test`
 
 To run your redis server for the session store `redis-server`
-
-

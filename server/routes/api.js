@@ -16,11 +16,10 @@ router.route('/')
 router.route('/createEvent')
   .post((req, res) => {
     let eventInfo = {
-      // FIXME: replace the hard-coded data with info from req.body
-      event_name: 'picnic',
-      time: '06/07/2018',
-      location: 'San Francisco',
-      category: 'Food',
+      event_name: req.body.eventName,
+      time: req.body.time,
+      location: req.body.location,
+      category: req.body.category,
     };
     let newEvent = models.Event.forge(eventInfo);
     return newEvent.save()
