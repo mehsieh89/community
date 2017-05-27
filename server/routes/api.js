@@ -25,6 +25,9 @@ router.route('/createEvent')
     return newEvent.save()
     .then(() => {
       res.status(201).send('saved: ' + newEvent.get('event_name'));
+    })
+    .catch((err) => {
+      res.status(400).send('error: ' + err);
     });
   });
 

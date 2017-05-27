@@ -1,20 +1,22 @@
+import axios from 'axios';
+
 const initialState = {
   eventName: '',
   time: '',
   location: '',
   description: '',
-  category: 'select...',
-  groupSize: '6'
+  category: 'Category',
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
 
   case 'UPDATE_FORM':
-    let stateCopy = Object.assign({}, state);
-    stateCopy[action.payload.prop] = action.payload.value;
-    console.log(stateCopy);
-    return stateCopy;
+    console.log(action.payload);
+    axios.post('/api/createEvent', action.payload)
+    .then((res) => { console.log(res.data); })
+    .catch((err) => { console.log('error when creating event', err); });
+    return action.payload;
 
   default:
     return state;
