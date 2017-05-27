@@ -11,3 +11,10 @@ export const updateForm = (prop, value) => {
     payload: { prop: prop, value: value }
   };
 };
+
+export const changeCenter = (prop) => {
+  return {
+    type: 'CHANGE_CENTER',
+    payload: prop
+  };
+};
