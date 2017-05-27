@@ -5,10 +5,10 @@ export const changeHeader = (text) => {
   };
 };
 
-export const updateForm = (prop, value) => {
+export const updateForm = (state) => {
   return {
     type: 'UPDATE_FORM',
-    payload: { prop: prop, value: value }
+    payload: state
   };
 };
 
