@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { changeHeader, updateForm } from '../actions';
+import { changeHeader, updateForm, changeCenter } from '../actions';
 import Header from '../components/Header';
 import CreateEventForm from '../components/CreateEventForm';
 import Gmap from '../components/googleMap';
@@ -23,8 +23,10 @@ class Homepage extends Component {
           updateForm={this.props.updateForm}
         />
         <div style={style}>
-          <Gmap style={style} initialPosition={{ lat: 37.774929, lng: -122.419416 }}
+          <Gmap style={style} center={this.props.googleMap}
             markers={[]}
+            changeCenter={this.props.changeCenter}
+            googleMap={this.props.googleMap}
             containerElement={ <div className='map-container' style={style}></div>}
             mapElement={ <div id='map' className='map-section' style={style}></div>}
           />
@@ -37,14 +39,16 @@ class Homepage extends Component {
 const mapStateToProps = (state) => {
   return {
     header: state.header,
-    createEventForm: state.createEventForm
+    createEventForm: state.createEventForm,
+    googleMap: state.googleMap
   };
 };
 
 const matchDispatchToProps = (dispatch) => {
   return bindActionCreators({
     changeHeader: changeHeader,
-    updateForm: updateForm
+    updateForm: updateForm,
+    changeCenter: changeCenter
   }, dispatch);
 };
 
