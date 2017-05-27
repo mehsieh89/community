@@ -15,14 +15,12 @@ const style = {
 class Gmap extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      markers: this.props.markers
-    };
+
     this.handleMapLoad = this.handleMapLoad.bind(this);
     this.handleMapClick = this.handleMapClick.bind(this);
     this.handleMarkerRightClick = this.handleMarkerRightClick.bind(this);
     this.handleLocationInput = this.handleLocationInput.bind(this);
-    // this.handleMarkerClick = this.handleMarkerClick.bind(this);
+    this.handleMarkerClick = this.handleMarkerClick.bind(this);
   }
 
   handleMapLoad(map) {
@@ -45,9 +43,14 @@ class Gmap extends Component {
     this.handleReverseGeoCode({lat: lat, lng: lng});
   }
 
-  // handleMarkerClick(targetMarker) {
-  //   console.log('meow!');
-  // }
+  handleMarkerClick(targetMarker) {
+    console.log('great success');
+    const latlng = {
+      lat: targetMarker.position.lat,
+      lng: targetMarker.position.lng
+    };
+    // this.handleReverseGeoCode(latlng);
+  }
 
   handleMarkerRightClick(targetMarker) {
     const nextMarkers = this.props.markers.filter(marker => marker !== targetMarker);
@@ -100,6 +103,7 @@ class Gmap extends Component {
           {props.markers.map((marker) => (
             <Marker
             {...marker}
+            onClick={() => props.onMarkerClick(marker)}
             onRightClick={() => props.onMarkerRightClick(marker)}
           />
         ))}
@@ -116,7 +120,7 @@ class Gmap extends Component {
           onMapClick={this.handleMapClick}
           markers={this.props.markers}
           onMarkerRightClick={this.handleMarkerRightClick}
-          // onMarkerClick={this.handleMarkerClick}
+          onMarkerClick={this.handleMarkerClick}
         />
       </div>
     );
