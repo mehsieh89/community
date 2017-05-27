@@ -44,7 +44,7 @@ class Gmap extends Component {
   }
 
   handleMarkerClick(targetMarker) {
-    console.log('great success');
+    console.log('Great Success');
     const latlng = {
       lat: targetMarker.position.lat,
       lng: targetMarker.position.lng
