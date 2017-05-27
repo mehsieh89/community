@@ -3,6 +3,7 @@ const initialState = {
   time: '',
   location: '',
   description: '',
+  category: 'select...',
   groupSize: '6'
 };
 

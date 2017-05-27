@@ -4,14 +4,16 @@
   "scripts": {
     "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
     "start-web": "nodemon server",
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest",
+    "start-ios": "node node_modules/react-native/local-cli/cli.js start",
+    "test-ios": "jest",
     "test-web": "NODE_ENV=test grunt test",
-    "build": "webpack --watch"
+    "build": "webpack --watch",
+    "ios-dev": "react-native run-ios"
   },
   "author": "Hack Reactor",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.16.1",
     "babel-core": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "bcrypt-nodejs": "^0.0.3",
