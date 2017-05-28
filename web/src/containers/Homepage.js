@@ -8,8 +8,8 @@ import Gmap from '../components/googleMap';
 
 const style = {
   position: 'absolute',
-  height: '900px',
-  width: '900px',
+  height: '500px',
+  width: '500px',
 };
 
 class Homepage extends Component {

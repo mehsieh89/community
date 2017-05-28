@@ -8,21 +8,19 @@ const GeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
 const RevGeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
 const style = {
   position: 'absolute',
-  height: '900px',
-  width: '900px',
+  height: '100%',
+  width: '100%',
 };
 
 class Gmap extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      markers: this.props.markers
-    };
+
     this.handleMapLoad = this.handleMapLoad.bind(this);
     this.handleMapClick = this.handleMapClick.bind(this);
+    this.handleMarkerClick = this.handleMarkerClick.bind(this);
     this.handleMarkerRightClick = this.handleMarkerRightClick.bind(this);
-    this.handleLocationInput = this.handleLocationInput.bind(this);
-    // this.handleMarkerClick = this.handleMarkerClick.bind(this);
+    this.handleReverseGeoCode = this.handleReverseGeoCode.bind(this);
   }
 
   handleMapLoad(map) {
@@ -36,7 +34,7 @@ class Gmap extends Component {
       ...this.props.markers,
       {
         position: {lat: lat, lng: lng},
-        defaultAnimation: 2,
+        defaultAnimation: 3,
         key: Date.now(),
       },
     ];
@@ -45,9 +43,14 @@ class Gmap extends Component {
     this.handleReverseGeoCode({lat: lat, lng: lng});
   }
 
-  // handleMarkerClick(targetMarker) {
-  //   console.log('meow!');
-  // }
+  handleMarkerClick(targetMarker) {
+    console.log('Great Success');
+    const latlng = {
+      lat: targetMarker.position.lat,
+      lng: targetMarker.position.lng
+    };
+    // this.handleReverseGeoCode(latlng);
+  }
 
   handleMarkerRightClick(targetMarker) {
     const nextMarkers = this.props.markers.filter(marker => marker !== targetMarker);
@@ -58,31 +61,6 @@ class Gmap extends Component {
     axios.get(RevGeoCodeURL + latlng.lat + ',' + latlng.lng + Key)
     .then((res) => {
       console.log(res.data.results[0].formatted_address);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }
-
-  handleLocationInput(location) {
-    let string = location.split(' ').join('+');
-    axios.get(GeoCodeURL + string + Key)
-    .then((res) => {
-      const lat = res.data.results[0].geometry.location.lat;
-      const lng = res.data.results[0].geometry.location.lng;
-      const nextMarkers = [
-        ...this.props.markers,
-        {
-          position: {
-            lat: lat,
-            lng: lng,
-          },
-          defaultAnimation: 2,
-          key: Date.now(),
-        },
-      ];
-      this.props.setMarkers(nextMarkers);
-      this.props.changeCenter({lat: lat, lng: lng});
     })
     .catch((err) => {
       console.log(err);
@@ -100,6 +78,7 @@ class Gmap extends Component {
           {props.markers.map((marker) => (
             <Marker
             {...marker}
+            onClick={() => props.onMarkerClick(marker)}
             onRightClick={() => props.onMarkerRightClick(marker)}
           />
         ))}
@@ -108,7 +87,12 @@ class Gmap extends Component {
 
     return (
       <div style={style}>
-        <LocationInput LocationInput={this.handleLocationInput}/>
+        <LocationInput
+          markers={this.props.markers}
+          setMarkers={this.props.setMarkers}
+          changeCenter={this.props.changeCenter}
+          handleReverseGeoCode={this.handleReverseGeoCode}
+          />
         <Map style={style}
           containerElement={ <div className='map-container' style={style}></div>}
           mapElement={ <div id='map' className='map-section' style={style}></div>}
@@ -116,7 +100,7 @@ class Gmap extends Component {
           onMapClick={this.handleMapClick}
           markers={this.props.markers}
           onMarkerRightClick={this.handleMarkerRightClick}
-          // onMarkerClick={this.handleMarkerClick}
+          onMarkerClick={this.handleMarkerClick}
         />
       </div>
     );
