@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Promise from 'bluebird';
 import { RaisedButton, TextField, Card, SelectField, MenuItem } from 'material-ui';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
@@ -14,6 +15,7 @@ class CreateEventForm extends Component {
       location: '',
       description: '',
       category: 'select...',
+      dateTime: null
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -29,12 +31,10 @@ class CreateEventForm extends Component {
   }
 
   handleDatePicker(x, v) {
-    console.log(v);
     this.setState({date: v});
   }
 
   handleTimePicker(x, v) {
-    console.log(v);
     this.setState({time: v});
   }
 
@@ -44,12 +44,19 @@ class CreateEventForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.updateForm(this.state);
+    let date = this.state.date;
+    let time = this.state.time;
+    let dateTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), time.getSeconds());
+    return new Promise((resolve, reject) => {
+      resolve(this.setState({ dateTime: dateTime }));
+    })
+    .then(() => { this.props.updateForm(this.state); })
+    .catch(err => { console.log('error in submitting event', err); });
   }
 
   render() {
     return (
-      <Card className="createEventForm" style={{ width: '50%', padding: 30 }}>
+      <Card className="createEventForm" style={{ padding: 30 }}>
         <TextField
           name="eventName"
           floatingLabelText="Event Name"
@@ -62,7 +69,6 @@ class CreateEventForm extends Component {
           autoOk={true}
           onChange={this.handleDatePicker}
           floatingLabelText="Date"/>
-        <br />
         <TimePicker
           name="time"
           autoOk={true}

@@ -15,11 +15,15 @@ router.route('/')
 // create event in the events table
 router.route('/createEvent')
   .post((req, res) => {
+    console.log('session', req.session);
+    console.log('cookies', req.cookies);
     let eventInfo = {
       event_name: req.body.eventName,
-      time: req.body.time,
+      time: req.body.dateTime,
       location: req.body.location,
       category: req.body.category,
+      description: req.body.description,
+      profile_id: req.session.passport.user
     };
     let newEvent = models.Event.forge(eventInfo);
     return newEvent.save()
