@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { RaisedButton, TextField, Card } from 'material-ui';
+import { RaisedButton, TextField, Card, AutoComplete } from 'material-ui';
 
 export default class LocationInput extends Component {
   constructor(props) {
@@ -32,6 +32,7 @@ export default class LocationInput extends Component {
           value={this.state.location}
           autoFocus
           onChange={this.handleChange}/>
+        <AutoComplete dataSource={['dqw', 'qdw']} />
         <RaisedButton label="search" onTouchTap={this.handleLocationSearch}/>
       </Card>
     );
