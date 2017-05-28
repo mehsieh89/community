@@ -87,8 +87,13 @@ export default class LocationInput extends Component {
           name="address"
           value={this.state.location}
           autoFocus
+<<<<<<< HEAD
           filter={filter}
           onUpdateInput={this.handleChange}/>
+=======
+          onChange={this.handleChange}/>
+        <AutoComplete dataSource={['dqw', 'qdw']} />
+>>>>>>> modify form to save date and time to database correctly, keep track of user-id
         <RaisedButton label="search" onTouchTap={this.handleLocationSearch}/>
       </Card>
     );
