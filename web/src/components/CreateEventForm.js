@@ -74,8 +74,9 @@ class CreateEventForm extends Component {
 
   render() {
     return (
-      <Card className="createEventForm" style={{ padding: 30 }}>
+      <Card className="createEventForm" style={styles.container}>
         <TextField
+          style={styles.textField}
           name="eventName"
           floatingLabelText="Event Name"
           autoFocus
@@ -120,5 +121,18 @@ class CreateEventForm extends Component {
     );
   }
 }
+
+const style = {
+  container: {
+    paddingTop: 0,
+    paddingLeft: 30,
+    paddingBottom: 30,
+  },
+  textField: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center'
+  }
+};
 
 export default CreateEventForm;
