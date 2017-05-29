@@ -8,7 +8,7 @@ export const changeHeader = (text) => {
 export const updateForm = (state) => {
   return {
     type: 'UPDATE_FORM',
-    payload: state
+    payload: state,
   };
 };
 

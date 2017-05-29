@@ -50,7 +50,25 @@ class CreateEventForm extends Component {
     return new Promise((resolve, reject) => {
       resolve(this.setState({ dateTime: dateTime }));
     })
-    .then(() => { this.props.updateForm(this.state); })
+    .then(() => {
+      this.props.updateForm(this.state);
+      return axios.get('/api/retrieveMarkers')
+      .then((res) => {
+        const nextMarkers = [];
+        for (let i = 0; i < res.data.length; i++) {
+          let newMarker = {
+            position: {lat: Number(res.data[i].lat), lng: Number(res.data[i].lng)},
+            defaultAnimation: 3,
+            key: Math.random(),
+          };
+          nextMarkers.push(newMarker);
+        }
+        this.props.setMarkers(nextMarkers);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    })
     .catch(err => { console.log('error in submitting event', err); });
   }
 

@@ -22,23 +22,27 @@ class Gmap extends Component {
     this.handleMarkerClick = this.handleMarkerClick.bind(this);
     this.handleMarkerRightClick = this.handleMarkerRightClick.bind(this);
     this.handleReverseGeoCode = this.handleReverseGeoCode.bind(this);
+    // this.convertToLatLng = this.convertToLatLng.bind(this);
   }
 
   componentDidMount() {
     const nextMarkers = [
       ...this.props.markers,
     ];
-    // let holder = [];
-    // let holder2 = [];
     axios.get('/api/retrieveMarkers')
     .then((res) => {
-      console.log(res.data);
-        // {
-        //   position: {lat: lat, lng: lng},
-        //   defaultAnimation: 3,
-        //   key: Date.now(),
-        // },
-      // this.props.setMarkers(nextMarkers);
+      for (let i = 0; i < res.data.length; i++) {
+        let newMarker = {
+          position: {lat: Number(res.data[i].lat), lng: Number(res.data[i].lng)},
+          defaultAnimation: 3,
+          key: Math.random(),
+        };
+        nextMarkers.push(newMarker);
+      }
+      this.props.setMarkers(nextMarkers);
+    })
+    .catch((err) => {
+      console.log(err);
     });
   }
 
@@ -62,7 +66,7 @@ class Gmap extends Component {
       {
         position: {lat: lat, lng: lng},
         defaultAnimation: 3,
-        key: Date.now(),
+        key: Math.random(),
       },
     ];
     this.props.setMarkers(nextMarkers);
@@ -71,7 +75,6 @@ class Gmap extends Component {
   }
 
   handleMarkerClick(targetMarker) {
-
     const latlng = {
       lat: targetMarker.position.lat,
       lng: targetMarker.position.lng

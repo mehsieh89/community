@@ -5,7 +5,6 @@ import axios from 'axios';
 import config from '../../../config/development.json';
 
 const KEY = config.GoogleKey;
-
 const GeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
 
 export default class LocationInput extends Component {
@@ -49,7 +48,7 @@ export default class LocationInput extends Component {
           lng: lng,
         },
         defaultAnimation: 3,
-        key: Date.now(),
+        key: Math.random(),
       },
     ];
     this.props.setMarkers(nextMarkers);
