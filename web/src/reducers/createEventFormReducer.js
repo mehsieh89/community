@@ -6,7 +6,6 @@ const initialState = {
   location: '',
   description: '',
   category: 'Category',
-  isfetching: null
 };
 
 export default function(state = initialState, action) {
