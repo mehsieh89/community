@@ -122,7 +122,7 @@ class CreateEventForm extends Component {
   }
 }
 
-const style = {
+const styles = {
   container: {
     paddingTop: 0,
     paddingLeft: 30,

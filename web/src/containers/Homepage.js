@@ -20,7 +20,7 @@ class Homepage extends Component {
     return (
       <div>
         <Header changeHeader={this.props.changeHeader} header={this.props.header}/>
-        <GridList cellHeight="auto" cellWidth="auto" >
+        <GridList cellHeight="auto">
           <Tabs>
             <Tab label="Find Events"> Event Grid </Tab>
             <Tab label="Create Event" >
