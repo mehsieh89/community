@@ -58,7 +58,6 @@ export default class LocationInput extends Component {
   handleLocationInput(location) {
     let string = location.split(' ').join('+');
     axios.get(GeoCodeURL + string + '&key=' + KEY)
-
     .then((res) => {
       let acArray = [];
       for (let i = 0; i < res.data.results.length; i++) {
