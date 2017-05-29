@@ -22,7 +22,6 @@ class Gmap extends Component {
     this.handleMarkerClick = this.handleMarkerClick.bind(this);
     this.handleMarkerRightClick = this.handleMarkerRightClick.bind(this);
     this.handleReverseGeoCode = this.handleReverseGeoCode.bind(this);
-    // this.convertToLatLng = this.convertToLatLng.bind(this);
   }
 
   componentDidMount() {
@@ -72,6 +71,7 @@ class Gmap extends Component {
   }
 
   handleMarkerClick(targetMarker) {
+
     const latlng = {
       lat: targetMarker.position.lat,
       lng: targetMarker.position.lng
