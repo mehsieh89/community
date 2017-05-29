@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { changeHeader, updateForm, changeCenter, setMarkers } from '../actions';
+import axios from 'axios';
 import Header from '../components/Header';
 import CreateEventForm from '../components/CreateEventForm';
 import Gmap from '../components/googleMap';

@@ -28,11 +28,13 @@ exports.up = function (knex, Promise) {
       table.increments('id').unsigned().primary();
       table.string('event_name', 30).notNullable();
       table.dateTime('time').notNullable();
-      table.string('location', 30).notNullable();
+      table.string('location', 100).notNullable();
       table.string('category', 30).notNullable();
       table.string('description', 100).nullable();
       table.string('image', 100).nullable();
       table.integer('like_count').nullable();
+      table.decimal('lat', 20, 15).notNullable();
+      table.decimal('lng', 20, 15).notNullable();
       table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
     }),
     knex.schema.createTableIfNotExists('events_profiles', function(table) {
@@ -49,8 +51,8 @@ exports.down = function (knex, Promise) {
   return Promise.all([
     knex.schema.dropTable('auths'),
     knex.schema.dropTable('comments'),
-    knex.schema.dropTable('events'),
     knex.schema.dropTable('events_profiles'),
+    knex.schema.dropTable('events'),
     knex.schema.dropTable('profiles'),
   ]);
 };

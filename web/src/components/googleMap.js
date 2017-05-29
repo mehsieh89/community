@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 import axios from 'axios';
 import LocationInput from './LocationInput';
+import config from '../../../config/development.json';
 
-const Key = process.env.GOOGLE_API_KEY;
+const KEY = config.GoogleKey;
 const GeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
 const RevGeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
 const style = {
@@ -21,7 +22,34 @@ class Gmap extends Component {
     this.handleMarkerClick = this.handleMarkerClick.bind(this);
     this.handleMarkerRightClick = this.handleMarkerRightClick.bind(this);
     this.handleReverseGeoCode = this.handleReverseGeoCode.bind(this);
+    // this.convertToLatLng = this.convertToLatLng.bind(this);
   }
+
+  componentDidMount() {
+    const nextMarkers = [
+      ...this.props.markers,
+    ];
+    // let holder = [];
+    // let holder2 = [];
+    axios.get('/api/retrieveMarkers')
+    .then((res) => {
+      console.log(res.data);
+        // {
+        //   position: {lat: lat, lng: lng},
+        //   defaultAnimation: 3,
+        //   key: Date.now(),
+        // },
+      // this.props.setMarkers(nextMarkers);
+    });
+  }
+
+  // convertToLatLng(addressStr) {
+  //   let string = addressStr.split(' ').join('+');
+  //   axios.get(GeoCodeURL + string + '&key=' + KEY)
+  //   .then((data) => {
+  //     console.log(data.results[0]);
+  //   });
+  // }
 
   handleMapLoad(map) {
     this._mapComponent = map;
@@ -57,7 +85,7 @@ class Gmap extends Component {
   }
 
   handleReverseGeoCode(latlng) {
-    axios.get(RevGeoCodeURL + latlng.lat + ',' + latlng.lng + Key)
+    axios.get(RevGeoCodeURL + latlng.lat + ',' + latlng.lng + '&key=' + KEY)
     .then((res) => {
       console.log(res.data.results[0].formatted_address);
     })
