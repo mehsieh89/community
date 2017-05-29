@@ -28,6 +28,7 @@ class Homepage extends Component {
                 className="createEventForm"
                 createEventForm={this.props.createEventForm}
                 updateForm={this.props.updateForm}
+                setM
               />
             </Tab>
           </Tabs>
