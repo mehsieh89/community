@@ -41,7 +41,6 @@ class Gmap extends Component {
         nextMarkers.push(newMarker);
       }
       this.props.setMarkers(nextMarkers);
-      // console.log('end of component did mount', this.props.markers);
     })
     .catch((err) => {
       console.log(err);
