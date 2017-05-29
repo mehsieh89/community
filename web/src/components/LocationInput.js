@@ -4,8 +4,8 @@ import Promise from 'bluebird';
 import axios from 'axios';
 import config from '../../../config/development.json';
 
+const KEY = config.GoogleKey;
 
-const Key = config.GoogleKey;
 const GeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
 
 export default class LocationInput extends Component {
@@ -59,7 +59,7 @@ export default class LocationInput extends Component {
 
   handleLocationInput(location) {
     let string = location.split(' ').join('+');
-    axios.get(GeoCodeURL + string + Key)
+    axios.get(GeoCodeURL + string + '&key=' + KEY)
     .then((res) => {
       let acArray = [];
       for (let i = 0; i < res.data.results.length; i++) {

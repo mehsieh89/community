@@ -1,7 +1,13 @@
 'use strict';
 const express = require('express');
+const axios = require('axios');
 const router = express.Router();
 const models = require('../../db/models');
+const db = require('../../db');
+const config = require('../../config/development.json');
+
+const KEY = config.GoogleKey;
+const GeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
 
 router.route('/')
   .get((req, res) => {
@@ -15,23 +21,42 @@ router.route('/')
 // create event in the events table
 router.route('/createEvent')
   .post((req, res) => {
-    console.log('session', req.session);
-    console.log('cookies', req.cookies);
-    let eventInfo = {
-      event_name: req.body.eventName,
-      time: req.body.dateTime,
-      location: req.body.location,
-      category: req.body.category,
-      description: req.body.description,
-      profile_id: req.session.passport.user
-    };
-    let newEvent = models.Event.forge(eventInfo);
-    return newEvent.save()
+    let string = req.body.location.split(' ').join('+');
+    return new Promise((resolve, reject) => {
+      resolve(axios.get(GeoCodeURL + string + '&key=' + KEY));
+    })
+    .then((data) => {
+      const lat = data.data.results[0].geometry.location.lat;
+      const lng = data.data.results[0].geometry.location.lng;
+
+      let eventInfo = {
+        event_name: req.body.eventName,
+        time: req.body.dateTime,
+        location: req.body.location,
+        category: req.body.category,
+        description: req.body.description,
+        profile_id: req.session.passport.user,
+        lat: lat,
+        lng: lng
+      };
+      return models.Event.forge(eventInfo).save();
+    })
     .then(() => {
-      res.status(201).send('saved: ' + newEvent.get('event_name'));
+      res.status(201).send('saved!!!!! ');
     })
     .catch((err) => {
-      res.status(400).send('error: ' + err);
+      res.status(400).send('error: ' + err.toString());
+    });
+  });
+
+router.route('/retrieveMarkers')
+  .get((req, res) => {
+    return db.knex.select('lat', 'lng').from('events')
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.send('error ' + err);
     });
   });
 
