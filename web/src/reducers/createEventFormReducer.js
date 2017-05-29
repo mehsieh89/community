@@ -6,6 +6,7 @@ const initialState = {
   location: '',
   description: '',
   category: 'Category',
+  // isFetching: false,
 };
 
 export default function(state = initialState, action) {
@@ -13,8 +14,11 @@ export default function(state = initialState, action) {
 
   case 'UPDATE_FORM':
     axios.post('/api/createEvent', action.payload)
-    .then((res) => { console.log(res.data); })
+    .then((res) => {
+      console.log(res.data);
+    })
     .catch((err) => { console.log('error when creating event', err); });
+    // return Object.assign({}, action.payload, {isFetching: true});
     return action.payload;
 
   default:

@@ -48,7 +48,7 @@ export default class LocationInput extends Component {
           lng: lng,
         },
         defaultAnimation: 3,
-        key: Date.now(),
+        key: Math.random(),
       },
     ];
     this.props.setMarkers(nextMarkers);
