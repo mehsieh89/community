@@ -23,7 +23,6 @@ class Gmap extends Component {
     this.handleMarkerClick = this.handleMarkerClick.bind(this);
     this.handleMarkerRightClick = this.handleMarkerRightClick.bind(this);
     this.handleReverseGeoCode = this.handleReverseGeoCode.bind(this);
-    // this.convertToLatLng = this.convertToLatLng.bind(this);
   }
 
   componentDidMount() {
@@ -49,15 +48,6 @@ class Gmap extends Component {
     });
   }
 
-
-  // convertToLatLng(addressStr) {
-  //   let string = addressStr.split(' ').join('+');
-  //   axios.get(GeoCodeURL + string + '&key=' + KEY)
-  //   .then((data) => {
-  //     console.log(data.results[0]);
-  //   });
-  // }
-
   handleMapLoad(map) {
     this._mapComponent = map;
   }
@@ -79,12 +69,20 @@ class Gmap extends Component {
     console.log(this.props.markers);
   }
 
-  handleMarkerClick(targetMarker) {
-    const latlng = {
-      lat: targetMarker.position.lat,
-      lng: targetMarker.position.lng
-    };
-    // this.handleReverseGeoCode(latlng);
+  // handleMarkerClick(targetMarker) {
+  //   const latlng = {
+  //     lat: targetMarker.position.lat,
+  //     lng: targetMarker.position.lng
+  //   };
+  //   // this.handleReverseGeoCode(latlng);
+  // }
+
+  handleMarkerClick(props, marker, e) {
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
   }
 
   handleMarkerRightClick(targetMarker) {
@@ -103,7 +101,6 @@ class Gmap extends Component {
   }
 
   render () {
-    // console.log('withGmap', this.props.markers);
     const Map = withGoogleMap(props => (
       <GoogleMap
         ref={props.onMapLoad}
@@ -111,12 +108,12 @@ class Gmap extends Component {
         center={this.props.googleMap}
         onClick={props.onMapClick}
         >
-          {props.markers.map((marker) => (
-            <Marker
-            {...marker}
-            onClick={() => props.onMarkerClick(marker)}
-            onRightClick={() => props.onMarkerRightClick(marker)}
-          />
+        {props.markers.map((marker) => (
+          <Marker
+          {...marker}
+          onClick={() => props.onMarkerClick(marker)}
+          onRightClick={() => props.onMarkerRightClick(marker)}>
+          </Marker>
         ))}
       </GoogleMap>
     ));
