@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { changeHeader, updateForm, changeCenter, setMarkers } from '../actions';
+import { GridList, Tabs, Tab } from 'material-ui';
 import axios from 'axios';
+import { changeHeader, updateForm, changeCenter, setMarkers } from '../actions';
 import Header from '../components/Header';
 import CreateEventForm from '../components/CreateEventForm';
-import { GridList, Tabs, Tab } from 'material-ui';
-import Gmap from '../components/googleMap';
+import FindEvents from '../components/FindEvents';
+import Gmap from '../components/GoogleMap';
 
 const style = {
   position: 'absolute',
   display: 'inline',
-  height: '500px',
+  height: '520px',
   width: '610px',
 };
 
@@ -22,7 +23,11 @@ class Homepage extends Component {
         <Header changeHeader={this.props.changeHeader} header={this.props.header}/>
         <GridList cellHeight="auto">
           <Tabs>
-            <Tab label="Find Events"> Event Grid </Tab>
+            <Tab label="Find Events">
+              <FindEvents
+                googleMap={this.props.googleMap}
+              />
+            </Tab>
             <Tab label="Create Event" >
               <CreateEventForm
                 className="createEventForm"

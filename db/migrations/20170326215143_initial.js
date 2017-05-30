@@ -31,7 +31,7 @@ exports.up = function (knex, Promise) {
       table.string('location', 100).notNullable();
       table.string('category', 30).notNullable();
       table.string('description', 100).nullable();
-      table.string('image', 100).nullable();
+      table.string('image', 500).nullable();
       table.integer('like_count').nullable();
       table.decimal('lat', 20, 15).notNullable();
       table.decimal('lng', 20, 15).notNullable();
