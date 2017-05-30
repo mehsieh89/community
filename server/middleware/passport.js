@@ -127,23 +127,23 @@ passport.use('google', new GoogleStrategy({
   (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
 );
 
-passport.use('facebook', new FacebookStrategy({
-  clientID: config.Facebook.clientID,
-  clientSecret: config.Facebook.clientSecret,
-  callbackURL: config.Facebook.callbackURL,
-  profileFields: ['id', 'emails', 'name']
-},
-  (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
-);
-
 // passport.use('facebook', new FacebookStrategy({
-//   clientID: process.env.FACEBOOK_CLIENT_ID,
-//   clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-//   callbackURL: process.env.FACEBOOK_CALLBACK_URL,
+//   clientID: config.Facebook.clientID,
+//   clientSecret: config.Facebook.clientSecret,
+//   callbackURL: config.Facebook.callbackURL,
 //   profileFields: ['id', 'emails', 'name']
 // },
 //   (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
 // );
+
+passport.use('facebook', new FacebookStrategy({
+  clientID: process.env.FACEBOOK_CLIENT_ID,
+  clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+  callbackURL: process.env.FACEBOOK_CALLBACK_URL,
+  profileFields: ['id', 'emails', 'name']
+},
+  (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
+);
 
 // // REQUIRES PERMISSIONS FROM TWITTER TO OBTAIN USER EMAIL ADDRESSES
 // passport.use('twitter', new TwitterStrategy({
