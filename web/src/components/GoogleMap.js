@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 import axios from 'axios';
 import LocationInput from './LocationInput';
-// import config from '../../../config/development.json';
 
-//const KEY = config.GoogleKey;
 const KEY = process.env.GOOGLE_API_KEY;
 const GeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
 const RevGeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
@@ -69,21 +67,20 @@ class Gmap extends Component {
     console.log(this.props.markers);
   }
 
-  // handleMarkerClick(targetMarker) {
-  //   const latlng = {
-  //     lat: targetMarker.position.lat,
-  //     lng: targetMarker.position.lng
-  //   };
-  //   // this.handleReverseGeoCode(latlng);
-  // }
-
-  handleMarkerClick(props, marker, e) {
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    });
+  handleMarkerClick(targetMarker) {
+    const latlng = {
+      lat: targetMarker.position.lat,
+      lng: targetMarker.position.lng
+    };
+    // this.handleReverseGeoCode(latlng);
   }
+
+  // handleMarkerClick(e) {
+  //   this.setState({
+  //     selectedPlace: props,
+  //     activeMarker: marker,
+  //   });
+  // }
 
   handleMarkerRightClick(targetMarker) {
     const nextMarkers = this.props.markers.filter(marker => marker !== targetMarker);
@@ -93,6 +90,7 @@ class Gmap extends Component {
   handleReverseGeoCode(latlng) {
     axios.get(RevGeoCodeURL + latlng.lat + ',' + latlng.lng + '&key=' + KEY)
     .then((res) => {
+      console.log(res.data);
       console.log(res.data.results[0].formatted_address);
     })
     .catch((err) => {
@@ -112,7 +110,8 @@ class Gmap extends Component {
           <Marker
           {...marker}
           onClick={() => props.onMarkerClick(marker)}
-          onRightClick={() => props.onMarkerRightClick(marker)}>
+          onRightClick={() => props.onMarkerRightClick(marker)}
+          >
           </Marker>
         ))}
       </GoogleMap>
