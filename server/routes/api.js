@@ -60,5 +60,16 @@ router.route('/retrieveMarkers')
     });
   });
 
+router.route('/retrieveEvents')
+  .get((req, res) => {
+    return db.knex.select().from('events')
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.send('error ' + err);
+    });
+  });
+
 
 module.exports = router;

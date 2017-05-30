@@ -1,39 +1,53 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { changeHeader, updateForm, changeCenter, setMarkers } from '../actions';
+import { GridList, Tabs, Tab } from 'material-ui';
 import axios from 'axios';
+import { changeHeader, updateForm, changeCenter, setMarkers } from '../actions';
 import Header from '../components/Header';
 import CreateEventForm from '../components/CreateEventForm';
-import Gmap from '../components/googleMap';
+import FindEvents from '../components/FindEvents';
+import Gmap from '../components/GoogleMap';
 
 const style = {
   position: 'absolute',
-  height: '500px',
-  width: '500px',
+  display: 'inline',
+  height: '520px',
+  width: '610px',
 };
 
 class Homepage extends Component {
-
   render() {
     return (
-			<div>
+      <div>
         <Header changeHeader={this.props.changeHeader} header={this.props.header}/>
-        <CreateEventForm
-          createEventForm={this.props.createEventForm}
-          updateForm={this.props.updateForm}
-          setMarkers={this.props.setMarkers}
-        />
-        <div style={style}>
-          <Gmap style={style}
-            center={this.props.googleMap.center}
-            markers={this.props.googleMap.markers}
-            changeCenter={this.props.changeCenter}
-            googleMap={this.props.googleMap.center}
-            setMarkers={this.props.setMarkers}
-          />
-        </div>
-			</div>
+        <GridList cellHeight="auto">
+          <Tabs>
+            <Tab label="Find Events">
+              <FindEvents
+                googleMap={this.props.googleMap}
+              />
+            </Tab>
+            <Tab label="Create Event" >
+              <CreateEventForm
+                className="createEventForm"
+                createEventForm={this.props.createEventForm}
+                updateForm={this.props.updateForm}
+                setM
+              />
+            </Tab>
+          </Tabs>
+          <div style={style}>
+            <Gmap
+              center={this.props.googleMap.center}
+              markers={this.props.googleMap.markers}
+              changeCenter={this.props.changeCenter}
+              googleMap={this.props.googleMap.center}
+              setMarkers={this.props.setMarkers}
+            />
+          </div>
+        </GridList>
+      </div>
     );
   }
 }

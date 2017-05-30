@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { RaisedButton, TextField, Card, AutoComplete } from 'material-ui';
 import Promise from 'bluebird';
 import axios from 'axios';
-import config from '../../../config/development.json';
 
-const KEY = config.GoogleKey;
+const KEY = process.env.GOOGLE_API_KEY;
 const GeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
 
 export default class LocationInput extends Component {
