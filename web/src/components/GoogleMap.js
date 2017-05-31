@@ -3,9 +3,6 @@ import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 import axios from 'axios';
 import LocationInput from './LocationInput';
 
-const KEY = process.env.GOOGLE_API_KEY;
-const GeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
-const RevGeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
 const style = {
   position: 'absolute',
   height: '100%',
@@ -64,7 +61,7 @@ class Gmap extends Component {
     this.props.setMarkers(nextMarkers);
     this.props.changeCenter({lat: lat, lng: lng});
     this.handleReverseGeoCode({lat: lat, lng: lng});
-    console.log(this.props.markers);
+    // console.log(this.props.markers);
   }
 
   handleMarkerClick(targetMarker) {
@@ -72,6 +69,7 @@ class Gmap extends Component {
       lat: targetMarker.position.lat,
       lng: targetMarker.position.lng
     };
+    // targetMarker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
     // this.handleReverseGeoCode(latlng);
   }
 
@@ -88,10 +86,9 @@ class Gmap extends Component {
   }
 
   handleReverseGeoCode(latlng) {
-    axios.get(RevGeoCodeURL + latlng.lat + ',' + latlng.lng + '&key=' + KEY)
+    axios.post('/api/reverseGeoCode', {lat: latlng.lat, lng: latlng.lng})
     .then((res) => {
       console.log(res.data);
-      console.log(res.data.results[0].formatted_address);
     })
     .catch((err) => {
       console.log(err);
@@ -102,7 +99,7 @@ class Gmap extends Component {
     const Map = withGoogleMap(props => (
       <GoogleMap
         ref={props.onMapLoad}
-        zoom={16}
+        zoom={0}
         center={this.props.googleMap}
         onClick={props.onMapClick}
         >
@@ -111,6 +108,7 @@ class Gmap extends Component {
           {...marker}
           onClick={() => props.onMarkerClick(marker)}
           onRightClick={() => props.onMarkerRightClick(marker)}
+          // setIcon={() => props.setIcon(url)}
           >
           </Marker>
         ))}

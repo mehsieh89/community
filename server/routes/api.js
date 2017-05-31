@@ -6,6 +6,7 @@ const models = require('../../db/models');
 const db = require('../../db');
 
 const KEY = process.env.GOOGLE_API_KEY;
+const RevGeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
 const GeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
 
 router.route('/')
@@ -48,6 +49,30 @@ router.route('/createEvent')
     })
     .catch((err) => {
       res.status(400).send('error: ' + err.toString());
+    });
+  });
+
+router.route('/reverseGeoCode')
+  .post((req, res) => {
+    const lat = req.body.lat;
+    const lng = req.body.lng;
+    axios.get(RevGeoCodeURL + lat + ',' + lng + '&key=' + KEY)
+    .then((data) => {
+      res.json(data.data.results[0].formatted_address);
+    })
+    .catch((err) => {
+      res.send('error ' + err);
+    });
+  });
+
+router.route('/locationInput')
+  .post((req, res) => {
+    axios.get(GeoCodeURL + req.body.location + '&key=' + KEY)
+    .then((data) => {
+      res.send(data.data.results);
+    })
+    .catch((err) => {
+      res.send('error ' + err);
     });
   });
 

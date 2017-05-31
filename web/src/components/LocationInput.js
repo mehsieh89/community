@@ -3,7 +3,6 @@ import { RaisedButton, TextField, Card, AutoComplete } from 'material-ui';
 import Promise from 'bluebird';
 import axios from 'axios';
 
-const KEY = process.env.GOOGLE_API_KEY;
 const GeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
 
 export default class LocationInput extends Component {
@@ -57,11 +56,11 @@ export default class LocationInput extends Component {
 
   handleLocationInput(location) {
     let string = location.split(' ').join('+');
-    axios.get(GeoCodeURL + string + '&key=' + KEY)
+    axios.post('/api/locationInput', {location: string})
     .then((res) => {
       let acArray = [];
-      for (let i = 0; i < res.data.results.length; i++) {
-        acArray.push(res.data.results[i]);
+      for (let i = 0; i < res.data.length; i++) {
+        acArray.push(res.data[i]);
       }
       return acArray;
     })
