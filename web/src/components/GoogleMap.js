@@ -95,6 +95,7 @@ class Gmap extends Component {
     ];
     console.log(this.state.center);
     this.props.setMarkers(nextMarkers);
+    // this.props._mapComponent(lat, lng);
     this.props.changeCenter({lat: lat, lng: lng});
     this.handleReverseGeoCode({lat: lat, lng: lng});
     // console.log(this.props.markers);
@@ -123,6 +124,7 @@ class Gmap extends Component {
   }
 
   render () {
+
     const Map = withGoogleMap(props => (
       <GoogleMap
         ref={props.onMapLoad}
