@@ -33,7 +33,9 @@ class Homepage extends Component {
                 className="createEventForm"
                 createEventForm={this.props.createEventForm}
                 updateForm={this.props.updateForm}
-                setM
+                setMarkers={this.props.setMarkers}
+                markers={this.props.googleMap.markers}
+                changeCenter={this.props.changeCenter}
               />
             </Tab>
           </Tabs>

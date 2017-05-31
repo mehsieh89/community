@@ -9,7 +9,6 @@ export const updateForm = (state) => {
   return {
     type: 'UPDATE_FORM',
     payload: state,
-    isFetching: true
   };
 };
 

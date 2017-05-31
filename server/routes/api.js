@@ -5,9 +5,8 @@ const router = express.Router();
 const models = require('../../db/models');
 const db = require('../../db');
 
-// const config = require('../../config/development.json');
-
 const KEY = process.env.GOOGLE_API_KEY;
+const RevGeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
 const GeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
 
 router.route('/')
@@ -22,6 +21,7 @@ router.route('/')
 // create event in the events table
 router.route('/createEvent')
   .post((req, res) => {
+    let result = {};
     let string = req.body.location.split(' ').join('+');
     return new Promise((resolve, reject) => {
       resolve(axios.get(GeoCodeURL + string + '&key=' + KEY));
@@ -29,6 +29,7 @@ router.route('/createEvent')
     .then((data) => {
       const lat = data.data.results[0].geometry.location.lat;
       const lng = data.data.results[0].geometry.location.lng;
+      result = {lat: lat, lng: lng};
 
       let eventInfo = {
         event_name: req.body.eventName,
@@ -43,10 +44,35 @@ router.route('/createEvent')
       return models.Event.forge(eventInfo).save();
     })
     .then(() => {
-      res.status(201).send('saved!!!!! ');
+      result.status = 'saved!!!';
+      res.status(201).send(result);
     })
     .catch((err) => {
       res.status(400).send('error: ' + err.toString());
+    });
+  });
+
+router.route('/reverseGeoCode')
+  .post((req, res) => {
+    const lat = req.body.lat;
+    const lng = req.body.lng;
+    axios.get(RevGeoCodeURL + lat + ',' + lng + '&key=' + KEY)
+    .then((data) => {
+      res.json(data.data.results[0].formatted_address);
+    })
+    .catch((err) => {
+      res.send('error ' + err);
+    });
+  });
+
+router.route('/locationInput')
+  .post((req, res) => {
+    axios.get(GeoCodeURL + req.body.location + '&key=' + KEY)
+    .then((data) => {
+      res.send(data.data.results);
+    })
+    .catch((err) => {
+      res.send('error ' + err);
     });
   });
 

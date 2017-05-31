@@ -2,12 +2,7 @@ import React, { Component } from 'react';
 import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 import axios from 'axios';
 import LocationInput from './LocationInput';
-// import config from '../../../config/development.json';
 
-//const KEY = config.GoogleKey;
-const KEY = process.env.GOOGLE_API_KEY;
-const GeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
-const RevGeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
 const style = {
   position: 'absolute',
   height: '100%',
@@ -23,10 +18,10 @@ class Gmap extends Component {
     this.handleMarkerClick = this.handleMarkerClick.bind(this);
     this.handleMarkerRightClick = this.handleMarkerRightClick.bind(this);
     this.handleReverseGeoCode = this.handleReverseGeoCode.bind(this);
-    // this.convertToLatLng = this.convertToLatLng.bind(this);
   }
 
   componentDidMount() {
+    // console.log('hi from componentdidMount');
     const nextMarkers = [
       ...this.props.markers,
     ];
@@ -41,19 +36,12 @@ class Gmap extends Component {
         nextMarkers.push(newMarker);
       }
       this.props.setMarkers(nextMarkers);
+      // console.log('end of component did mount', this.props.markers);
     })
     .catch((err) => {
       console.log(err);
     });
   }
-
-  // convertToLatLng(addressStr) {
-  //   let string = addressStr.split(' ').join('+');
-  //   axios.get(GeoCodeURL + string + '&key=' + KEY)
-  //   .then((data) => {
-  //     console.log(data.results[0]);
-  //   });
-  // }
 
   handleMapLoad(map) {
     this._mapComponent = map;
@@ -73,6 +61,7 @@ class Gmap extends Component {
     this.props.setMarkers(nextMarkers);
     this.props.changeCenter({lat: lat, lng: lng});
     this.handleReverseGeoCode({lat: lat, lng: lng});
+    // console.log(this.props.markers);
   }
 
   handleMarkerClick(targetMarker) {
@@ -80,8 +69,16 @@ class Gmap extends Component {
       lat: targetMarker.position.lat,
       lng: targetMarker.position.lng
     };
+    // targetMarker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
     // this.handleReverseGeoCode(latlng);
   }
+
+  // handleMarkerClick(e) {
+  //   this.setState({
+  //     selectedPlace: props,
+  //     activeMarker: marker,
+  //   });
+  // }
 
   handleMarkerRightClick(targetMarker) {
     const nextMarkers = this.props.markers.filter(marker => marker !== targetMarker);
@@ -89,9 +86,9 @@ class Gmap extends Component {
   }
 
   handleReverseGeoCode(latlng) {
-    axios.get(RevGeoCodeURL + latlng.lat + ',' + latlng.lng + '&key=' + KEY)
+    axios.post('/api/reverseGeoCode', {lat: latlng.lat, lng: latlng.lng})
     .then((res) => {
-      console.log(res.data.results[0].formatted_address);
+      console.log(res.data);
     })
     .catch((err) => {
       console.log(err);
@@ -99,19 +96,22 @@ class Gmap extends Component {
   }
 
   render () {
+    // console.log('withGmap', this.props.markers);
     const Map = withGoogleMap(props => (
       <GoogleMap
         ref={props.onMapLoad}
-        zoom={16}
+        zoom={0}
         center={this.props.googleMap}
         onClick={props.onMapClick}
         >
-          {props.markers.map((marker) => (
-            <Marker
-            {...marker}
-            onClick={() => props.onMarkerClick(marker)}
-            onRightClick={() => props.onMarkerRightClick(marker)}
-          />
+        {props.markers.map((marker) => (
+          <Marker
+          {...marker}
+          onClick={() => props.onMarkerClick(marker)}
+          onRightClick={() => props.onMarkerRightClick(marker)}
+          // setIcon={() => props.setIcon(url)}
+          >
+          </Marker>
         ))}
       </GoogleMap>
     ));
