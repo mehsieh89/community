@@ -74,6 +74,22 @@ class Gmap extends Component {
         });
       });
     })
+    .then(() => {
+      let context = this;
+      geolocation.getCurrentPosition((position) => {
+        return new Promise((resolve, reject) => {
+          resolve(this.setState({
+            center: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            }
+          }));
+        })
+        .then(() => {
+          context.props.changeCenter(this.state.center);
+        });
+      });
+    })
     .catch((err) => {
       console.log(err);
     });
