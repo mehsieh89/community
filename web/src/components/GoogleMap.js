@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
+import { withGoogleMap, GoogleMap, Marker, Circle } from 'react-google-maps';
+import canUseDOM from 'can-use-dom';
+import Promise from 'bluebird';
 import axios from 'axios';
 import LocationInput from './LocationInput';
 
@@ -9,12 +11,27 @@ const style = {
   width: '100%',
 };
 
+const geolocation = (
+  canUseDOM && navigator.geolocation ?
+  navigator.geolocation :
+  ({
+    getCurrentPosition(success, failure) {
+      if (failure) {
+        console.log('Your browser does not support geolocation.');
+      }
+    },
+  })
+);
+
 class Gmap extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   colorChange: false,
-    // };
+    this.state = {
+      center: {
+        lat: 40.758895,
+        lng: -73.985131,
+      }
+    };
     this.handleMapLoad = this.handleMapLoad.bind(this);
     this.handleMapClick = this.handleMapClick.bind(this);
     this.handleMarkerClick = this.handleMarkerClick.bind(this);
@@ -23,7 +40,6 @@ class Gmap extends Component {
   }
 
   componentDidMount() {
-    // console.log('hi from componentdidMount');
     const nextMarkers = [
       ...this.props.markers,
     ];
@@ -38,6 +54,22 @@ class Gmap extends Component {
       }
       this.props.setMarkers(nextMarkers);
       // console.log('end of component did mount', this.props.markers);
+    })
+    .then(() => {
+      let context = this;
+      geolocation.getCurrentPosition((position) => {
+        return new Promise((resolve, reject) => {
+          resolve(this.setState({
+            center: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            }
+          }));
+        })
+        .then(() => {
+          context.props.changeCenter(this.state.center);
+        });
+      });
     })
     .catch((err) => {
       console.log(err);
@@ -58,6 +90,7 @@ class Gmap extends Component {
         defaultAnimation: 3,
       },
     ];
+    console.log(this.state.center);
     this.props.setMarkers(nextMarkers);
     // this.props._mapComponent(lat, lng);
     this.props.changeCenter({lat: lat, lng: lng});
@@ -76,13 +109,6 @@ class Gmap extends Component {
     // console.log(this.state.icon);
     // this.handleReverseGeoCode(latlng);
   }
-
-  // handleMarkerClick(e) {
-  //   this.setState({
-  //     selectedPlace: props,
-  //     activeMarker: marker,
-  //   });
-  // }
 
   handleMarkerRightClick(targetMarker) {
     const nextMarkers = this.props.markers.filter(marker => marker !== targetMarker);
@@ -105,8 +131,8 @@ class Gmap extends Component {
     const Map = withGoogleMap(props => (
       <GoogleMap
         ref={props.onMapLoad}
-        zoom={0}
-        center={this.props.googleMap}
+        zoom={14}
+        center={this.props.center}
         onClick={props.onMapClick}
         >
         {props.markers.map((marker, index) => (

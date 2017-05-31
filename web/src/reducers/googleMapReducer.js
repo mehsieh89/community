@@ -1,7 +1,7 @@
 const initialState = {
   center: {
-    lat: 37.774929,
-    lng: -122.419416
+    lat: 40.758895,
+    lng: -73.985131
   },
   markers: [],
 };
