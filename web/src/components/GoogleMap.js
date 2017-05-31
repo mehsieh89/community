@@ -12,7 +12,9 @@ const style = {
 class Gmap extends Component {
   constructor(props) {
     super(props);
-
+    // this.state = {
+    //   colorChange: false,
+    // };
     this.handleMapLoad = this.handleMapLoad.bind(this);
     this.handleMapClick = this.handleMapClick.bind(this);
     this.handleMarkerClick = this.handleMarkerClick.bind(this);
@@ -31,7 +33,6 @@ class Gmap extends Component {
         let newMarker = {
           position: {lat: Number(res.data[i].lat), lng: Number(res.data[i].lng)},
           defaultAnimation: 3,
-          key: Math.random(),
         };
         nextMarkers.push(newMarker);
       }
@@ -55,10 +56,10 @@ class Gmap extends Component {
       {
         position: {lat: lat, lng: lng},
         defaultAnimation: 3,
-        key: Math.random(),
       },
     ];
     this.props.setMarkers(nextMarkers);
+    // this.props._mapComponent(lat, lng);
     this.props.changeCenter({lat: lat, lng: lng});
     this.handleReverseGeoCode({lat: lat, lng: lng});
     // console.log(this.props.markers);
@@ -69,7 +70,10 @@ class Gmap extends Component {
       lat: targetMarker.position.lat,
       lng: targetMarker.position.lng
     };
-    // targetMarker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+    // this.setState({
+    //   colorChange: true,
+    // });
+    // console.log(this.state.icon);
     // this.handleReverseGeoCode(latlng);
   }
 
@@ -97,6 +101,7 @@ class Gmap extends Component {
 
   render () {
     // console.log('withGmap', this.props.markers);
+    // const icon = this.state.colorChange ? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png' : 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
     const Map = withGoogleMap(props => (
       <GoogleMap
         ref={props.onMapLoad}
@@ -104,12 +109,13 @@ class Gmap extends Component {
         center={this.props.googleMap}
         onClick={props.onMapClick}
         >
-        {props.markers.map((marker) => (
+        {props.markers.map((marker, index) => (
           <Marker
           {...marker}
           onClick={() => props.onMarkerClick(marker)}
           onRightClick={() => props.onMarkerRightClick(marker)}
-          // setIcon={() => props.setIcon(url)}
+          icon={'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'}
+          key={index}
           >
           </Marker>
         ))}
