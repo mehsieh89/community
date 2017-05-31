@@ -12,13 +12,13 @@ class Header extends Component {
 
   render () {
     return (
-			<div>
+      <div>
         <AppBar title="Community" />
         {/* <div>{this.props.header}</div>
         <button onClick={this.handleClick.bind(this)}>
           Click
         </button> */}
-			</div>
+      </div>
     );
   }
 }
