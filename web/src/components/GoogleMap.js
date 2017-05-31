@@ -96,6 +96,7 @@ class Gmap extends Component {
   }
 
   render () {
+    // console.log('withGmap', this.props.markers);
     const Map = withGoogleMap(props => (
       <GoogleMap
         ref={props.onMapLoad}
