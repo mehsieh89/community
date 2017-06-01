@@ -63,7 +63,12 @@ class CreateEventForm extends Component {
       this.props.updateForm(this.state);
       this.props.setMarkers(this.props.markers);
       this.props.changeCenter({lat: Number(data.data.lat), lng: Number(data.data.lng)});
-      console.log(data.data.status);
+    })
+    .then(() => {
+      axios.get('/api/retrieveEvents')
+      .then((data) => {
+        this.props.addEvents(data.data);
+      });
     })
     .catch(err => { console.log('error in submitting event', err); });
   }

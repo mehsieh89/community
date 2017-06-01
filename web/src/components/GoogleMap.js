@@ -153,9 +153,11 @@ class Gmap extends Component {
         center={this.props.center}
         onClick={props.onMapClick}
         >
-        {props.markers.map((marker, index) => (
+        {this.props.events.map((marker, index) => (
           <Marker
-          {...marker}
+          // {...marker}
+          defaultAnimation={3}
+          position={{lat: Number(marker.lat), lng: Number(marker.lng)}}
           onClick={() => props.onMarkerClick(marker)}
           onRightClick={() => props.onMarkerRightClick(marker)}
           icon={'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'}
@@ -165,9 +167,10 @@ class Gmap extends Component {
         ))}
         {props.geolocation.map((marker, index) => (
           <Marker
-            {...marker}
+            // {...marker}
+            defaultAnimation={3}
+            position={{lat: this.state.center.lat, lng: this.state.center.lng}}
             key={'geo_' + index}
-          {...marker}
           icon={'http://maps.google.com/mapfiles/ms/icons/green-dot.png'}
           >
           </Marker>

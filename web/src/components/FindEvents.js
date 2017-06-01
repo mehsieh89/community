@@ -23,18 +23,14 @@ class FindEvents extends Component {
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
-
-  componentDidMount() {
-    this.retrieveEvents();
-  }
-
-  // TODO: filter incoming data by user location
-  retrieveEvents(location) {
-    axios.get('/api/retrieveEvents')
-    .then((res) => {
-      this.setState({ tilesData: res.data });
-    });
-  }
+  
+  // // TODO: filter incoming data by user location
+  // retrieveEvents(location) {
+  //   axios.get('/api/retrieveEvents')
+  //   .then((res) => {
+  //     this.setState({ tilesData: res.data });
+  //   });
+  // }
 
   handleOpen() {
     this.setState({open: true});
@@ -46,14 +42,13 @@ class FindEvents extends Component {
 
   handleTileClick(i) {
     this.handleOpen();
-    console.log(this.state.tilesData[i]);
     this.setState({
       eventInfo: {
-        event_name: this.state.tilesData[i].event_name,
-        category: this.state.tilesData[i].category,
-        description: this.state.tilesData[i].description,
-        location: this.state.tilesData[i].location,
-        time: this.state.tilesData[i].time,
+        event_name: this.props.events[i].event_name,
+        category: this.props.events[i].category,
+        description: this.props.events[i].description,
+        location: this.props.events[i].location,
+        time: this.props.events[i].time,
       }
     });
   }
@@ -65,17 +60,11 @@ class FindEvents extends Component {
        primary={true}
        onTouchTap={this.handleClose}
       />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        keyboardFocused={true}
-        onTouchTap={this.handleClose}
-      />,
     ];
     return (
       <Card style={styles.container}>
         <GridList cellHeight={180} cols={2} style={styles.gridList}>
-          {this.state.tilesData.map((tile, i) => (
+          {this.props.events.map((tile, i) => (
             <GridTileComponent
               key={i}
               indexID={i}
@@ -85,7 +74,7 @@ class FindEvents extends Component {
               style={styles.tile}
               actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
               imageSRC={tile.image}
-              data={this.state.tilesData}
+              data={this.props.events}
               onClick={this.handleTileClick}
               dialog={this.state.open}
             >
