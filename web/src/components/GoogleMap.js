@@ -91,7 +91,6 @@ class Gmap extends Component {
             defaultAnimation: 3,
           }]);
           context.props.changeCenter(this.state.center);
-          console.log(this.props.geolocation);
         });
       });
     })
