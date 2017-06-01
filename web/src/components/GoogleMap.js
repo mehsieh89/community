@@ -86,7 +86,12 @@ class Gmap extends Component {
           }));
         })
         .then(() => {
+          context.props.addGeolocation([{
+            position: {lat: this.state.center.lat, lng: this.state.center.lng},
+            defaultAnimation: 3,
+          }]);
           context.props.changeCenter(this.state.center);
+          console.log(this.props.geolocation);
         });
       });
     })
