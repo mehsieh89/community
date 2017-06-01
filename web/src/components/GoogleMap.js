@@ -53,7 +53,6 @@ class Gmap extends Component {
         nextMarkers.push(newMarker);
       }
       this.props.setMarkers(nextMarkers);
-      // console.log('end of component did mount', this.props.markers);
     })
     .then(() => {
       let context = this;
@@ -67,6 +66,10 @@ class Gmap extends Component {
           }));
         })
         .then(() => {
+          context.props.addGeolocation([{
+            position: {lat: this.state.center.lat, lng: this.state.center.lng},
+            defaultAnimation: 3,
+          }]);
           context.props.changeCenter(this.state.center);
         });
       });
@@ -92,7 +95,6 @@ class Gmap extends Component {
     ];
     console.log(this.state.center);
     this.props.setMarkers(nextMarkers);
-    // this.props._mapComponent(lat, lng);
     this.props.changeCenter({lat: lat, lng: lng});
     this.handleReverseGeoCode({lat: lat, lng: lng});
     // console.log(this.props.markers);
@@ -103,11 +105,6 @@ class Gmap extends Component {
       lat: targetMarker.position.lat,
       lng: targetMarker.position.lng
     };
-    // this.setState({
-    //   colorChange: true,
-    // });
-    // console.log(this.state.icon);
-    // this.handleReverseGeoCode(latlng);
   }
 
   handleMarkerRightClick(targetMarker) {
@@ -126,8 +123,6 @@ class Gmap extends Component {
   }
 
   render () {
-    // console.log('withGmap', this.props.markers);
-    // const icon = this.state.colorChange ? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png' : 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
     const Map = withGoogleMap(props => (
       <GoogleMap
         ref={props.onMapLoad}
@@ -141,7 +136,16 @@ class Gmap extends Component {
           onClick={() => props.onMarkerClick(marker)}
           onRightClick={() => props.onMarkerRightClick(marker)}
           icon={'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'}
-          key={index}
+          key={'marker_' + index}
+          >
+          </Marker>
+        ))}
+        {props.geolocation.map((marker, index) => (
+          <Marker
+            {...marker}
+            key={'geo_' + index}
+          {...marker}
+          icon={'http://maps.google.com/mapfiles/ms/icons/green-dot.png'}
           >
           </Marker>
         ))}
@@ -164,6 +168,7 @@ class Gmap extends Component {
           markers={this.props.markers}
           onMarkerRightClick={this.handleMarkerRightClick}
           onMarkerClick={this.handleMarkerClick}
+          geolocation={this.props.geolocation}
         />
       </div>
     );

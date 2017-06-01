@@ -4,6 +4,7 @@ const initialState = {
     lng: -73.985131
   },
   markers: [],
+  geolocation: [],
 };
 
 export default function(state = initialState, action) {
@@ -18,6 +19,11 @@ export default function(state = initialState, action) {
     let MarkerState = Object.assign({}, state);
     MarkerState.markers = action.payload;
     return MarkerState;
+
+  case 'ADD_GEOLOCATION' :
+    let GeoState = Object.assign({}, state);
+    GeoState.geolocation = action.payload;
+    return GeoState;
 
   default:
     return state;

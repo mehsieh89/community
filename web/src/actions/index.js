@@ -26,8 +26,9 @@ export const setMarkers = (prop) => {
   };
 };
 
-export const doNothing = () => {
+export const addGeolocation = (prop) => {
   return {
-    type: 'DO_NOTHING',
+    type: 'ADD_GEOLOCATION',
+    payload: prop
   };
 };
