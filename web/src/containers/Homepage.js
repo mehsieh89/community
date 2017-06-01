@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { GridList, Tabs, Tab } from 'material-ui';
 import axios from 'axios';
-import { changeHeader, updateForm, changeCenter, setMarkers } from '../actions';
+import { changeHeader, updateForm, changeCenter, setMarkers, addGeolocation } from '../actions';
 import Header from '../components/Header';
 import CreateEventForm from '../components/CreateEventForm';
 import FindEvents from '../components/FindEvents';
@@ -46,6 +46,8 @@ class Homepage extends Component {
               changeCenter={this.props.changeCenter}
               googleMap={this.props.googleMap.center}
               setMarkers={this.props.setMarkers}
+              addGeolocation={this.props.addGeolocation}
+              geolocation={this.props.googleMap.geolocation}
             />
           </div>
         </GridList>
@@ -68,6 +70,7 @@ const matchDispatchToProps = (dispatch) => {
     updateForm: updateForm,
     changeCenter: changeCenter,
     setMarkers: setMarkers,
+    addGeolocation: addGeolocation,
   }, dispatch);
 };
 

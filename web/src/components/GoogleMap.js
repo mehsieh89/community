@@ -67,7 +67,12 @@ class Gmap extends Component {
           }));
         })
         .then(() => {
+          context.props.addGeolocation([{
+            position: {lat: this.state.center.lat, lng: this.state.center.lng},
+            defaultAnimation: 3,
+          }]);
           context.props.changeCenter(this.state.center);
+          console.log(this.props.geolocation);
         });
       });
     })
@@ -141,7 +146,16 @@ class Gmap extends Component {
           onClick={() => props.onMarkerClick(marker)}
           onRightClick={() => props.onMarkerRightClick(marker)}
           icon={'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'}
-          key={index}
+          key={'marker_' + index}
+          >
+          </Marker>
+        ))}
+        {props.geolocation.map((marker, index) => (
+          <Marker
+            {...marker}
+            key={'geo_' + index}
+          {...marker}
+          icon={'http://maps.google.com/mapfiles/ms/icons/green-dot.png'}
           >
           </Marker>
         ))}
@@ -164,6 +178,7 @@ class Gmap extends Component {
           markers={this.props.markers}
           onMarkerRightClick={this.handleMarkerRightClick}
           onMarkerClick={this.handleMarkerClick}
+          geolocation={this.props.geolocation}
         />
       </div>
     );
