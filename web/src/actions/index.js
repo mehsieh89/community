@@ -5,6 +5,13 @@ export const changeHeader = (text) => {
   };
 };
 
+export const addEvents = (prop) => {
+  return {
+    type: 'ADD_EVENTS',
+    payload: prop
+  };
+};
+
 export const updateForm = (state) => {
   return {
     type: 'UPDATE_FORM',

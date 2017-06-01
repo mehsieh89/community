@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { GridList, Tabs, Tab } from 'material-ui';
 import axios from 'axios';
-import { changeHeader, updateForm, changeCenter, setMarkers, addGeolocation } from '../actions';
+import { changeHeader, updateForm, changeCenter, setMarkers, addGeolocation, addEvents } from '../actions';
 import Header from '../components/Header';
 import CreateEventForm from '../components/CreateEventForm';
 import FindEvents from '../components/FindEvents';
@@ -17,6 +17,14 @@ const style = {
 };
 
 class Homepage extends Component {
+
+  componentWillMount() {
+    axios.get('/api/retrieveEvents')
+    .then((data) => {
+      this.props.addEvents(data.data);
+    });
+  }
+
   render() {
     return (
       <div>
@@ -25,6 +33,7 @@ class Homepage extends Component {
           <Tabs>
             <Tab label="Find Events">
               <FindEvents
+                events={this.props.events}
                 googleMap={this.props.googleMap}
               />
             </Tab>
@@ -36,11 +45,14 @@ class Homepage extends Component {
                 setMarkers={this.props.setMarkers}
                 markers={this.props.googleMap.markers}
                 changeCenter={this.props.changeCenter}
+                addEvents={this.props.addEvents}
+                events={this.props.events}
               />
             </Tab>
           </Tabs>
           <div style={style}>
             <Gmap
+              events={this.props.events}
               center={this.props.googleMap.center}
               markers={this.props.googleMap.markers}
               changeCenter={this.props.changeCenter}
@@ -60,7 +72,8 @@ const mapStateToProps = (state) => {
   return {
     header: state.header,
     createEventForm: state.createEventForm,
-    googleMap: state.googleMap
+    googleMap: state.googleMap,
+    events: state.events.allEvents
   };
 };
 
@@ -71,6 +84,7 @@ const matchDispatchToProps = (dispatch) => {
     changeCenter: changeCenter,
     setMarkers: setMarkers,
     addGeolocation: addGeolocation,
+    addEvents: addEvents,
   }, dispatch);
 };
 

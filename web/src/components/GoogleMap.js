@@ -74,6 +74,26 @@ class Gmap extends Component {
         });
       });
     })
+    .then(() => {
+      let context = this;
+      geolocation.getCurrentPosition((position) => {
+        return new Promise((resolve, reject) => {
+          resolve(this.setState({
+            center: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            }
+          }));
+        })
+        .then(() => {
+          context.props.addGeolocation([{
+            position: {lat: this.state.center.lat, lng: this.state.center.lng},
+            defaultAnimation: 3,
+          }]);
+          context.props.changeCenter(this.state.center);
+        });
+      });
+    })
     .catch((err) => {
       console.log(err);
     });
@@ -95,6 +115,7 @@ class Gmap extends Component {
     ];
     console.log(this.state.center);
     this.props.setMarkers(nextMarkers);
+    // this.props._mapComponent(lat, lng);
     this.props.changeCenter({lat: lat, lng: lng});
     this.handleReverseGeoCode({lat: lat, lng: lng});
     // console.log(this.props.markers);
@@ -123,6 +144,7 @@ class Gmap extends Component {
   }
 
   render () {
+
     const Map = withGoogleMap(props => (
       <GoogleMap
         ref={props.onMapLoad}
@@ -130,9 +152,11 @@ class Gmap extends Component {
         center={this.props.center}
         onClick={props.onMapClick}
         >
-        {props.markers.map((marker, index) => (
+        {this.props.events.map((marker, index) => (
           <Marker
-          {...marker}
+          // {...marker}
+          defaultAnimation={3}
+          position={{lat: Number(marker.lat), lng: Number(marker.lng)}}
           onClick={() => props.onMarkerClick(marker)}
           onRightClick={() => props.onMarkerRightClick(marker)}
           icon={'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'}
@@ -142,9 +166,10 @@ class Gmap extends Component {
         ))}
         {props.geolocation.map((marker, index) => (
           <Marker
-            {...marker}
+            // {...marker}
+            defaultAnimation={3}
+            position={{lat: this.state.center.lat, lng: this.state.center.lng}}
             key={'geo_' + index}
-          {...marker}
           icon={'http://maps.google.com/mapfiles/ms/icons/green-dot.png'}
           >
           </Marker>
