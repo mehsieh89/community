@@ -53,7 +53,6 @@ class Gmap extends Component {
         nextMarkers.push(newMarker);
       }
       this.props.setMarkers(nextMarkers);
-      // console.log('end of component did mount', this.props.markers);
     })
     .then(() => {
       let context = this;
@@ -72,7 +71,6 @@ class Gmap extends Component {
             defaultAnimation: 3,
           }]);
           context.props.changeCenter(this.state.center);
-          console.log(this.props.geolocation);
         });
       });
     })
@@ -97,7 +95,6 @@ class Gmap extends Component {
     ];
     console.log(this.state.center);
     this.props.setMarkers(nextMarkers);
-    // this.props._mapComponent(lat, lng);
     this.props.changeCenter({lat: lat, lng: lng});
     this.handleReverseGeoCode({lat: lat, lng: lng});
     // console.log(this.props.markers);
@@ -108,11 +105,6 @@ class Gmap extends Component {
       lat: targetMarker.position.lat,
       lng: targetMarker.position.lng
     };
-    // this.setState({
-    //   colorChange: true,
-    // });
-    // console.log(this.state.icon);
-    // this.handleReverseGeoCode(latlng);
   }
 
   handleMarkerRightClick(targetMarker) {
@@ -131,8 +123,6 @@ class Gmap extends Component {
   }
 
   render () {
-    // console.log('withGmap', this.props.markers);
-    // const icon = this.state.colorChange ? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png' : 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
     const Map = withGoogleMap(props => (
       <GoogleMap
         ref={props.onMapLoad}
