@@ -10,57 +10,17 @@ class FindEvents extends Component {
     super(props);
     this.state = {
       tilesData: [],
-      open: false,
-      eventInfo: {
-        event_name: '',
-        category: '',
-        description: '',
-        location: '',
-        time: '',
-      }
     };
     this.handleTileClick = this.handleTileClick.bind(this);
-    this.handleOpen = this.handleOpen.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-  }
-
-  // // TODO: filter incoming data by user location
-  // retrieveEvents(location) {
-  //   axios.get('/api/retrieveEvents')
-  //   .then((res) => {
-  //     this.setState({ tilesData: res.data });
-  //   });
-  // }
-
-  handleOpen() {
-    this.setState({open: true});
-  }
-
-  handleClose() {
-    this.setState({open: false});
   }
 
   handleTileClick(i) {
-    this.handleOpen();
-    this.setState({
-      eventInfo: {
-        event_name: this.props.events[i].event_name,
-        category: this.props.events[i].category,
-        description: this.props.events[i].description,
-        location: this.props.events[i].location,
-        time: this.props.events[i].time,
-      }
-    });
+    console.log(i);
+    this.props.setCurrentEvent(i);
+    this.props.toggleEventDetails();
   }
 
   render() {
-    const actions = [
-      <FlatButton
-       label="Cancel"
-       primary={true}
-       onTouchTap={this.handleClose}
-      />
-    ];
     return (
       <Card
         style={styles.container}
@@ -77,36 +37,10 @@ class FindEvents extends Component {
               actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
               imageSRC={tile.image}
               data={this.props.events}
-              onClick={this.handleTileClick}
-              dialog={this.state.open}
+              onClick={() => this.handleTileClick(i)}
             >
             </GridTileComponent>
           ))}
-          <Dialog
-            title="Event Details"
-            actions={actions}
-            modal={false}
-            open={this.state.open}
-            onRequestClose={this.handleClose}
-          >
-            <div style={styles.theme}>
-              <div>
-                Event Name: {this.state.eventInfo.event_name}
-              </div>
-              <div>
-                Time: {this.state.eventInfo.time}
-              </div>
-              <div>
-                Location: {this.state.eventInfo.location}
-              </div>
-              <div>
-                Description: {this.state.eventInfo.description}
-              </div>
-              <div>
-                Category: {this.state.eventInfo.category}
-              </div>
-            </div>
-          </Dialog>
         </GridList>
       </Card>
     );
