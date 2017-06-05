@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import { Card, GridTile, IconButton, Subheader } from 'material-ui';
 import Promise from 'bluebird';
-import { Card, GridTile, Subheader, IconButton } from 'material-ui';
+import React, { Component } from 'react';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 class GridTileComponent extends Component {
@@ -22,7 +22,6 @@ class GridTileComponent extends Component {
       <GridTile
         title={this.props.title}
         titleBackground={this.props.titleBackground}
-        // subtitle={<span>by <b>{tile.host_name}</b></span>}
         style={this.props.style}
         actionIcon={this.props.actionIcon}
         onClick={this.handleClick}

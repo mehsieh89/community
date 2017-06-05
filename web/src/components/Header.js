@@ -1,26 +1,32 @@
-import React, { Component } from 'react';
 import { AppBar } from 'material-ui';
+import React, { Component } from 'react';
 
 class Header extends Component {
   constructor(props) {
     super(props);
   }
 
-  handleClick () {
-    this.props.changeHeader('Yvonne is smart');
-  }
-
   render () {
     return (
       <div>
-        <AppBar title="Community" />
-        {/* <div>{this.props.header}</div>
-        <button onClick={this.handleClick.bind(this)}>
-          Click
-        </button> */}
+        <AppBar
+          title="Community"
+          style={styles.theme}
+          titleStyle={styles.title}
+        />
       </div>
     );
   }
 }
+
+const styles = {
+  title: {
+    fontFamily: 'Vibur',
+    fontSize: '34px'
+  },
+  theme: {
+    backgroundColor: '#5E35B1',
+  }
+};
 
 export default Header;

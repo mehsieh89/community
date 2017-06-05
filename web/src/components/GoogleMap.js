@@ -1,15 +1,9 @@
-import React, { Component } from 'react';
-import { withGoogleMap, GoogleMap, Marker, Circle } from 'react-google-maps';
-import canUseDOM from 'can-use-dom';
-import Promise from 'bluebird';
 import axios from 'axios';
+import canUseDOM from 'can-use-dom';
 import LocationInput from './LocationInput';
-
-const style = {
-  position: 'absolute',
-  height: '100%',
-  width: '100%',
-};
+import Promise from 'bluebird';
+import React, { Component } from 'react';
+import { Circle, GoogleMap, Marker, withGoogleMap } from 'react-google-maps';
 
 const geolocation = (
   canUseDOM && navigator.geolocation ?
@@ -178,16 +172,17 @@ class Gmap extends Component {
     ));
 
     return (
-      <div style={style}>
+      <div style={styles.container}>
         <LocationInput
           markers={this.props.markers}
           setMarkers={this.props.setMarkers}
           changeCenter={this.props.changeCenter}
           handleReverseGeoCode={this.handleReverseGeoCode}
+          
           />
-        <Map style={style}
-          containerElement={ <div className='map-container' style={style}></div>}
-          mapElement={ <div id='map' className='map-section' style={style}></div>}
+        <Map style={styles.container}
+          containerElement={ <div className='map-container' style={styles.container}></div>}
+          mapElement={ <div id='map' className='map-section' style={styles.mapSize}></div>}
           onMapLoad={this.handleMapLoad}
           onMapClick={this.handleMapClick}
           markers={this.props.markers}
@@ -199,5 +194,18 @@ class Gmap extends Component {
     );
   }
 }
+
+const styles = {
+  container: {
+    width: '100%',
+    height: '100%'
+  },
+  mapSize: {
+    position: 'absolute',
+    height: 'calc(100% - 112px)',
+    width: '50%',
+  }
+};
+
 
 export default Gmap;
