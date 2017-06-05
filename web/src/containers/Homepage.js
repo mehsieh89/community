@@ -1,12 +1,13 @@
 import axios from 'axios';
-import { addEvents, addGeolocation, changeCenter, changeHeader, setMarkers, updateForm } from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { GridList, Tabs, Tab } from 'material-ui';
+import { changeHeader, updateForm, changeCenter, setMarkers, addGeolocation, addEvents, setCurrentEvent, toggleEventDetails } from '../actions';
+import Header from '../components/Header';
 import CreateEventForm from '../components/CreateEventForm';
 import FindEvents from '../components/FindEvents';
+import EventDetails from '../components/EventDetails';
 import Gmap from '../components/GoogleMap';
-import { GridList, Tabs, Tab } from 'material-ui';
-import Header from '../components/Header';
 import React, { Component } from 'react';
 
 class Homepage extends Component {
@@ -33,6 +34,8 @@ class Homepage extends Component {
               <FindEvents
                 events={this.props.events}
                 googleMap={this.props.googleMap}
+                setCurrentEvent={this.props.setCurrentEvent}
+                toggleEventDetails={this.props.toggleEventDetails}
               />
             </Tab>
             <Tab
@@ -65,6 +68,11 @@ class Homepage extends Component {
             />
           </div>
         </GridList>
+        <EventDetails
+          currentEventIndex={this.props.currentEventIndex}
+          showEventDetails={this.props.showEventDetails}
+          toggleEventDetails={this.props.toggleEventDetails}
+          events={this.props.events}/>
       </div>
     );
   }
@@ -92,6 +100,17 @@ const styles = {
   }
 };
 
+const mapStateToProps = (state) => {
+  return {
+    header: state.header,
+    createEventForm: state.createEventForm,
+    googleMap: state.googleMap,
+    events: state.events.allEvents,
+    currentEventIndex: state.eventDetails.currentEventIndex,
+    showEventDetails: state.eventDetails.showEventDetails,
+  };
+};
+
 const matchDispatchToProps = (dispatch) => {
   return bindActionCreators({
     addEvents: addEvents,
@@ -99,17 +118,10 @@ const matchDispatchToProps = (dispatch) => {
     changeCenter: changeCenter,
     changeHeader: changeHeader,
     setMarkers: setMarkers,
-    updateForm: updateForm
+    updateForm: updateForm,
+    toggleEventDetails: toggleEventDetails,
+    setCurrentEvent: setCurrentEvent
   }, dispatch);
-};
-
-const mapStateToProps = (state) => {
-  return {
-    header: state.header,
-    createEventForm: state.createEventForm,
-    googleMap: state.googleMap,
-    events: state.events.allEvents
-  };
 };
 
 export default connect(mapStateToProps, matchDispatchToProps)(Homepage);
