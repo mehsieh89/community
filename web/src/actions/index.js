@@ -26,13 +26,6 @@ export const changeCenter = (prop) => {
   };
 };
 
-export const setMarkers = (prop) => {
-  return {
-    type: 'SET_MARKERS',
-    payload: prop
-  };
-};
-
 export const addGeolocation = (prop) => {
   return {
     type: 'ADD_GEOLOCATION',

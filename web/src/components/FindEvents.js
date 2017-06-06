@@ -15,7 +15,6 @@ class FindEvents extends Component {
   }
 
   handleTileClick(i) {
-    console.log(i);
     this.props.setCurrentEvent(i);
     this.props.toggleEventDetails();
   }

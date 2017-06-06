@@ -2,7 +2,7 @@ import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { GridList, Tabs, Tab } from 'material-ui';
-import { changeHeader, updateForm, changeCenter, setMarkers, addGeolocation, addEvents, setCurrentEvent, toggleEventDetails } from '../actions';
+import { changeHeader, updateForm, changeCenter, addGeolocation, addEvents, setCurrentEvent, toggleEventDetails } from '../actions';
 import Header from '../components/Header';
 import CreateEventForm from '../components/CreateEventForm';
 import FindEvents from '../components/FindEvents';
@@ -46,7 +46,6 @@ class Homepage extends Component {
                 className="createEventForm"
                 createEventForm={this.props.createEventForm}
                 updateForm={this.props.updateForm}
-                setMarkers={this.props.setMarkers}
                 markers={this.props.googleMap.markers}
                 changeCenter={this.props.changeCenter}
                 addEvents={this.props.addEvents}
@@ -63,7 +62,8 @@ class Homepage extends Component {
               geolocation={this.props.googleMap.geolocation}
               googleMap={this.props.googleMap.center}
               markers={this.props.googleMap.markers}
-              setMarkers={this.props.setMarkers}
+              setCurrentEvent={this.props.setCurrentEvent}
+              toggleEventDetails={this.props.toggleEventDetails}
               style={styles.location}
             />
           </div>
@@ -117,7 +117,6 @@ const matchDispatchToProps = (dispatch) => {
     addGeolocation: addGeolocation,
     changeCenter: changeCenter,
     changeHeader: changeHeader,
-    setMarkers: setMarkers,
     updateForm: updateForm,
     toggleEventDetails: toggleEventDetails,
     setCurrentEvent: setCurrentEvent
