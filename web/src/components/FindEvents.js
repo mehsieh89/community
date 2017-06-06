@@ -8,15 +8,25 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 class FindEvents extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      tilesData: [],
-    };
     this.handleTileClick = this.handleTileClick.bind(this);
   }
 
   handleTileClick(i) {
     this.props.setCurrentEvent(i);
     this.props.toggleEventDetails();
+
+    axios.post('/api/retrieveParticipants', { eventId: this.props.events[i].id })
+    .then(res => { this.props.setCurrentEventParticipants(res.data); })
+    .catch(err => { console.log(err); });
+
+    axios.post('/api/connectEventToProfile', { eventId: this.props.events[i].id })
+    .then(res => {
+      this.props.disableButton({
+        attendDisabled: !!res.data.is_attending,
+        likeDisabled: !!res.data.liked
+      });
+    })
+    .catch(err => { console.log(err); });
   }
 
   render() {
@@ -31,7 +41,7 @@ class FindEvents extends Component {
               key={i}
               indexID={i}
               title={tile.event_name}
-              titleBackground="white"
+              titleBackground="linear-gradient(to top, rgba(127,0,255,0.7) 0%,rgba(127,0,255,0.3) 70%,rgba(127,0,255,0) 100%)"
               style={styles.tile}
               actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
               imageSRC={tile.image}

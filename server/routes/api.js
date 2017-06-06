@@ -99,5 +99,64 @@ router.route('/retrieveEvents')
     });
   });
 
+router.route('/connectEventToProfile')
+  .post((req, res) => {
+    let info = {
+      profile_id: req.session.passport.user,
+      event_id: req.body.eventId,
+    };
+    return models.Event_Profile.where(info).fetch()
+    .then(entry => {
+      if (!entry) {
+        return models.Event_Profile.forge(info).save();
+      } else {
+        return entry;
+      }
+    })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch(err => { res.send(err); });
+  });
+
+router.route('/attendEvent')
+  .post((req, res) => {
+    return db.knex('events_profiles')
+    .where({
+      profile_id: req.session.passport.user,
+      event_id: req.body.eventId
+    })
+    .update({ is_attending: true })
+    .then(() => { res.send('attended event'); })
+    .catch(err => { res.send(err); });
+  });
+
+router.route('/likeEvent')
+  .post((req, res) => {
+    return db.knex('events_profiles')
+    .where({
+      profile_id: req.session.passport.user,
+      event_id: req.body.eventId
+    })
+    .update({ liked: true })
+    .then(() => { res.send('liked event'); })
+    .catch(err => { res.send(err); });
+  });
+
+router.route('/retrieveParticipants')
+  .post((req, res) => {
+    return db.knex('events_profiles')
+    .where('event_id', '=', req.body.eventId)
+    .select('profile_id')
+    .then((data) => {
+      let ids = data.map(obj => obj.profile_id);
+      return db.knex.select('display', 'email').from('profiles')
+      .whereIn('id', ids);
+    })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch(err => { res.send(err); });
+  });
 
 module.exports = router;
