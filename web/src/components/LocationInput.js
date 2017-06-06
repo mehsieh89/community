@@ -38,18 +38,6 @@ export default class LocationInput extends Component {
   handleLocationSearch() {
     const lat = this.state.autoComplete[0].geometry.location.lat;
     const lng = this.state.autoComplete[0].geometry.location.lng;
-    const nextMarkers = [
-      ...this.props.markers,
-      {
-        position: {
-          lat: lat,
-          lng: lng,
-        },
-        defaultAnimation: 3,
-        key: Math.random(),
-      },
-    ];
-    this.props.setMarkers(nextMarkers);
     this.props.changeCenter({lat: lat, lng: lng});
     this.props.handleReverseGeoCode({lat: lat, lng: lng});
   }

@@ -34,62 +34,26 @@ class Gmap extends Component {
   }
 
   componentDidMount() {
-    const nextMarkers = [
-      ...this.props.markers,
-    ];
-    axios.get('/api/retrieveMarkers')
-    .then((res) => {
-      for (let i = 0; i < res.data.length; i++) {
-        let newMarker = {
-          position: {lat: Number(res.data[i].lat), lng: Number(res.data[i].lng)},
+    let context = this;
+    geolocation.getCurrentPosition((position) => {
+      return new Promise((resolve, reject) => {
+        resolve(this.setState({
+          center: {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          }
+        }));
+      })
+      .then(() => {
+        context.props.addGeolocation([{
+          position: {lat: this.state.center.lat, lng: this.state.center.lng},
           defaultAnimation: 3,
-        };
-        nextMarkers.push(newMarker);
-      }
-      this.props.setMarkers(nextMarkers);
-    })
-    .then(() => {
-      let context = this;
-      geolocation.getCurrentPosition((position) => {
-        return new Promise((resolve, reject) => {
-          resolve(this.setState({
-            center: {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            }
-          }));
-        })
-        .then(() => {
-          context.props.addGeolocation([{
-            position: {lat: this.state.center.lat, lng: this.state.center.lng},
-            defaultAnimation: 3,
-          }]);
-          context.props.changeCenter(this.state.center);
-        });
+        }]);
+        context.props.changeCenter(this.state.center);
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    })
-    .then(() => {
-      let context = this;
-      geolocation.getCurrentPosition((position) => {
-        return new Promise((resolve, reject) => {
-          resolve(this.setState({
-            center: {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            }
-          }));
-        })
-        .then(() => {
-          context.props.addGeolocation([{
-            position: {lat: this.state.center.lat, lng: this.state.center.lng},
-            defaultAnimation: 3,
-          }]);
-          context.props.changeCenter(this.state.center);
-        });
-      });
-    })
-    .catch((err) => {
-      console.log(err);
     });
   }
 
@@ -115,7 +79,12 @@ class Gmap extends Component {
   // }
 
   handleMarkerClick(targetMarker, index) {
-    console.log(index);
+    this.props.setCurrentEvent(index);
+    this.props.toggleEventDetails();
+    this.props.changeCenter({
+      lat: Number(targetMarker.lat),
+      lng: Number(targetMarker.lng)
+    });
   }
 
   // handleMarkerRightClick(targetMarker) {
@@ -175,7 +144,7 @@ class Gmap extends Component {
           setMarkers={this.props.setMarkers}
           changeCenter={this.props.changeCenter}
           handleReverseGeoCode={this.handleReverseGeoCode}
-          
+
           />
         <Map style={styles.container}
           containerElement={ <div className='map-container' style={styles.container}></div>}

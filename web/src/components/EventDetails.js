@@ -12,7 +12,6 @@ class EventDetails extends Component {
   }
 
   render() {
-    console.log('**********', this.props.currentEventIndex);
     let currentEvent = this.props.events[this.props.currentEventIndex];
 
     const actions = [
