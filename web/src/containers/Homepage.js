@@ -2,7 +2,7 @@ import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { GridList, Tabs, Tab } from 'material-ui';
-import { changeHeader, updateForm, changeCenter, addGeolocation, addEvents, setCurrentEvent, toggleEventDetails } from '../actions';
+import { changeHeader, updateForm, changeCenter, setMarkers, addGeolocation, addEvents, setCurrentEvent, toggleEventDetails, setCurrentEventParticipants, disableButton } from '../actions';
 import Header from '../components/Header';
 import CreateEventForm from '../components/CreateEventForm';
 import FindEvents from '../components/FindEvents';
@@ -36,6 +36,8 @@ class Homepage extends Component {
                 googleMap={this.props.googleMap}
                 setCurrentEvent={this.props.setCurrentEvent}
                 toggleEventDetails={this.props.toggleEventDetails}
+                setCurrentEventParticipants={this.props.setCurrentEventParticipants}
+                disableButton={this.props.disableButton}
               />
             </Tab>
             <Tab
@@ -69,9 +71,8 @@ class Homepage extends Component {
           </div>
         </GridList>
         <EventDetails
-          currentEventIndex={this.props.currentEventIndex}
-          showEventDetails={this.props.showEventDetails}
           toggleEventDetails={this.props.toggleEventDetails}
+          eventDetails={this.props.eventDetails}
           events={this.props.events}/>
       </div>
     );
@@ -106,8 +107,7 @@ const mapStateToProps = (state) => {
     createEventForm: state.createEventForm,
     googleMap: state.googleMap,
     events: state.events.allEvents,
-    currentEventIndex: state.eventDetails.currentEventIndex,
-    showEventDetails: state.eventDetails.showEventDetails,
+    eventDetails: state.eventDetails,
   };
 };
 
@@ -119,7 +119,9 @@ const matchDispatchToProps = (dispatch) => {
     changeHeader: changeHeader,
     updateForm: updateForm,
     toggleEventDetails: toggleEventDetails,
-    setCurrentEvent: setCurrentEvent
+    setCurrentEvent: setCurrentEvent,
+    setCurrentEventParticipants: setCurrentEventParticipants,
+    disableButton: disableButton
   }, dispatch);
 };
 
