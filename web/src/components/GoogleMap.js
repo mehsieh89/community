@@ -5,6 +5,7 @@ import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import LocationInput from './LocationInput';
 import LocationSearching from 'material-ui-icons/LocationSearching';
+import Autorenew from 'material-ui-icons/Autorenew';
 import Promise from 'bluebird';
 import React, { Component } from 'react';
 
@@ -37,6 +38,8 @@ class Gmap extends Component {
     this.handleMarkerClick = this.handleMarkerClick.bind(this);
     this.handleReverseGeoCode = this.handleReverseGeoCode.bind(this);
     this.recenter = this.recenter.bind(this);
+    this.onRefresh = this.onRefresh.bind(this);
+
   }
 
   componentDidMount() {
@@ -90,6 +93,13 @@ class Gmap extends Component {
     })
     .catch((err) => {
       console.log(err);
+    });
+  }
+
+  onRefresh() {
+    axios.get('/api/retrieveEvents')
+    .then((data) => {
+      this.props.addEvents(data.data);
     });
   }
 
@@ -151,6 +161,13 @@ class Gmap extends Component {
             color={'purple'}
           />
         </IconButton>
+        <IconButton style={styles.refresh}>
+          <Autorenew
+            onTouchTap={this.onRefresh}
+            touch={true}
+            color={'blue'}
+          />
+        </IconButton>
       </div>
     );
   }
@@ -170,6 +187,11 @@ const styles = {
     position: 'absolute',
     top: '112px',
     right: '0px'
+  },
+  refresh: {
+    position: 'absolute',
+    top: '150px',
+    right: '0px',
   }
 };
 
