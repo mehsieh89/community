@@ -110,7 +110,7 @@ router.route('/retrieveEvents')
 router.route('/connectEventToProfile')
   .post((req, res) => {
     let info = {
-      profile_id: req.session.passport.user,
+      profile_id: req.body.userId || req.session.passport.user,
       event_id: req.body.eventId,
     };
     return models.Event_Profile.where(info).fetch()
@@ -131,7 +131,7 @@ router.route('/attendEvent')
   .post((req, res) => {
     return db.knex('events_profiles')
     .where({
-      profile_id: req.session.passport.user,
+      profile_id: req.body.userId || req.session.passport.user,
       event_id: req.body.eventId
     })
     .update({ is_attending: true })
@@ -143,7 +143,7 @@ router.route('/likeEvent')
   .post((req, res) => {
     return db.knex('events_profiles')
     .where({
-      profile_id: req.session.passport.user,
+      profile_id: req.body.userId || req.session.passport.user,
       event_id: req.body.eventId
     })
     .update({ liked: true })

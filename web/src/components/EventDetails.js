@@ -16,7 +16,6 @@ class EventDetails extends Component {
   }
 
   handleAttend() {
-    this.setState({ attendDisabled: true });
     let currentEvent = this.props.events[this.props.eventDetails.currentEventIndex];
     axios.post('/api/attendEvent', { eventId: currentEvent.id })
     .then(res => {
@@ -27,7 +26,6 @@ class EventDetails extends Component {
   }
 
   handleLike() {
-    this.setState({ likeDisabled: true });
     let currentEvent = this.props.events[this.props.eventDetails.currentEventIndex];
     axios.post('/api/likeEvent', { eventId: currentEvent.id })
     .then(res => {
