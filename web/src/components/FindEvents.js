@@ -12,6 +12,9 @@ class FindEvents extends Component {
   }
 
   handleTileClick(i) {
+    const lat = this.props.events[i].lat;
+    const lng = this.props.events[i].lng;
+    this.props.changeCenter({lat: Number(lat), lng: Number(lng)});
     this.props.setCurrentEvent(i);
     this.props.toggleEventDetails();
 
