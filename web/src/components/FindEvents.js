@@ -19,7 +19,6 @@ class FindEvents extends Component {
     const lat = this.props.events[i].lat;
     const lng = this.props.events[i].lng;
     this.props.changeCenter({lat: Number(lat), lng: Number(lng)});
-
     this.props.setCurrentEventParticipants([]);
     this.props.setCurrentEvent(i);
     this.props.toggleEventDetails();
