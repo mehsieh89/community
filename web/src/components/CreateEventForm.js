@@ -131,24 +131,6 @@ class CreateEventForm extends Component {
       });
   }
 
-  clearForm() {
-    this.setState({
-      eventName: '',
-      date: null,
-      time: null,
-      location: '',
-      description: '',
-      category: 'select...',
-      dateTime: null,
-      eventNameError: null,
-      dateError: null,
-      timeError: null,
-      locationError: null,
-      categoryError: null,
-    });
-  }
-
-
   handleSubmit(e) {
     e.preventDefault();
 
