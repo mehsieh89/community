@@ -67,9 +67,10 @@ class EventDetails extends Component {
           modal={false}
           open={this.props.eventDetails.showEventDetails}
           onRequestClose={this.handleClose}
+          autoScrollBodyContent={true}
           >
           <div>
-            <img id="eventimage" style={styles.image} src={currentEvent.image} />
+            <img id="eventimage" style={styles.image} src={currentEvent.image} alt=''/>
           </div>
           <br />
             <p><strong>Time: </strong>{parsedTime}</p>

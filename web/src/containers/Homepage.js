@@ -38,6 +38,7 @@ class Homepage extends Component {
                 toggleEventDetails={this.props.toggleEventDetails}
                 setCurrentEventParticipants={this.props.setCurrentEventParticipants}
                 disableButton={this.props.disableButton}
+                changeCenter={this.props.changeCenter}
               />
             </Tab>
             <Tab
@@ -75,7 +76,8 @@ class Homepage extends Component {
           toggleEventDetails={this.props.toggleEventDetails}
           eventDetails={this.props.eventDetails}
           disableButton={this.props.disableButton}
-          events={this.props.events}/>
+          events={this.props.events}
+        />
       </div>
     );
   }
