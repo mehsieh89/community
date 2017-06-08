@@ -40,6 +40,7 @@ class Homepage extends Component {
                 disableButton={this.props.disableButton}
                 changeCenter={this.props.changeCenter}
                 addEvents={this.props.addEvents}
+
               />
             </Tab>
             <Tab
