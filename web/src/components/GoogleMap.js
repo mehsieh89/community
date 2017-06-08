@@ -80,6 +80,7 @@ class Gmap extends Component {
   handleMarkerClick(targetMarker, index) {
     this.props.setCurrentEvent(index);
     this.props.toggleEventDetails();
+    // this._mapComponent.panTo({lat: Number(targetMarker.lat), lng: Number(targetMarker.lng)});
     this.props.changeCenter({
       lat: Number(targetMarker.lat),
       lng: Number(targetMarker.lng)
@@ -111,7 +112,8 @@ class Gmap extends Component {
   }
 
   recenter() {
-    this.props.changeCenter(this.state.userLocation);
+    this._mapComponent.panTo({lat: this.state.userLocation.lat, lng: this.state.userLocation.lng});
+    // this.props.changeCenter(this.state.userLocation);
   }
 
   render () {
