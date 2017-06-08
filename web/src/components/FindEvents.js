@@ -38,13 +38,13 @@ class FindEvents extends Component {
         style={styles.container}
         containerStyle={styles.container}
       >
-        <GridList cellHeight={180} cols={2} style={styles.gridList}>
+        <GridList cellHeight={220} cols={2} style={styles.gridList}>
           {this.props.events.map((tile, i) => (
             <GridTileComponent
               key={i}
               indexID={i}
               title={tile.event_name}
-              titleBackground="linear-gradient(to top, rgba(127,0,255,0.7) 0%,rgba(127,0,255,0.3) 70%,rgba(127,0,255,0) 100%)"
+              titleBackground="linear-gradient(to top, rgba(94,53,177,0.7) 0%,rgba(94,53,177,0.3) 70%,rgba(94,53,177,0) 100%)"
               style={styles.tile}
               actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
               imageSRC={tile.image}
@@ -77,6 +77,7 @@ const styles = {
   },
   tile: {
     margin: 10,
+    width: 300
   }
 };
 

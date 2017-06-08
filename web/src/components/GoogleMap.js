@@ -39,7 +39,7 @@ class Gmap extends Component {
     this.handleReverseGeoCode = this.handleReverseGeoCode.bind(this);
     this.recenter = this.recenter.bind(this);
     this.onRefresh = this.onRefresh.bind(this);
-
+    // this.onMapClick = this.onMapClick.bind(this);
   }
 
   componentDidMount() {
@@ -96,6 +96,13 @@ class Gmap extends Component {
     });
   }
 
+  // onMapClick () {
+  //   this._mapComponent.panTo({lat: 37.821593, lng: -121.999961});
+  // }
+
+  //25.0330 lat
+  //121.5654 lng
+
   onRefresh() {
     axios.get('/api/retrieveEvents')
     .then((data) => {
@@ -113,6 +120,7 @@ class Gmap extends Component {
         ref={props.onMapLoad}
         zoom={14}
         center={this.props.center}
+        // onClick={this.onMapClick}
         >
         {this.props.events.map((marker, index) => (
           <Marker
