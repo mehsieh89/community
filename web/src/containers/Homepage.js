@@ -57,6 +57,7 @@ class Homepage extends Component {
           </Tabs>
           <div style={styles.style}>
             <Gmap
+              addEvents={this.props.addEvents}
               addGeolocation={this.props.addGeolocation}
               center={this.props.googleMap.center}
               changeCenter={this.props.changeCenter}
