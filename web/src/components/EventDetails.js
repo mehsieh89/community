@@ -88,8 +88,7 @@ const styles = {
   image: {
     width: 'auto',
     height: 'auto',
-    'max-width': 500,
-    'max-height': 500
+    'max-height': 250
   }
 };
 
