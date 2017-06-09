@@ -29,4 +29,5 @@ class GridTileComponent extends Component {
     );
   }
 }
+
 export default GridTileComponent;
