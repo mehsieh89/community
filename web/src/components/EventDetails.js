@@ -74,7 +74,6 @@ class EventDetails extends Component {
           modal={false}
           open={this.props.eventDetails.showEventDetails}
           onRequestClose={this.handleClose}
-          autoScrollBodyContent={true}
           >
             <Tabs
               // initialSelectedIndex={0}
@@ -127,8 +126,8 @@ const styles = {
   image: {
     width: 'auto',
     height: 'auto',
-    'max-height': 250,
-    'max-width': 300,
+    maxWidth: 300,
+    maxHeight: 350
   },
   chip: {
     margin: 4,
