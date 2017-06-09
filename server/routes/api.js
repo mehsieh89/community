@@ -107,6 +107,29 @@ router.route('/retrieveEvents')
     });
   });
 
+router.route('/retrieveCategoryEvents')
+  .get((req, res) => {
+    const category = req.query.query;
+    if (category === 'All') {
+      return db.knex.select().from('events')
+      .then((data) => {
+        res.json(data);
+      })
+      .catch((err) => {
+        res.send('error ' + err);
+      });
+    } else {
+      return db.knex.select().from('events')
+      .where({ category: category })
+      .then((data) => {
+        res.json(data);
+      })
+      .catch((err) => {
+        res.send('error ' + err);
+      });
+    }
+  });
+
 router.route('/connectEventToProfile')
   .post((req, res) => {
     let info = {

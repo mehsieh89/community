@@ -39,6 +39,7 @@ class Homepage extends Component {
                 setCurrentEventParticipants={this.props.setCurrentEventParticipants}
                 disableButton={this.props.disableButton}
                 changeCenter={this.props.changeCenter}
+                addEvents={this.props.addEvents}
               />
             </Tab>
             <Tab

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Card, Dialog, FlatButton, GridList, GridTile, IconButton, Subheader } from 'material-ui';
+import { Card, Dialog, FlatButton, GridList, GridTile, IconButton, Subheader, SelectField, MenuItem } from 'material-ui';
 import GridTileComponent from './GridTile.js';
 import Promise from 'bluebird';
 import React, { Component } from 'react';
@@ -8,7 +8,11 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 class FindEvents extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      value: 'Select Category...',
+    };
     this.handleTileClick = this.handleTileClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleTileClick(i) {
@@ -32,12 +36,35 @@ class FindEvents extends Component {
     .catch(err => { console.log(err); });
   }
 
+  handleChange(e) {
+    axios.get('/api/retrieveCategoryEvents?query=' + e.target.innerHTML)
+    .then((data) => {
+      this.props.addEvents(data.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
   render() {
     return (
       <Card
         style={styles.container}
         containerStyle={styles.container}
       >
+        <SelectField
+         floatingLabelText={this.state.value}
+         value={this.state.value}
+         onChange={this.handleChange}
+       >
+         <MenuItem value={7} primaryText="All" />
+         <MenuItem value={1} primaryText="Food" />
+         <MenuItem value={2} primaryText="Sports" />
+         <MenuItem value={3} primaryText="Outdoors" />
+         <MenuItem value={4} primaryText="Nightlife" />
+         <MenuItem value={5} primaryText="Games" />
+         <MenuItem value={6} primaryText="Other" />
+       </SelectField>
         <GridList cellHeight={220} cols={2} style={styles.gridList}>
           {this.props.events.map((tile, i) => (
             <GridTileComponent
