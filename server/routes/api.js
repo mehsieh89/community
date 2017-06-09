@@ -76,13 +76,17 @@ router.route('/reverseGeoCode')
 
 router.route('/locationInput')
   .post((req, res) => {
-    axios.get(GeoCodeURL + req.body.location + '&key=' + KEY)
-    .then((data) => {
-      res.send(data.data.results);
-    })
-    .catch((err) => {
-      res.send('error ' + err);
-    });
+    if (req.body.location === '') {
+      res.send([]);
+    } else {
+      axios.get(GeoCodeURL + req.body.location + '&key=' + KEY)
+      .then((data) => {
+        res.send(data.data.results);
+      })
+      .catch((err) => {
+        res.send('error ' + err);
+      });
+    }
   });
 
 router.route('/retrieveMarkers')
