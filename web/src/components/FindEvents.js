@@ -51,6 +51,16 @@ class FindEvents extends Component {
     });
   }
 
+  handleChange(e) {
+    axios.get('/api/retrieveCategoryEvents?query=' + e.target.innerHTML)
+    .then((data) => {
+      this.props.addEvents(data.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
   render() {
     return (
       <Card
