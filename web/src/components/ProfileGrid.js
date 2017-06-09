@@ -8,7 +8,6 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 class ProfileGrid extends Component {
   constructor(props) {
     super(props);
-<<<<<<< HEAD
     this.onGridClick = this.onGridClick.bind(this);
   }
 
@@ -35,8 +34,6 @@ class ProfileGrid extends Component {
       });
     })
     .catch(err => { console.log(err); });
-=======
->>>>>>> populate user profile
   }
 
   render() {
@@ -56,11 +53,7 @@ class ProfileGrid extends Component {
               actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
               imageSRC={tile.image}
               data={this.props.events}
-<<<<<<< HEAD
               onClick={() => this.onGridClick(i)}
-=======
-              onClick={() => console.log('clicked')}
->>>>>>> populate user profile
             >
             </GridTileComponent>
           ))}
