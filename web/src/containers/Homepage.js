@@ -2,7 +2,7 @@ import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { GridList, Tabs, Tab } from 'material-ui';
-import { changeHeader, updateForm, changeCenter, setMarkers, addGeolocation, addEvents, setCurrentEvent, toggleEventDetails, setCurrentEventParticipants, disableButton } from '../actions';
+import { changeHeader, updateForm, changeCenter, setMarkers, addGeolocation, addEvents, setCurrentEvent, toggleEventDetails, setCurrentEventParticipants, disableButton, incrementLikes, setCurrentEventLikes } from '../actions';
 import Header from '../components/Header';
 import CreateEventForm from '../components/CreateEventForm';
 import FindEvents from '../components/FindEvents';
@@ -40,6 +40,7 @@ class Homepage extends Component {
                 disableButton={this.props.disableButton}
                 changeCenter={this.props.changeCenter}
                 addEvents={this.props.addEvents}
+                setCurrentEventLikes={this.props.setCurrentEventLikes}
               />
             </Tab>
             <Tab
@@ -77,6 +78,7 @@ class Homepage extends Component {
           toggleEventDetails={this.props.toggleEventDetails}
           eventDetails={this.props.eventDetails}
           disableButton={this.props.disableButton}
+          incrementLikes={this.props.incrementLikes}
           events={this.props.events}
         />
       </div>
@@ -125,7 +127,9 @@ const matchDispatchToProps = (dispatch) => {
     toggleEventDetails: toggleEventDetails,
     setCurrentEvent: setCurrentEvent,
     setCurrentEventParticipants: setCurrentEventParticipants,
-    disableButton: disableButton
+    disableButton: disableButton,
+    setCurrentEventLikes: setCurrentEventLikes,
+    incrementLikes: incrementLikes
   }, dispatch);
 };
 

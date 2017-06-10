@@ -59,3 +59,16 @@ export const disableButton = (data) => {
     payload: data
   };
 };
+
+export const setCurrentEventLikes = (count) => {
+  return {
+    type: 'SET_CURRENT_EVENT_LIKES',
+    payload: count
+  };
+};
+
+export const incrementLikes = () => {
+  return {
+    type: 'INCREMENT_LIKES',
+  };
+};

@@ -31,6 +31,7 @@ class EventDetails extends Component {
     .then(res => {
       console.log(res.data);
       this.props.disableButton({ likeDisabled: true });
+      this.props.incrementLikes();
     })
     .catch(err => { console.log(err); });
   }
@@ -78,6 +79,7 @@ class EventDetails extends Component {
             <p><strong>Description: </strong>{currentEvent.description}</p>
             <p><strong>Category: </strong>{currentEvent.category}</p>
             <p><strong>Participants: </strong>{participants}</p>
+            <p><strong>Likes: </strong>{this.props.eventDetails.likeCount}</p>
         </Dialog>
       );
     } else { return null; }
