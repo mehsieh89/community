@@ -4,6 +4,7 @@ import { deepOrange500 } from 'material-ui/styles/colors';
 import { getMuiTheme, MuiThemeProvider } from 'material-ui/styles';
 import Homepage from './containers/Homepage';
 import Profile from './containers/Profile';
+import Login from './containers/Login';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { Provider } from 'react-redux';
 import React from 'react';
@@ -41,4 +42,13 @@ if (document.getElementById('profile')) {
         <Profile />
       </MuiThemeProvider>
     </Provider>, document.getElementById('profile'));
+}
+
+if (document.getElementById('login')) {
+  ReactDOM.render(
+    <Provider store={store} >
+      <MuiThemeProvider muiTheme={muiTheme} fontFamily={'Vibur'}>
+        <Login />
+      </MuiThemeProvider>
+    </Provider>, document.getElementById('login'));
 }

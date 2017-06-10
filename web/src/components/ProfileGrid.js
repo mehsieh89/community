@@ -74,20 +74,19 @@ const styles = {
     fontSize: '20px'
   },
   gridList: {
-    display: 'flex',
+    // display: 'flex',
     flexWrap: 'nowrap',
     flexDirection: 'row',
     width: 1150,
     height: 200,
     overflowX: 'auto',
-    padding: 10
-    // marginLeft: 10,
+    padding: 10,
+    alignItems: 'left'
   },
   tile: {
     margin: 10,
     width: 280,
     height: 180,
-    color: 'rgb(0, 188, 212)',
   },
 };
 
