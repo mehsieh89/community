@@ -174,7 +174,22 @@ router.route('/likeEvent')
       event_id: req.body.eventId
     })
     .update({ liked: true })
-    .then(() => { res.send('liked event'); })
+    .then(() => {
+      res.send('liked event');
+    })
+    .catch(err => { res.send(err); });
+  });
+
+router.route('/countLikes')
+  .post((req, res) => {
+    let options = {
+      event_id: req.body.eventId,
+      liked: true
+    };
+    return models.Event_Profile.where(options).count()
+    .then((data) => {
+      res.send(data);
+    })
     .catch(err => { res.send(err); });
   });
 

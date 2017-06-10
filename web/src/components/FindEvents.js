@@ -19,19 +19,10 @@ class FindEvents extends Component {
     const lat = this.props.events[i].lat;
     const lng = this.props.events[i].lng;
     this.props.changeCenter({lat: Number(lat), lng: Number(lng)});
+
     this.props.setCurrentEventParticipants([]);
     this.props.setCurrentEvent(i);
     this.props.toggleEventDetails();
-
-    axios.post('/api/retrieveParticipants', { eventId: this.props.events[i].id })
-    .then(res => {
-      // let participants = res.data.filter(entry => entry.is_attending).map(entry => {
-      //   return { display: entry.profile.display, email: entry.profile.email };
-      // });
-      // console.log(participants);
-      this.props.setCurrentEventParticipants(res.data);
-    })
-    .catch(err => { console.log(err); });
 
     axios.post('/api/connectEventToProfile', { eventId: this.props.events[i].id })
     .then(res => {
@@ -40,6 +31,14 @@ class FindEvents extends Component {
         likeDisabled: !!res.data.liked
       });
     })
+    .catch(err => { console.log(err); });
+
+    axios.post('/api/retrieveParticipants', { eventId: this.props.events[i].id })
+    .then(res => { this.props.setCurrentEventParticipants(res.data); })
+    .catch(err => { console.log(err); });
+
+    axios.post('/api/countLikes', { eventId: this.props.events[i].id })
+    .then(res => { this.props.setCurrentEventLikes(res.data); })
     .catch(err => { console.log(err); });
   }
 
@@ -59,19 +58,23 @@ class FindEvents extends Component {
         style={styles.container}
         containerStyle={styles.container}
       >
-        <SelectField
-         floatingLabelText={this.state.value}
-         value={this.state.value}
-         onChange={this.handleChange}
-       >
-         <MenuItem value={7} primaryText="All" />
-         <MenuItem value={1} primaryText="Food" />
-         <MenuItem value={2} primaryText="Sports" />
-         <MenuItem value={3} primaryText="Outdoors" />
-         <MenuItem value={4} primaryText="Nightlife" />
-         <MenuItem value={5} primaryText="Games" />
-         <MenuItem value={6} primaryText="Other" />
-       </SelectField>
+        <div>
+          <SelectField
+            floatingLabelText={this.state.value}
+            value={this.state.value}
+            onChange={this.handleChange}
+            style={styles.dropdown}
+            >
+            <MenuItem value={7} primaryText="All" />
+            <MenuItem value={1} primaryText="Food" />
+            <MenuItem value={2} primaryText="Sports" />
+            <MenuItem value={3} primaryText="Outdoors" />
+            <MenuItem value={4} primaryText="Nightlife" />
+            <MenuItem value={5} primaryText="Games" />
+            <MenuItem value={6} primaryText="Other" />
+          </SelectField>
+          <br />
+        </div>
         <GridList cellHeight={220} cols={2} style={styles.gridList}>
           {this.props.events.map((tile, i) => (
             <GridTileComponent
@@ -111,7 +114,10 @@ const styles = {
   },
   tile: {
     margin: 10,
-    width: 300
+    width: 270
+  },
+  dropdown: {
+    width: 350
   }
 };
 
