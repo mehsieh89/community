@@ -43,7 +43,7 @@ class Profile extends Component {
         <Header header={this.props.header}/>
         <Card style={styles.container} >
           <div style={styles.welcome} >Welcome, {JSON.parse(window.user).first}</div>
-          <div style={styles.heading} >Upcoming Events:</div>
+          <h3 style={styles.heading} >Upcoming Events:</h3>
           <ProfileGrid events={this.state.upcomingEvents}
             setCurrentEvent={this.props.setCurrentEvent}
             eventDetails={this.props.eventDetails}
@@ -52,14 +52,13 @@ class Profile extends Component {
             setCurrentEventParticipants={this.props.setCurrentEventParticipants}
           />
           <br />
-          <div style={styles.heading} >Past Events:</div>
+          <h3 style={styles.heading} >Past Events:</h3>
           <ProfileGrid events={this.state.pastEvents}
             setCurrentEvent={this.props.setCurrentEvent}
             eventDetails={this.props.eventDetails}
             toggleEventDetails={this.props.toggleEventDetails}
             disableButton={this.props.disableButton}
             setCurrentEventParticipants={this.props.setCurrentEventParticipants}
-
           />
         </Card>
         <EventDetails
@@ -76,15 +75,15 @@ class Profile extends Component {
 const styles = {
   container: {
     margin: 10,
-    padding: 20
+    padding: 10
   },
   welcome: {
-    fontSize: 30,
+    fontSize: 20,
     fontFamily: 'Vibur',
     align: 'center'
   },
   heading: {
-    fontSize: 25,
+    fontSize: 20,
     fontFamily: 'Vibur'
   }
 };

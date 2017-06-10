@@ -10,6 +10,7 @@ class FindEvents extends Component {
     super(props);
     this.state = {
       value: 'Select Category...',
+      category: 'All'
     };
     this.handleTileClick = this.handleTileClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -43,6 +44,7 @@ class FindEvents extends Component {
   }
 
   handleChange(e) {
+    this.setState({ category: e.target.innerHTML });
     axios.get('/api/retrieveCategoryEvents?query=' + e.target.innerHTML)
     .then((data) => {
       this.props.addEvents(data.data);
@@ -71,17 +73,17 @@ class FindEvents extends Component {
         <div>
           <SelectField
             floatingLabelText={this.state.value}
-            value={this.state.value}
+            value={this.state.category}
             onChange={this.handleChange}
             style={styles.dropdown}
             >
-            <MenuItem value={7} primaryText="All" />
-            <MenuItem value={1} primaryText="Food" />
-            <MenuItem value={2} primaryText="Sports" />
-            <MenuItem value={3} primaryText="Outdoors" />
-            <MenuItem value={4} primaryText="Nightlife" />
-            <MenuItem value={5} primaryText="Games" />
-            <MenuItem value={6} primaryText="Other" />
+            <MenuItem value="All" primaryText="All" />
+            <MenuItem value="Food" primaryText="Food" />
+            <MenuItem value="Sports" primaryText="Sports" />
+            <MenuItem value="Outdoors" primaryText="Outdoors" />
+            <MenuItem value="Nightlife" primaryText="Nightlife" />
+            <MenuItem value="Games" primaryText="Games" />
+            <MenuItem value="Other" primaryText="Other" />
           </SelectField>
           <br />
         </div>
