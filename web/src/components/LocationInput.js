@@ -3,8 +3,6 @@ import axios from 'axios';
 import Promise from 'bluebird';
 import React, { Component } from 'react';
 
-const GeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
-
 export default class LocationInput extends Component {
   constructor(props) {
     super(props);
@@ -36,10 +34,20 @@ export default class LocationInput extends Component {
   }
 
   handleLocationSearch() {
-    const lat = this.state.autoComplete[0].geometry.location.lat;
-    const lng = this.state.autoComplete[0].geometry.location.lng;
-    this.props.changeCenter({lat: lat, lng: lng});
-    this.props.handleReverseGeoCode({lat: lat, lng: lng});
+    this.setState({
+      autoComplete: [],
+    });
+    const string = this.state.location.split(' ').join('+');
+    axios.post('/api/locationInput', {location: string})
+    .then((res) => {
+      const lat = res.data[0].geometry.location.lat;
+      const lng = res.data[0].geometry.location.lng;
+      this.props.changeCenter({lat: lat, lng: lng});
+      this.props.handleReverseGeoCode({lat: lat, lng: lng});
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   handleLocationInput(location) {
