@@ -19,9 +19,8 @@ class FindEvents extends Component {
     const lat = this.props.events[i].lat;
     const lng = this.props.events[i].lng;
     this.props.changeCenter({lat: Number(lat), lng: Number(lng)});
-
     this.props.setCurrentEventParticipants([]);
-    this.props.setCurrentEvent(i);
+    this.props.setCurrentEvent(this.props.events[i]);
     this.props.toggleEventDetails();
 
     axios.post('/api/connectEventToProfile', { eventId: this.props.events[i].id })
@@ -40,6 +39,16 @@ class FindEvents extends Component {
     axios.post('/api/countLikes', { eventId: this.props.events[i].id })
     .then(res => { this.props.setCurrentEventLikes(res.data); })
     .catch(err => { console.log(err); });
+  }
+
+  handleChange(e) {
+    axios.get('/api/retrieveCategoryEvents?query=' + e.target.innerHTML)
+    .then((data) => {
+      this.props.addEvents(data.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   handleChange(e) {
