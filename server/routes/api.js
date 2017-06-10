@@ -193,7 +193,6 @@ router.route('/countLikes')
     .catch(err => { res.send(err); });
   });
 
-
 // router.route('/retrieveParticipants')
 //   .post((req, res) => {
 //     models.Event_Profile.where({profile_id: req.body.eventId}).fetchAll({withRelated: ['profile']})
