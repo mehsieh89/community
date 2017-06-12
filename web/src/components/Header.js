@@ -56,7 +56,6 @@ class Header extends Component {
             </IconButton>}
           onLeftIconButtonTouchTap={this.toggleDrawer}
           docked={true}
-          // iconStyleLeft={{icon: {tintColor: '#3EB1E0'}}}
         />
           <Drawer
             open={this.state.open}
