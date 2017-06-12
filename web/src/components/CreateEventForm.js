@@ -292,7 +292,7 @@ const styles = {
     marginTop: '20px'
   },
   buttonLabel: {
-    fontFamily: 'Vibur',
+    fontFamily: 'Roboto',
     fontSize: '18px',
     color: '#5E35B1',
     textTransform: 'capitalize',
@@ -309,7 +309,7 @@ const styles = {
     alignSelf: 'center'
   },
   text: {
-    fontFamily: 'Vibur',
+    fontFamily: 'Roboto',
     fontSize: '18px',
   },
   image: {

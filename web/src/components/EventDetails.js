@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dialog, FlatButton, RaisedButton } from 'material-ui';
+import { Dialog, FlatButton, RaisedButton, Avatar, Chip } from 'material-ui';
 import axios from 'axios';
 import moment from 'moment';
 
@@ -59,7 +59,7 @@ class EventDetails extends Component {
 
     if (currentEvent) {
       let parsedTime = moment(currentEvent.time).format('MMMM Do YYYY, h:mm a') + ' (' + moment(currentEvent.time).fromNow() + ')';
-      let participants = this.props.eventDetails.participants.map(obj => obj.display).join(', ');
+      let participants = this.props.eventDetails.participants;
 
       return (
         <Dialog
@@ -68,17 +68,31 @@ class EventDetails extends Component {
           modal={false}
           open={this.props.eventDetails.showEventDetails}
           onRequestClose={this.handleClose}
+          autoScrollBodyContent={true}
           >
-          <div>
-            <img id="eventimage" style={styles.image} src={currentEvent.image} />
+          <div style={styles.left}>
+            <img id="eventimage" style={styles.image} src={currentEvent.image} alt=''/>
           </div>
-          <br />
+          <div style={styles.right}>
+            <img src="https://image.flaticon.com/icons/png/128/148/148836.png" width='20' alt="likes" />
+            {this.props.eventDetails.likeCount}
             <p><strong>Time: </strong>{parsedTime}</p>
             <p><strong>Location: </strong>{currentEvent.location}</p>
             <p><strong>Description: </strong>{currentEvent.description}</p>
             <p><strong>Category: </strong>{currentEvent.category}</p>
-            <p><strong>Participants: </strong>{participants}</p>
-            <p><strong>Likes: </strong>{this.props.eventDetails.likeCount}</p>
+            <p><strong>Participants: </strong>
+            {participants.map(participant => {
+              return (
+                <div style={styles.wrapper}>
+                  <Chip onTouchTap={() => console.log('clicked')} style={styles.chip} >
+                    <Avatar src={participant.profile_picture} size={50} />
+                    {participant.display}
+                  </Chip>
+                </div>
+              );
+            })}
+            </p>
+          </div>
         </Dialog>
       );
     } else { return null; }
@@ -86,12 +100,21 @@ class EventDetails extends Component {
 }
 
 const styles = {
+  left: { float: 'left' },
+  right: { float: 'left', paddingLeft: 7 },
   image: {
     width: 'auto',
     height: 'auto',
-    maxWidth: 300,
-    maxHeight: 350
-  }
+    'max-height': 250,
+    'max-width': 300,
+  },
+  chip: {
+    margin: 4,
+  },
+  wrapper: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
 };
 
 export default EventDetails;

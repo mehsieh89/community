@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Card } from 'material-ui';
+import { Card, Avatar } from 'material-ui';
 import { addEvents, setCurrentEvent, toggleEventDetails, setCurrentEventParticipants, disableButton } from '../actions';
 import Header from '../components/Header';
 import ProfileGrid from '../components/ProfileGrid';
@@ -43,6 +43,7 @@ class Profile extends Component {
         <Header header={this.props.header}/>
         <Card style={styles.container} >
           <div style={styles.welcome} >Welcome, {JSON.parse(window.user).first}</div>
+          <Avatar src={JSON.parse(window.user).profile_picture} size={100} />
           <h3 style={styles.heading} >Upcoming Events:</h3>
           <ProfileGrid events={this.state.upcomingEvents}
             setCurrentEvent={this.props.setCurrentEvent}
@@ -79,12 +80,12 @@ const styles = {
   },
   welcome: {
     fontSize: 20,
-    fontFamily: 'Vibur',
+    fontFamily: 'Roboto',
     align: 'center'
   },
   heading: {
     fontSize: 20,
-    fontFamily: 'Vibur'
+    fontFamily: 'Roboto'
   }
 };
 

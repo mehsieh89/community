@@ -48,7 +48,7 @@ class ProfileGrid extends Component {
               key={i}
               indexID={i}
               title={tile.event_name}
-              titleBackground="linear-gradient(to top, rgba(127,0,255,0.7) 0%,rgba(127,0,255,0.3) 70%,rgba(127,0,255,0) 100%)"
+              // titleBackground="linear-gradient(to top, rgba(127,0,255,0.7) 0%,rgba(127,0,255,0.3) 70%,rgba(127,0,255,0) 100%)"
               style={styles.tile}
               actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
               imageSRC={tile.image}
@@ -70,7 +70,7 @@ const styles = {
     justifyContent: 'space-around',
   },
   theme: {
-    fontFamily: 'Vibur',
+    fontFamily: 'Roboto',
     fontSize: '20px'
   },
   gridList: {

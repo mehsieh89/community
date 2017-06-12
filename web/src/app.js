@@ -21,7 +21,7 @@ const muiTheme = getMuiTheme({
 
 const styles = {
   theme: {
-    fontFamily: 'Vibur'
+    fontFamily: 'Roboto'
   }
 };
 
@@ -29,7 +29,7 @@ injectTapEventPlugin();
 if (document.getElementById('root')) {
   ReactDOM.render(
     <Provider store={store} >
-      <MuiThemeProvider muiTheme={muiTheme} fontFamily={'Vibur'}>
+      <MuiThemeProvider muiTheme={muiTheme} fontFamily={'Roboto'}>
         <Homepage />
       </MuiThemeProvider>
     </Provider>, document.getElementById('root'));
@@ -38,7 +38,7 @@ if (document.getElementById('root')) {
 if (document.getElementById('profile')) {
   ReactDOM.render(
     <Provider store={store} >
-      <MuiThemeProvider muiTheme={muiTheme} fontFamily={'Vibur'}>
+      <MuiThemeProvider muiTheme={muiTheme} fontFamily={'Roboto'}>
         <Profile />
       </MuiThemeProvider>
     </Provider>, document.getElementById('profile'));
@@ -47,7 +47,7 @@ if (document.getElementById('profile')) {
 if (document.getElementById('login')) {
   ReactDOM.render(
     <Provider store={store} >
-      <MuiThemeProvider muiTheme={muiTheme} fontFamily={'Vibur'}>
+      <MuiThemeProvider muiTheme={muiTheme} fontFamily={'Roboto'}>
         <Login />
       </MuiThemeProvider>
     </Provider>, document.getElementById('login'));

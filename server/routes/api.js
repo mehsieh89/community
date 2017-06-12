@@ -219,7 +219,7 @@ router.route('/retrieveParticipants')
     .select('profile_id')
     .then((data) => {
       let ids = data.map(obj => obj.profile_id);
-      return db.knex.select('display', 'email').from('profiles')
+      return db.knex.select('display', 'email', 'profile_picture').from('profiles')
       .whereIn('id', ids);
     })
     .then((data) => {
