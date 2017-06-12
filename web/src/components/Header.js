@@ -92,7 +92,7 @@ const styles = {
     fontSize: '34px'
   },
   theme: {
-    backgroundColor: '#5E35B1',
+    backgroundColor: '#3EB1E0',
   }
 };
 

@@ -75,16 +75,17 @@ export default class LocationInput extends Component {
           filter={filter}
           name="address"
           onUpdateInput={this.handleChange}
-          placeholder={'Search Location'}
+          hintText='Search Location'
+          hintStyle={{color: '#458fb4'}}
           textFieldStyle={styles.location}
           underlineStyle={styles.underline}
           value={this.state.location}
         />
         <RaisedButton
-          label="Search"
+          label="SEARCH"
           onTouchTap={this.handleLocationSearch}
           labelStyle={styles.buttonLabel}
-          labelColor={'#5E35B1'}
+          labelColor={'#3EB1E0'}
           style={styles.button}
         />
       </Card>
@@ -94,21 +95,22 @@ export default class LocationInput extends Component {
 
 const styles = {
   button: {
-    border: '1px solid #5E35B1',
+    border: '1px solid #3EB1E0',
     borderRadius: '10px',
     marginLeft: '18px',
     float: 'right',
-    marginRight: '10'
+    marginRight: '10',
+    marginTop: '3',
   },
   buttonLabel: {
     fontFamily: 'Roboto',
-    fontSize: '18px',
+    fontSize: '14px',
     textTransform: 'capitalize',
   },
   location: {
-    borderColor: '#5E35B1',
+    borderColor: '#3EB1E0',
     fontFamily: 'Roboto',
-    fontSize: '20px',
+    fontSize: '16px',
     marginLeft: '8px',
     marginRight: '8px',
     width: '530'

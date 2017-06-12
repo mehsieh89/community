@@ -233,7 +233,7 @@ router.route('/retrieveParticipants')
   });
 
 router.route('/retrieveUserEvents')
-  .get((req, res) => {
+  .post((req, res) => {
     let options = {
       profile_id: req.body.profileId || req.session.passport.user,
       is_attending: true
