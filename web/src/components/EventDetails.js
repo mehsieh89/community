@@ -74,6 +74,7 @@ class EventDetails extends Component {
           modal={false}
           open={this.props.eventDetails.showEventDetails}
           onRequestClose={this.handleClose}
+          autoScrollBodyContent={true}
           >
             <Tabs
               // initialSelectedIndex={0}
