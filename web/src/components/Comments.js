@@ -2,11 +2,6 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { RaisedButton, TextField } from 'material-ui';
 import react_time_ago from 'react-time-ago';
-// import javascript_time_ago from 'javascript-time-ago';
-// javascript_time_ago.locale(require('javascript-time-ago/locales/en'));
-// import ReactTimeAgo from 'react-time-ago';
-// require('javascript-time-ago/intl-messageformat-global');
-// require('intl-messageformat/dist/locale-data/en');
 import moment from 'moment';
 
 class Comments extends Component {
@@ -26,7 +21,6 @@ class Comments extends Component {
   componentDidMount() {
     axios.get('/api/retrieveComments?event_id=' + this.props.eventDetails.currentEvent.id)
     .then(comments => {
-      // console.log('Comments === ', comments)
       const commentsArray = comments.data.map(comment => {
         return {
           username: comment.username,
@@ -37,11 +31,8 @@ class Comments extends Component {
       .sort((latest, oldest) => {
         return new Date(oldest.createdAt) - new Date(latest.createdAt);
       });
-      // .then(() =>)
 
-      this.setState({comments: commentsArray})
-      // console.log('state right now ??? === ', this.state )
-      // console.log('ALL COMMENTS ? === ', commentsArray);
+      this.setState({comments: commentsArray});
     });
   }
 
@@ -54,15 +45,16 @@ class Comments extends Component {
   // handleRefresh() {
   //
   // }
-
   handleSubmit(event) {
     event.preventDefault();
     axios.post('/api/comments', {
       text: this.state.text,
       event_id: this.props.eventDetails.currentEvent.id,
       profile_id: null
+    })
+    .then(() => {
+      this.clearText();
     });
-    this.clearText();
   }
 
   clearText() {
@@ -71,9 +63,7 @@ class Comments extends Component {
     });
   }
 
-
   render() {
-    // console.log('current state === ', this.state)
     return (
       <div>
         <form>
@@ -82,32 +72,38 @@ class Comments extends Component {
             name="name"
             onChange={this.handleChange}
             style={styles.inputField}
+            value={this.state.text}
           />
+          {this.state.text === '' ?
+          <RaisedButton
+            label="Comment"
+            labelColor={'#5E35B1'}
+            onTouchTap={this.handleSubmit}
+            style={styles.button}
+            disabled='true'
+          />
+          :
           <RaisedButton
             label="Comment"
             labelColor={'#5E35B1'}
             onTouchTap={this.handleSubmit}
             style={styles.button}
           />
+          }
         </form>
         <div>
           {this.state.comments.map(comment => (
           <div style={styles.container}>
-            <div class="colLeft">
-              <strong>{comment.username}</strong> {moment(comment.createdAt).fromNow()}
+            <div style={styles.colLeft}>
+              <strong>{comment.username}</strong>
             </div>
-            <div class="comment">
+            <div style={styles.time}>
+              {moment(comment.createdAt).fromNow()}
+            </div>
+            <div style={styles.comment}>
               {comment.comment}
             </div>
         </div>
-          //   <p style={styles.container}>
-          //  <strong>{comment.username} </strong> {comment.comment} {' '}
-          //   <ReactTimeAgo
-          //    locale='en-GB'
-          //    timeStyle='twitter'
-          //  >{comment.createdAt}
-          //  </ReactTimeAgo>
-          // </p>
          ))}
         </div>
       </div>
@@ -117,7 +113,7 @@ class Comments extends Component {
 
 // FIX COMMENT CHARACTERS IN THE DB TO A 100
 // Dont allow users to hit submit on a comment if the comment is zero
-// Format date and display
+// clearText upon submit
 
 const styles = {
   container: {
@@ -148,16 +144,17 @@ const styles = {
   },
   colLeft: {
     float: 'left',
-    width: '33%'
-  },
-  colRright: {
-    float: 'right',
-    width: '33%',
   },
   comment: {
     display: 'inline-block',
-    width: '33%',
-    marginTop: '5',
+    width: '550',
+    marginTop: '10',
+    wordWrap: 'normal',
+  },
+  time: {
+    float: 'right',
+    display: 'inline-block',
+
   }
 };
 
