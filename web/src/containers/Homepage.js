@@ -109,8 +109,8 @@ const styles = {
     height: '100%',
   },
   theme: {
-    borderColor: '#5E35B1',
-    backgroundColor: '#D1C4E9',
+    borderColor: '#3EB1E0',
+    backgroundColor: '#edca24',
     fontFamily: 'Roboto',
     borderRightStyle: 'dotted',
     borderWidth: '1px',

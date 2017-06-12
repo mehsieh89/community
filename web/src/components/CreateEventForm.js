@@ -284,15 +284,15 @@ class CreateEventForm extends Component {
 
 const styles = {
   button: {
-    border: '1px solid #5E35B1',
+    border: '1px solid #3EB1E0',
     borderRadius: '10px',
     backgroundColor: 'white',
     marginTop: '20px'
   },
   buttonLabel: {
     fontFamily: 'Roboto',
-    fontSize: '18px',
-    color: '#5E35B1',
+    fontSize: '14px',
+    color: '#3EB1E0',
     textTransform: 'capitalize',
   },
   container: {

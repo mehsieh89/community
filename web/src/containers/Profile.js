@@ -18,7 +18,7 @@ class Profile extends Component {
   }
 
   componentWillMount() {
-    axios.get('/api/retrieveUserEvents')
+    axios.post('/api/retrieveUserEvents')
     .then((res) => {
       let parsed = res.data.map(entry => entry.event);
       let now = new Date();
