@@ -127,6 +127,15 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
   },
+  theme: {
+    backgroundColor: '#D1C4E9',
+  },
+  leftTab: {
+    backgroundColor: '#D1C4E9',
+    borderColor: '#5E35B1',
+    borderRightStyle: 'dotted',
+    borderWidth: '1px',
+  }
 };
 
 export default EventDetails;
