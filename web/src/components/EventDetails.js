@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dialog, FlatButton, RaisedButton, Avatar, Chip } from 'material-ui';
+import { Dialog, FlatButton, RaisedButton, Avatar, Chip, Tabs, Tab } from 'material-ui';
 import axios from 'axios';
 import moment from 'moment';
 import Comments from './Comments';
@@ -71,30 +71,40 @@ class EventDetails extends Component {
           onRequestClose={this.handleClose}
           autoScrollBodyContent={true}
           >
-          <div style={styles.left}>
-            <img id="eventimage" style={styles.image} src={currentEvent.image} alt=''/>
-          </div>
-          <div style={styles.right}>
-            <img src="https://image.flaticon.com/icons/png/128/148/148836.png" width='20' alt="likes" />
-            {this.props.eventDetails.likeCount}
-            <p><strong>Time: </strong>{parsedTime}</p>
-            <p><strong>Location: </strong>{currentEvent.location}</p>
-            <p><strong>Description: </strong>{currentEvent.description}</p>
-            <p><strong>Category: </strong>{currentEvent.category}</p>
-            <p><strong>Participants: </strong>
-            {participants.map(participant => {
-              return (
-                <div style={styles.wrapper}>
-                  <Chip onTouchTap={() => console.log('clicked')} style={styles.chip} >
-                    <Avatar src={participant.profile_picture} size={50} />
-                    {participant.display}
-                  </Chip>
+            <Tabs>
+              <Tab
+                label="Event Details"
+              >
+                <div style={styles.left}>
+                  <img id="eventimage" style={styles.image} src={currentEvent.image} alt=''/>
                 </div>
-              );
-            })}
-            </p>
-          </div>
-            <Comments {...this.props}/>
+                <div style={styles.right}>
+                  <img src="https://image.flaticon.com/icons/png/128/148/148836.png" width='20' alt="likes" />
+                  {this.props.eventDetails.likeCount}
+                  <p><strong>Time: </strong>{parsedTime}</p>
+                  <p><strong>Location: </strong>{currentEvent.location}</p>
+                  <p><strong>Description: </strong>{currentEvent.description}</p>
+                  <p><strong>Category: </strong>{currentEvent.category}</p>
+                  <p><strong>Participants: </strong>
+                  {participants.map(participant => {
+                    return (
+                      <div style={styles.wrapper}>
+                        <Chip onTouchTap={() => console.log('clicked')} style={styles.chip} >
+                          <Avatar src={participant.profile_picture} size={50} />
+                          {participant.display}
+                        </Chip>
+                      </div>
+                    );
+                  })}
+                  </p>
+                </div>
+              </Tab>
+              <Tab
+                label="Event Comments"
+              >
+                <Comments {...this.props}/>
+              </Tab>
+            </Tabs>
         </Dialog>
       );
     } else { return null; }
