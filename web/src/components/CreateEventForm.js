@@ -258,11 +258,9 @@ class CreateEventForm extends Component {
         <div>
           <input type="file" id="imageupload" accept="image/*" onChange={this.showAddImageButton}/>
           {this.state.choseImage ?
-          <RaisedButton
-            label="Add Event Image"
-            labelColor={'#5E35B1'}
-            onTouchTap={this.addImage}
-          /> : null}
+          <button onClick={this.addImage}>
+            Add Event Image
+          </button> : null}
         </div>
         <div>
           {this.state.hasImage ?
@@ -292,7 +290,7 @@ const styles = {
     marginTop: '20px'
   },
   buttonLabel: {
-    fontFamily: 'Vibur',
+    fontFamily: 'Roboto',
     fontSize: '18px',
     color: '#5E35B1',
     textTransform: 'capitalize',
@@ -309,7 +307,7 @@ const styles = {
     alignSelf: 'center'
   },
   text: {
-    fontFamily: 'Vibur',
+    fontFamily: 'Roboto',
     fontSize: '18px',
   },
   image: {

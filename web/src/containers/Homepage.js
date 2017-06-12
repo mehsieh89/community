@@ -111,12 +111,12 @@ const styles = {
   theme: {
     borderColor: '#5E35B1',
     backgroundColor: '#D1C4E9',
-    fontFamily: 'Vibur',
+    fontFamily: 'Roboto',
     borderRightStyle: 'dotted',
     borderWidth: '1px',
   },
   location: {
-    fontFamily: 'Vibur'
+    fontFamily: 'Roboto'
   }
 };
 

@@ -116,7 +116,7 @@ const styles = {
     height: '100%'
   },
   theme: {
-    fontFamily: 'Vibur',
+    fontFamily: 'Roboto',
     fontSize: '20px'
   },
   gridList: {

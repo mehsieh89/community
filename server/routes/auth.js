@@ -17,7 +17,8 @@ router.route('/mobileFBLogin')
       },
       displayName: req.body.name,
       emails: [{value: req.body.email}],
-      id: req.body.id
+      id: req.body.id,
+      photos: [{value: req.body.picture.data.url}],
     };
 
     const cb = (err, data) => {

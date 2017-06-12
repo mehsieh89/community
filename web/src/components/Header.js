@@ -49,10 +49,12 @@ class Header extends Component {
           style={styles.theme}
           titleStyle={styles.title}
           onLeftIconButtonTouchTap={this.toggleDrawer}
+          docked={true}
         />
           <Drawer
             open={this.state.open}
             onRequestChange={open => this.setState({ open })}
+            docked={false}
           >
             <AppBar
               title="Community"
@@ -69,7 +71,7 @@ class Header extends Component {
             <MenuItem
               onTouchTap={this.handleClose}
               onTouchTap={this.handleEditProfile}
-              primaryText="User Profile"
+              primaryText="My Profile"
               href={'/profile'}
             />
             <MenuItem

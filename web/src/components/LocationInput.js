@@ -46,15 +46,8 @@ export default class LocationInput extends Component {
     let string = location.split(' ').join('+');
     axios.post('/api/locationInput', {location: string})
     .then((res) => {
-      let acArray = [];
-      for (let i = 0; i < res.data.length; i++) {
-        acArray.push(res.data[i]);
-      }
-      return acArray;
-    })
-    .then((array) => {
       this.setState({
-        autoComplete: array
+        autoComplete: res.data
       });
     })
     .catch((err) => {
@@ -100,13 +93,13 @@ const styles = {
     marginRight: '10'
   },
   buttonLabel: {
-    fontFamily: 'Vibur',
+    fontFamily: 'Roboto',
     fontSize: '18px',
     textTransform: 'capitalize',
   },
   location: {
     borderColor: '#5E35B1',
-    fontFamily: 'Vibur',
+    fontFamily: 'Roboto',
     fontSize: '20px',
     marginLeft: '8px',
     marginRight: '8px',

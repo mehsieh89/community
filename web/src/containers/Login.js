@@ -14,7 +14,7 @@ class Login extends Component {
     return (
       <div style={styles.container}>
         <h1 style={styles.title}>Community</h1>
-        <h3 style={styles.text}>explore your surroundings and make new friends~</h3>
+        <h3 style={styles.text}>explore your surroundings, create new experiences</h3>
         <a href="/auth/facebook"><img src="https://www.bunditcenter.com/images/fb_signin.png" width="250" /></a>
       </div>
     );
@@ -23,18 +23,20 @@ class Login extends Component {
 
 const styles = {
   title: {
-
+    fontSize: 70,
+    fontFamily: 'Vibur',
+    marginBottom: 0
   },
   text: {
-
+    fontSize: 20
   },
   container: {
-    paddingTop: '150',
+    paddingTop: 120,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    width: '1250',
-    height: '450',
+    width: 'auto',
+    height: window.innerHeight * 0.7,
     backgroundImage: 'url("https://www.iasfund.org/wp-content/uploads/2014/12/slider-community-hands.png")',
     backgroundSize: 'cover'
   }

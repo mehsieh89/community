@@ -214,12 +214,16 @@ router.route('/countLikes')
 
 router.route('/retrieveParticipants')
   .post((req, res) => {
+    let options = {
+      event_id: req.body.eventId,
+      is_attending: true
+    };
     return db.knex('events_profiles')
-    .where('event_id', '=', req.body.eventId)
+    .where(options)
     .select('profile_id')
     .then((data) => {
       let ids = data.map(obj => obj.profile_id);
-      return db.knex.select('display', 'email').from('profiles')
+      return db.knex.select('display', 'email', 'profile_picture').from('profiles')
       .whereIn('id', ids);
     })
     .then((data) => {
@@ -230,7 +234,11 @@ router.route('/retrieveParticipants')
 
 router.route('/retrieveUserEvents')
   .get((req, res) => {
-    models.Event_Profile.where({profile_id: req.session.passport.user}).fetchAll({withRelated: ['event']})
+    let options = {
+      profile_id: req.body.profileId || req.session.passport.user,
+      is_attending: true
+    };
+    models.Event_Profile.where(options).fetchAll({withRelated: ['event']})
     .then((profiles) => {
       res.send(profiles);
     })
