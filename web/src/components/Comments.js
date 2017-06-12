@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { RaisedButton, TextField } from 'material-ui';
-import react_time_ago from 'react-time-ago';
 import moment from 'moment';
 
 class Comments extends Component {
@@ -16,9 +15,14 @@ class Comments extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.clearText = this.clearText.bind(this);
+    this.getLatestComments = this.getLatestComments.bind(this);
   }
 
   componentDidMount() {
+    this.getLatestComments();
+  }
+
+  getLatestComments() {
     axios.get('/api/retrieveComments?event_id=' + this.props.eventDetails.currentEvent.id)
     .then(comments => {
       const commentsArray = comments.data.map(comment => {
@@ -42,11 +46,7 @@ class Comments extends Component {
     });
   }
 
-  // handleRefresh() {
-  //
-  // }
-  handleSubmit(event) {
-    event.preventDefault();
+  handleSubmit() {
     axios.post('/api/comments', {
       text: this.state.text,
       event_id: this.props.eventDetails.currentEvent.id,
@@ -54,6 +54,9 @@ class Comments extends Component {
     })
     .then(() => {
       this.clearText();
+    })
+    .then(() => {
+      this.getLatestComments();
     });
   }
 
@@ -66,13 +69,21 @@ class Comments extends Component {
   render() {
     return (
       <div>
-        <form>
+        <form onSubmit={(event => {
+          event.preventDefault();
+          this.handleSubmit();
+        })}>
           <TextField
             type="text"
             name="name"
             onChange={this.handleChange}
             style={styles.inputField}
             value={this.state.text}
+            onKeyPress={(event) => {
+              if (event.key === 'Enter') {
+                this.handleSubmit();
+              }
+            }}
           />
           {this.state.text === '' ?
           <RaisedButton
@@ -111,10 +122,6 @@ class Comments extends Component {
   }
 }
 
-// FIX COMMENT CHARACTERS IN THE DB TO A 100
-// Dont allow users to hit submit on a comment if the comment is zero
-// clearText upon submit
-
 const styles = {
   container: {
     display: 'inline-block',
@@ -126,7 +133,7 @@ const styles = {
     boxShadow: '0 1 3 rgba(0, 0, 0, 0.15)',
     margin: '5',
     padding: '20',
-    width: '560',
+    width: '673'
   },
   button: {
     border: '1px solid #5E35B1',
@@ -138,8 +145,9 @@ const styles = {
   },
   inputField: {
     borderColor: '#5E35B1',
-    width: '585',
+    width: '555',
     marginTop: '10',
+    marginLeft: '7',
     marginBottom: '10'
   },
   colLeft: {
@@ -147,14 +155,18 @@ const styles = {
   },
   comment: {
     display: 'inline-block',
-    width: '550',
+    width: '560',
     marginTop: '10',
     wordWrap: 'normal',
   },
   time: {
     float: 'right',
     display: 'inline-block',
-
+  },
+  refresh: {
+    float: 'right',
+    position: 'absolute',
+    bottom: '75',
   }
 };
 
