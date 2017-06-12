@@ -258,11 +258,9 @@ class CreateEventForm extends Component {
         <div>
           <input type="file" id="imageupload" accept="image/*" onChange={this.showAddImageButton}/>
           {this.state.choseImage ?
-          <RaisedButton
-            label="Add Event Image"
-            labelColor={'#5E35B1'}
-            onTouchTap={this.addImage}
-          /> : null}
+          <button onClick={this.addImage}>
+            Add Event Image
+          </button> : null}
         </div>
         <div>
           {this.state.hasImage ?

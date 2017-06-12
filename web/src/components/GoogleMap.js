@@ -6,6 +6,7 @@ import IconButton from 'material-ui/IconButton';
 import LocationInput from './LocationInput';
 import LocationSearching from 'material-ui-icons/LocationSearching';
 import Autorenew from 'material-ui-icons/Autorenew';
+import Paper from 'material-ui/Paper';
 import Promise from 'bluebird';
 import React, { Component } from 'react';
 
@@ -165,16 +166,20 @@ class Gmap extends Component {
           geolocation={this.props.geolocation}
         />
         <IconButton style={styles.recenter}>
-          <LocationSearching
-            onTouchTap={this.recenter}
-            color={'purple'}
-          />
+          <Paper style={styles.circle} zDepth={2} circle={true} >
+            <LocationSearching
+              onTouchTap={this.recenter}
+              color={'#5E35B1'}
+            />
+          </Paper>
         </IconButton>
         <IconButton style={styles.refresh}>
-          <Autorenew
-            onTouchTap={this.onRefresh}
-            color={'blue'}
-          />
+          <Paper style={styles.circle} zDepth={2} circle={true} >
+            <Autorenew
+              onTouchTap={this.onRefresh}
+              color={'#5E35B1'}
+            />
+          </Paper>
         </IconButton>
       </div>
     );
@@ -200,6 +205,12 @@ const styles = {
     position: 'absolute',
     top: '150px',
     right: '0px',
+  },
+  circle: {
+    height: 100,
+    width: 100,
+    // margin: 20,
+    display: 'inline-block',
   }
 };
 
