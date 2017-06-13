@@ -88,6 +88,7 @@ class FindEvents extends Component {
     axios.post('/api/retrieveEventsByLocation', this.props.geolocation[0].position)
     .then((res) => {
       this.props.addEvents(res.data);
+      this.handleRequestClose();
     })
     .catch((err) => {
       console.log(err);
@@ -98,6 +99,7 @@ class FindEvents extends Component {
     axios.get('/api/retrieveEventsByPopularity')
     .then((res) => {
       this.props.addEvents(res.data);
+      this.handleRequestClose();
     })
     .catch((err) => {
       console.log(err);
