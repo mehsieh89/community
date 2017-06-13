@@ -54,6 +54,7 @@ class Homepage extends Component {
                 changeCenter={this.props.changeCenter}
                 addEvents={this.props.addEvents}
                 setCurrentEventLikes={this.props.setCurrentEventLikes}
+                geolocation={this.props.googleMap.geolocation}
               />
             </Tab>
             <Tab
@@ -109,11 +110,13 @@ const styles = {
     height: '100%',
   },
   theme: {
-    borderColor: '#5E35B1',
-    backgroundColor: '#D1C4E9',
+    borderColor: '#ddd',
+    backgroundColor: 'white',
     fontFamily: 'Roboto',
-    borderRightStyle: 'dotted',
+    color: '#3EB1E0',
+    borderRightStyle: 'solid',
     borderWidth: '1px',
+    boxShadow: '0 1px 3px 0 rgba(3, 3, 3, 0.2)'
   },
   location: {
     fontFamily: 'Roboto'

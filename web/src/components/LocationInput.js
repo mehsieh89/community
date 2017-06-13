@@ -3,8 +3,6 @@ import axios from 'axios';
 import Promise from 'bluebird';
 import React, { Component } from 'react';
 
-const GeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
-
 export default class LocationInput extends Component {
   constructor(props) {
     super(props);
@@ -36,10 +34,20 @@ export default class LocationInput extends Component {
   }
 
   handleLocationSearch() {
-    const lat = this.state.autoComplete[0].geometry.location.lat;
-    const lng = this.state.autoComplete[0].geometry.location.lng;
-    this.props.changeCenter({lat: lat, lng: lng});
-    this.props.handleReverseGeoCode({lat: lat, lng: lng});
+    this.setState({
+      autoComplete: [],
+    });
+    const string = this.state.location.split(' ').join('+');
+    axios.post('/api/locationInput', {location: string})
+    .then((res) => {
+      const lat = res.data[0].geometry.location.lat;
+      const lng = res.data[0].geometry.location.lng;
+      this.props.changeCenter({lat: lat, lng: lng});
+      this.props.handleReverseGeoCode({lat: lat, lng: lng});
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   handleLocationInput(location) {
@@ -67,16 +75,17 @@ export default class LocationInput extends Component {
           filter={filter}
           name="address"
           onUpdateInput={this.handleChange}
-          placeholder={'Search Location'}
+          hintText='Search Location'
+          hintStyle={{color: '#3EB1E0'}}
           textFieldStyle={styles.location}
           underlineStyle={styles.underline}
           value={this.state.location}
         />
         <RaisedButton
-          label="Search"
+          label="SEARCH"
           onTouchTap={this.handleLocationSearch}
           labelStyle={styles.buttonLabel}
-          labelColor={'#5E35B1'}
+          labelColor={'#3EB1E0'}
           style={styles.button}
         />
       </Card>
@@ -86,21 +95,22 @@ export default class LocationInput extends Component {
 
 const styles = {
   button: {
-    border: '1px solid #5E35B1',
+    border: '1px solid #3EB1E0',
     borderRadius: '10px',
     marginLeft: '18px',
     float: 'right',
-    marginRight: '10'
+    marginRight: '10',
+    marginTop: '3',
   },
   buttonLabel: {
     fontFamily: 'Roboto',
-    fontSize: '18px',
+    fontSize: '14px',
     textTransform: 'capitalize',
   },
   location: {
-    borderColor: '#5E35B1',
+    borderColor: '#3EB1E0',
     fontFamily: 'Roboto',
-    fontSize: '20px',
+    fontSize: '16px',
     marginLeft: '8px',
     marginRight: '8px',
     width: '530'

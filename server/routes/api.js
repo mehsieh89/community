@@ -29,9 +29,7 @@ router.route('/createEvent')
   .post((req, res) => {
     let result = {};
     let string = req.body.location.split(' ').join('+');
-    return new Promise((resolve, reject) => {
-      resolve(axios.get(GeoCodeURL + string + '&key=' + KEY));
-    })
+    return axios.get(GeoCodeURL + string + '&key=' + KEY)
     .then((data) => {
       if (data.data.results.length === 0) {
         let e = new Error();
@@ -140,6 +138,38 @@ router.route('/retrieveCategoryEvents')
     }
   });
 
+router.route('/retrieveEventsByLocation')
+  .post((req, res) => {
+    console.log('req.body', req.body);
+    return db.knex.select().from('events')
+    .then((data) => {
+      const getDistance = (loc1, loc2) => {
+        return Math.sqrt(Math.pow((loc1.lat - loc2.lat), 2) + Math.pow((loc1.lng - loc2.lng), 2));
+      };
+      data.sort((a, b) => {
+        return getDistance(req.body, a) - getDistance(req.body, b);
+      });
+      res.json(data);
+    })
+    .catch((err) => {
+      res.send('error ' + err);
+    });
+  });
+
+router.route('/retrieveEventsByPopularity')
+  .get((req, res) => {
+    return db.knex.select().from('events')
+    .then((data) => {
+      data.sort((a, b) => {
+        return b.like_count - a.like_count;
+      });
+      res.json(data);
+    })
+    .catch((err) => {
+      res.send('error ' + err);
+    });
+  });
+
 router.route('/connectEventToProfile')
   .post((req, res) => {
     let info = {
@@ -181,6 +211,9 @@ router.route('/likeEvent')
     })
     .update({ liked: true })
     .then(() => {
+      db.knex('events')
+      .where({ id: req.body.eventId })
+      .increment('like_count', 1);
       res.send('liked event');
     })
     .catch(err => { res.send(err); });
@@ -188,13 +221,12 @@ router.route('/likeEvent')
 
 router.route('/countLikes')
   .post((req, res) => {
-    let options = {
-      event_id: req.body.eventId,
-      liked: true
-    };
-    return models.Event_Profile.where(options).count()
+    return db.knex('events')
+    .where({id: req.body.eventId})
+    .select('like_count')
     .then((data) => {
-      res.send(data);
+      console.log('likecount', data);
+      res.send(data[0]);
     })
     .catch(err => { res.send(err); });
   });
@@ -233,7 +265,7 @@ router.route('/retrieveParticipants')
   });
 
 router.route('/retrieveUserEvents')
-  .get((req, res) => {
+  .post((req, res) => {
     let options = {
       profile_id: req.body.profileId || req.session.passport.user,
       is_attending: true

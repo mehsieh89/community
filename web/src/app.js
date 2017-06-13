@@ -17,6 +17,10 @@ const muiTheme = getMuiTheme({
   palette: {
     accent1Color: deepOrange500
   },
+  tabs: {
+    backgroundColor: 'white',
+  }
+
 });
 
 const styles = {
