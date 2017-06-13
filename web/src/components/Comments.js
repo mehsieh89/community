@@ -36,8 +36,6 @@ class Comments extends Component {
         return new Date(oldest.createdAt) - new Date(latest.createdAt);
       });
 
-      console.log('Sorted array of comments ', commentsArray)
-
       this.setState({comments: commentsArray});
     });
   }
@@ -73,7 +71,6 @@ class Comments extends Component {
       <div>
         <form onSubmit={(event => {
           event.preventDefault();
-          this.handleSubmit();
         })}>
           <TextField
             type="text"
@@ -82,7 +79,7 @@ class Comments extends Component {
             style={styles.inputField}
             value={this.state.text}
             onKeyPress={(event) => {
-              if (event.key === 'Enter') {
+              if (event.key === 'Enter' && this.state.text !== '') {
                 this.handleSubmit();
               }
             }}
