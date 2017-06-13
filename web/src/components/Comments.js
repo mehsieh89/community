@@ -95,7 +95,7 @@ class Comments extends Component {
           :
           <RaisedButton
             label="Comment"
-            labelColor={'#5E35B1'}
+            labelColor={'#3EB1E0'}
             onTouchTap={this.handleSubmit}
             style={styles.button}
           />
@@ -135,7 +135,7 @@ const styles = {
     width: '673'
   },
   button: {
-    border: '1px solid #5E35B1',
+    border: '1px solid #3EB1E0',
     borderRadius: '10px',
     marginLeft: '18px',
     float: 'right',

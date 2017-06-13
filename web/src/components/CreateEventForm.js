@@ -299,7 +299,8 @@ const styles = {
     paddingTop: 0,
     paddingLeft: 30,
     paddingBottom: 30,
-    height: '100%'
+    height: '100%',
+    // backgroundColor: '#f6f5f0'
   },
   textField: {
     alignItems: 'center',

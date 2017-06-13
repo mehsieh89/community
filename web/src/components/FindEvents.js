@@ -93,9 +93,9 @@ class FindEvents extends Component {
               key={i}
               indexID={i}
               title={tile.event_name}
-              titleBackground="linear-gradient(to top, rgba(94,53,177,0.7) 0%,rgba(94,53,177,0.3) 70%,rgba(94,53,177,0) 100%)"
+              // titleBackground="linear-gradient(to top, rgba(94,53,177,0.7) 0%,rgba(94,53,177,0.3) 70%,rgba(94,53,177,0) 100%)"
               style={styles.tile}
-              actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+              actionIcon={<IconButton><StarBorder color="f6f5f0" /></IconButton>}
               imageSRC={tile.image}
               data={this.props.events}
               onClick={() => this.handleTileClick(i)}
@@ -113,7 +113,8 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-    height: '100%'
+    height: '100%',
+    // backgroundColor: '#f6f5f0'
   },
   theme: {
     fontFamily: 'Roboto',
@@ -126,7 +127,8 @@ const styles = {
   },
   tile: {
     margin: 10,
-    width: 270
+    width: 270,
+    cursor: 'pointer',
   },
   dropdown: {
     width: 350

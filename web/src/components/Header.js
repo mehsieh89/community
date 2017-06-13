@@ -52,7 +52,7 @@ class Header extends Component {
           titleStyle={styles.title}
           iconElementLeft={
             <IconButton>
-              <Menu color={'#fd5c63'} />
+              <Menu color={'#3798db'} />
             </IconButton>}
           onLeftIconButtonTouchTap={this.toggleDrawer}
           docked={true}
@@ -97,10 +97,11 @@ const styles = {
   title: {
     fontFamily: 'Vibur',
     fontSize: '34px',
-    color: '#fd5c63'
+    color: '#3798db'
   },
   theme: {
-    backgroundColor: 'white',
+    // backgroundColor: '#f6f5f0',
+    backgroundColor: 'white'
   }
 };
 
