@@ -50,7 +50,7 @@ class FindEvents extends Component {
 
   handleChange(e) {
     this.setState({ category: e.target.innerHTML });
-    axios.get('/api/retrieveCategoryEvents?query=' + e.target.innerHTML)
+    axios.get('/api/retrieveEventsByCategory?query=' + e.target.innerHTML)
     .then((data) => {
       this.props.addEvents(data.data);
     })
@@ -84,7 +84,6 @@ class FindEvents extends Component {
   }
 
   handleGeolocationSort() {
-    console.log(this.props.geolocation[0].position);
     axios.post('/api/retrieveEventsByLocation', this.props.geolocation[0].position)
     .then((res) => {
       this.props.addEvents(res.data);
@@ -126,8 +125,8 @@ class FindEvents extends Component {
               onRequestClose={this.handleRequestClose}
               >
                 <Menu>
-                  <MenuItem primaryText="location" onTouchTap={this.handleGeolocationSort}/>
-                  <MenuItem primaryText="popularity" onTouchTap={this.handlePopularitySort}/>
+                  <MenuItem primaryText="Location" onTouchTap={this.handleGeolocationSort}/>
+                  <MenuItem primaryText="Popularity" onTouchTap={this.handlePopularitySort}/>
                 </Menu>
               </Popover>
           <SelectField

@@ -115,7 +115,7 @@ router.route('/retrieveEvents')
     });
   });
 
-router.route('/retrieveCategoryEvents')
+router.route('/retrieveEventsByCategory')
   .get((req, res) => {
     const category = req.query.query;
     if (category === 'All') {
@@ -140,7 +140,6 @@ router.route('/retrieveCategoryEvents')
 
 router.route('/retrieveEventsByLocation')
   .post((req, res) => {
-    console.log('req.body', req.body);
     return db.knex.select().from('events')
     .then((data) => {
       const getDistance = (loc1, loc2) => {
