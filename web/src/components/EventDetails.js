@@ -3,7 +3,7 @@ import { Dialog, FlatButton, RaisedButton, Avatar, Chip, Tabs, Tab } from 'mater
 import axios from 'axios';
 import Comments from './Comments';
 import FontIcon from 'material-ui/FontIcon';
-import Home from 'material-ui-icons/Home';
+import Clear from 'material-ui-icons/Clear';
 import IconButton from 'material-ui/IconButton';
 import moment from 'moment';
 
@@ -55,10 +55,10 @@ class EventDetails extends Component {
         disabled={this.props.eventDetails.attendDisabled}
       />,
       <IconButton style={styles.homeIcon}>
-        <Home
+        <Clear
           onTouchTap={this.handleClose}
-          color='purple'
-          hoverColor='hotpink'
+          color='#3EB1E0'
+          hoverColor='#3798db'
         />
       </IconButton>
     ];
@@ -76,9 +76,13 @@ class EventDetails extends Component {
           onRequestClose={this.handleClose}
           autoScrollBodyContent={true}
           >
-            <Tabs>
+            <Tabs
+              // initialSelectedIndex={0}
+              inkBarStyle={{backgroundColor: '#3EB1E0'}}>
               <Tab
-                label="Event Details"
+                label={<span style={{ color: 'grey' }}>Event Details</span>}
+
+                // style={{backgroundColor: '#3EB1E0'}}
               >
                 <div style={styles.left}>
                   <img id="eventimage" style={styles.image} src={currentEvent.image} alt=''/>
@@ -105,7 +109,8 @@ class EventDetails extends Component {
                 </div>
               </Tab>
               <Tab
-                label="Event Comments"
+                // style={{backgroundColor: '#3EB1E0'}}
+                label={<span style={{ color: 'grey' }}>Event Comments</span>}
               >
                 <Comments {...this.props}/>
               </Tab>
@@ -131,15 +136,6 @@ const styles = {
   wrapper: {
     display: 'flex',
     flexWrap: 'wrap',
-  },
-  theme: {
-    backgroundColor: '#D1C4E9',
-  },
-  leftTab: {
-    backgroundColor: '#D1C4E9',
-    borderColor: '#5E35B1',
-    borderRightStyle: 'dotted',
-    borderWidth: '1px',
   },
   homeIcon: {
     position: 'absolute',
