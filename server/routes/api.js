@@ -34,7 +34,7 @@ router.route('/createEvent')
       if (data.data.results.length === 0) {
         let e = new Error();
         e.name = 'locationError';
-        e.message = 'location cannot be found';
+        e.message = 'Location cannot be found';
         throw e;
       }
       const lat = data.data.results[0].geometry.location.lat;
