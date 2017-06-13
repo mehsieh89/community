@@ -37,7 +37,7 @@ const styles = {
     alignItems: 'center',
     width: 'auto',
     height: window.innerHeight * 0.7,
-    backgroundImage: 'url("https://www.iasfund.org/wp-content/uploads/2014/12/slider-community-hands.png")',
+    backgroundImage: 'url("https://hr-community-images.s3.amazonaws.com/community-login.jpg")',
     backgroundSize: 'cover'
   }
 };
