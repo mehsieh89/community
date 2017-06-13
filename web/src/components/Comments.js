@@ -36,6 +36,8 @@ class Comments extends Component {
         return new Date(oldest.createdAt) - new Date(latest.createdAt);
       });
 
+      console.log('Sorted array of comments ', commentsArray)
+
       this.setState({comments: commentsArray});
     });
   }
@@ -75,7 +77,7 @@ class Comments extends Component {
         })}>
           <TextField
             type="text"
-            name="name"
+            name="comment"
             onChange={this.handleChange}
             style={styles.inputField}
             value={this.state.text}
@@ -162,11 +164,6 @@ const styles = {
   time: {
     float: 'right',
     display: 'inline-block',
-  },
-  refresh: {
-    float: 'right',
-    position: 'absolute',
-    bottom: '75',
   }
 };
 
