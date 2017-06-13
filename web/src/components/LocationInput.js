@@ -76,7 +76,7 @@ export default class LocationInput extends Component {
           name="address"
           onUpdateInput={this.handleChange}
           hintText='Search Location'
-          hintStyle={{color: '#458fb4'}}
+          hintStyle={{color: '#3EB1E0'}}
           textFieldStyle={styles.location}
           underlineStyle={styles.underline}
           value={this.state.location}

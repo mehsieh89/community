@@ -169,7 +169,7 @@ class Gmap extends Component {
           <Paper style={styles.circle} zDepth={2} circle={true} >
             <LocationSearching
               onTouchTap={this.recenter}
-              color={'#458fb4'}
+              color={'#3EB1E0'}
             />
           </Paper>
         </IconButton>
@@ -177,7 +177,7 @@ class Gmap extends Component {
           <Paper style={styles.circle} zDepth={2} circle={true} >
             <Autorenew
               onTouchTap={this.onRefresh}
-              color={'#458fb4'}
+              color={'#3EB1E0'}
             />
           </Paper>
         </IconButton>

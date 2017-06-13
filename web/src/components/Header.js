@@ -1,6 +1,8 @@
 import { AppBar, Drawer, MenuItem } from 'material-ui';
 import axios from 'axios';
 import React, { Component } from 'react';
+import Menu from 'material-ui-icons/Menu';
+import IconButton from 'material-ui/IconButton';
 
 class Header extends Component {
   constructor(props) {
@@ -48,8 +50,13 @@ class Header extends Component {
           title="Community"
           style={styles.theme}
           titleStyle={styles.title}
+          iconElementLeft={
+            <IconButton>
+              <Menu color={'#fd5c63'} />
+            </IconButton>}
           onLeftIconButtonTouchTap={this.toggleDrawer}
           docked={true}
+          // iconStyleLeft={{icon: {tintColor: '#3EB1E0'}}}
         />
           <Drawer
             open={this.state.open}
@@ -89,10 +96,11 @@ class Header extends Component {
 const styles = {
   title: {
     fontFamily: 'Vibur',
-    fontSize: '34px'
+    fontSize: '34px',
+    color: '#fd5c63'
   },
   theme: {
-    backgroundColor: '#3EB1E0',
+    backgroundColor: 'white',
   }
 };
 
