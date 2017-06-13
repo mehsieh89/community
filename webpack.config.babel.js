@@ -19,7 +19,11 @@ const config = {
             }
           }
         ]
-      }
+      },
+      {
+        test: /\.(mp4)$/,
+        loader: 'url-loader?limit=10000'
+      },
     ]
   }
 };
