@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { changeHeader, updateForm, changeCenter, setMarkers, addGeolocation, addEvents, setCurrentEvent, toggleEventDetails, setCurrentEventParticipants, disableButton } from '../actions';
 import { Card, MenuItem, RaisedButton, SelectField, TextField } from 'material-ui';
 import React, { Component } from 'react';
+import beachVideo from '../../../public/assets/beach.mp4';
 
 class Login extends Component {
   constructor(props) {
@@ -13,8 +14,12 @@ class Login extends Component {
   render() {
     return (
       <div style={styles.container}>
+        <div style={styles.fullscreen}>
+          <video loop muted autoPlay style={styles.video}>
+            <source src='/assets/beach.mp4' type="video/mp4"/>
+          </video>
+        </div>
         <h1 style={styles.title}>Community</h1>
-        <h3 style={styles.text}>explore your surroundings, create new experiences</h3>
         <a href="/auth/facebook"><img src="https://www.bunditcenter.com/images/fb_signin.png" width="250" /></a>
       </div>
     );
@@ -22,23 +27,34 @@ class Login extends Component {
 }
 
 const styles = {
-  title: {
-    fontSize: 70,
-    fontFamily: 'Vibur',
-    marginBottom: 0
+  fullscreen: {
+    position: 'fixed',
+    top: '0',
+    right: '0',
+    bottom: '0',
+    left: '0',
+    overflow: 'hidden',
+    zIndex: '-100',
   },
-  text: {
-    fontSize: 20
+  video: {
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    width: '100%',
+    height: '100%',
+    objectFit: 'inherit'
   },
   container: {
-    paddingTop: 120,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: 'auto',
-    height: window.innerHeight * 0.7,
-    backgroundImage: 'url("https://www.iasfund.org/wp-content/uploads/2014/12/slider-community-hands.png")',
-    backgroundSize: 'cover'
+    position: 'absolute',
+    bottom: '25%',
+    textAlign: 'center',
+    width: '100%',
+  },
+  title: {
+    fontFamily: 'Vibur',
+    color: 'white',
+    fontSize: '90px',
+    marginBottom: '25px'
   }
 };
 
