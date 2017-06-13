@@ -109,11 +109,13 @@ const styles = {
     height: '100%',
   },
   theme: {
-    borderColor: '#3EB1E0',
-    backgroundColor: '#edca24',
+    borderColor: '#ddd',
+    backgroundColor: 'white',
     fontFamily: 'Roboto',
-    borderRightStyle: 'dotted',
+    color: '#3EB1E0',
+    borderRightStyle: 'solid',
     borderWidth: '1px',
+    boxShadow: '0 1px 3px 0 rgba(3, 3, 3, 0.2)'
   },
   location: {
     fontFamily: 'Roboto'
