@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Card, Dialog, FlatButton, GridList, GridTile, IconButton, Subheader, SelectField, MenuItem } from 'material-ui';
+import { Card, Dialog, FlatButton, GridList, GridTile, IconButton, Subheader, SelectField, MenuItem, Popover, RaisedButton, Menu } from 'material-ui';
 import GridTileComponent from './GridTile.js';
 import Promise from 'bluebird';
 import React, { Component } from 'react';
@@ -10,10 +10,15 @@ class FindEvents extends Component {
     super(props);
     this.state = {
       value: 'Select Category...',
-      category: 'All'
+      category: 'All',
+      open: false,
     };
     this.handleTileClick = this.handleTileClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleTouchTap = this.handleTouchTap.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
+    this.handleGeolocationSort = this.handleGeolocationSort.bind(this);
+    this.handlePopularitySort = this.handlePopularitySort.bind(this);
   }
 
   handleTileClick(i) {
@@ -39,7 +44,7 @@ class FindEvents extends Component {
     .catch(err => { console.log(err); });
 
     axios.post('/api/countLikes', { eventId: this.props.events[i].id })
-    .then(res => { this.props.setCurrentEventLikes(res.data); })
+    .then(res => { this.props.setCurrentEventLikes(res.data.like_count); })
     .catch(err => { console.log(err); });
   }
 
@@ -64,6 +69,41 @@ class FindEvents extends Component {
     });
   }
 
+  handleTouchTap(event) {
+    event.preventDefault();
+    this.setState({
+      open: true,
+      anchorEl: event.currentTarget,
+    });
+  }
+
+  handleRequestClose() {
+    this.setState({
+      open: false,
+    });
+  }
+
+  handleGeolocationSort() {
+    console.log(this.props.geolocation[0].position);
+    axios.post('/api/retrieveEventsByLocation', this.props.geolocation[0].position)
+    .then((res) => {
+      this.props.addEvents(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
+  handlePopularitySort() {
+    axios.get('/api/retrieveEventsByPopularity')
+    .then((res) => {
+      this.props.addEvents(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
   render() {
     return (
       <Card
@@ -71,6 +111,23 @@ class FindEvents extends Component {
         containerStyle={styles.container}
       >
         <div>
+          <RaisedButton
+            label="Sort By..."
+            onTouchTap={this.handleTouchTap}
+            style={{position: 'relative', left: '-45', bottom: '20'}}
+          />
+            <Popover
+              open={this.state.open}
+              anchorEl={this.state.anchorEl}
+              anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+              targetOrigin={{horizontal: 'left', vertical: 'top'}}
+              onRequestClose={this.handleRequestClose}
+              >
+                <Menu>
+                  <MenuItem primaryText="location" onTouchTap={this.handleGeolocationSort}/>
+                  <MenuItem primaryText="popularity" onTouchTap={this.handlePopularitySort}/>
+                </Menu>
+              </Popover>
           <SelectField
             floatingLabelText={this.state.value}
             value={this.state.category}
@@ -131,7 +188,9 @@ const styles = {
     cursor: 'pointer',
   },
   dropdown: {
-    width: 350
+    width: 250,
+    position: 'relative',
+    left: '120'
   }
 };
 

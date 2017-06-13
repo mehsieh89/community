@@ -54,6 +54,7 @@ class Homepage extends Component {
                 changeCenter={this.props.changeCenter}
                 addEvents={this.props.addEvents}
                 setCurrentEventLikes={this.props.setCurrentEventLikes}
+                geolocation={this.props.googleMap.geolocation}
               />
             </Tab>
             <Tab

@@ -35,7 +35,7 @@ exports.up = function (knex, Promise) {
       table.string('category', 30).notNullable();
       table.string('description', 100).nullable();
       table.string('image', 500).nullable();
-      table.integer('like_count').nullable();
+      table.integer('like_count').defaultTo(0);
       table.decimal('lat', 20, 15).notNullable();
       table.decimal('lng', 20, 15).notNullable();
       table.integer('profile_id').references('profiles.id').onDelete('CASCADE');

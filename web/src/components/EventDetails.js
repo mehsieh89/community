@@ -78,11 +78,11 @@ class EventDetails extends Component {
           >
             <Tabs
               // initialSelectedIndex={0}
-              inkBarStyle={{backgroundColor: '#3EB1E0'}}>
+              inkBarStyle={{backgroundColor: '#3EB1E0', marginBottom: 20}}
+              >
               <Tab
-                label={<span style={{ color: 'grey' }}>Event Details</span>}
-
-                // style={{backgroundColor: '#3EB1E0'}}
+                label={<span style={{ color: '#3EB1E0'}}>Event Details</span>}
+                style={styles.tab}
               >
                 <div style={styles.left}>
                   <img id="eventimage" style={styles.image} src={currentEvent.image} alt=''/>
@@ -109,8 +109,8 @@ class EventDetails extends Component {
                 </div>
               </Tab>
               <Tab
-                // style={{backgroundColor: '#3EB1E0'}}
-                label={<span style={{ color: 'grey' }}>Event Comments</span>}
+                style={styles.tab}
+                label={<span style={{ color: '#3EB1E0' }}>Event Comments</span>}
               >
                 <Comments {...this.props}/>
               </Tab>
@@ -141,6 +141,12 @@ const styles = {
     position: 'absolute',
     left: '10',
     bottom: '1'
+  },
+  tab: {
+    borderRightStyle: 'solid',
+    borderWidth: '1px',
+    boxShadow: '0 1px 3px 0 rgba(3, 3, 3, 0.2)',
+    borderColor: '#ddd',
   }
 };
 
