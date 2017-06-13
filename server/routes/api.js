@@ -106,7 +106,7 @@ router.route('/retrieveMarkers')
 
 router.route('/retrieveEvents')
   .get((req, res) => {
-    return db.knex.select().from('events')
+    return db.knex.select().from('events').orderBy('time', 'desc')
     .then((data) => {
       res.json(data);
     })
@@ -119,7 +119,7 @@ router.route('/retrieveEventsByCategory')
   .get((req, res) => {
     const category = req.query.query;
     if (category === 'All') {
-      return db.knex.select().from('events')
+      return db.knex.select().from('events').orderBy('time', 'desc')
       .then((data) => {
         res.json(data);
       })
