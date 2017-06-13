@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import { Dialog, FlatButton, RaisedButton, Avatar, Chip } from 'material-ui';
+import { Dialog, FlatButton, RaisedButton, Avatar, Chip, Tabs, Tab } from 'material-ui';
 import axios from 'axios';
+import Comments from './Comments';
+import FontIcon from 'material-ui/FontIcon';
+import Home from 'material-ui-icons/Home';
+import IconButton from 'material-ui/IconButton';
 import moment from 'moment';
 
 class EventDetails extends Component {
@@ -50,11 +54,13 @@ class EventDetails extends Component {
         onTouchTap={this.handleAttend}
         disabled={this.props.eventDetails.attendDisabled}
       />,
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onTouchTap={this.handleClose}
-      />
+      <IconButton style={styles.homeIcon}>
+        <Home
+          onTouchTap={this.handleClose}
+          color='purple'
+          hoverColor='hotpink'
+        />
+      </IconButton>
     ];
 
     if (currentEvent) {
@@ -70,29 +76,40 @@ class EventDetails extends Component {
           onRequestClose={this.handleClose}
           autoScrollBodyContent={true}
           >
-          <div style={styles.left}>
-            <img id="eventimage" style={styles.image} src={currentEvent.image} alt=''/>
-          </div>
-          <div style={styles.right}>
-            <img src="https://image.flaticon.com/icons/png/128/148/148836.png" width='20' alt="likes" />
-            {this.props.eventDetails.likeCount}
-            <p><strong>Time: </strong>{parsedTime}</p>
-            <p><strong>Location: </strong>{currentEvent.location}</p>
-            <p><strong>Description: </strong>{currentEvent.description}</p>
-            <p><strong>Category: </strong>{currentEvent.category}</p>
-            <p><strong>Participants: </strong>
-            {participants.map(participant => {
-              return (
-                <div style={styles.wrapper}>
-                  <Chip onTouchTap={() => console.log('clicked')} style={styles.chip} >
-                    <Avatar src={participant.profile_picture} size={50} />
-                    {participant.display}
-                  </Chip>
+            <Tabs>
+              <Tab
+                label="Event Details"
+              >
+                <div style={styles.left}>
+                  <img id="eventimage" style={styles.image} src={currentEvent.image} alt=''/>
                 </div>
-              );
-            })}
-            </p>
-          </div>
+                <div style={styles.right}>
+                  <img src="https://image.flaticon.com/icons/png/128/148/148836.png" width='20' alt="likes" />
+                  {this.props.eventDetails.likeCount}
+                  <p><strong>Time: </strong>{parsedTime}</p>
+                  <p><strong>Location: </strong>{currentEvent.location}</p>
+                  <p><strong>Description: </strong>{currentEvent.description}</p>
+                  <p><strong>Category: </strong>{currentEvent.category}</p>
+                  <p><strong>Participants: </strong>
+                  {participants.map(participant => {
+                    return (
+                      <div style={styles.wrapper}>
+                        <Chip onTouchTap={() => console.log('clicked')} style={styles.chip} >
+                          <Avatar src={participant.profile_picture} size={50} />
+                          {participant.display}
+                        </Chip>
+                      </div>
+                    );
+                  })}
+                  </p>
+                </div>
+              </Tab>
+              <Tab
+                label="Event Comments"
+              >
+                <Comments {...this.props}/>
+              </Tab>
+            </Tabs>
         </Dialog>
       );
     } else { return null; }
@@ -115,6 +132,20 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
   },
+  theme: {
+    backgroundColor: '#D1C4E9',
+  },
+  leftTab: {
+    backgroundColor: '#D1C4E9',
+    borderColor: '#5E35B1',
+    borderRightStyle: 'dotted',
+    borderWidth: '1px',
+  },
+  homeIcon: {
+    position: 'absolute',
+    left: '10',
+    bottom: '1'
+  }
 };
 
 export default EventDetails;
