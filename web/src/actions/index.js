@@ -5,6 +5,12 @@ export const changeHeader = (text) => {
   };
 };
 
+export const toggleCreateEvent = () => {
+  return {
+    type: 'TOGGLE_CREATE_EVENT',
+  };
+};
+
 export const addEvents = (prop) => {
   return {
     type: 'ADD_EVENTS',

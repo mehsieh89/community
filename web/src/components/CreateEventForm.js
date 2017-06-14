@@ -1,7 +1,7 @@
 import axios from 'axios';
 import DatePicker from 'material-ui/DatePicker';
 import Promise from 'bluebird';
-import { Card, MenuItem, RaisedButton, SelectField, TextField } from 'material-ui';
+import { MenuItem, RaisedButton, FlatButton, SelectField, TextField, Dialog, GridList } from 'material-ui';
 import React, { Component } from 'react';
 import TimePicker from 'material-ui/TimePicker';
 import AWS from 'aws-sdk';
@@ -43,7 +43,8 @@ class CreateEventForm extends Component {
       locationError: null,
       categoryError: null,
       choseImage: false,
-      hasImage: false
+      hasImage: false,
+      fileName: 'No file chosen'
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -91,15 +92,20 @@ class CreateEventForm extends Component {
       locationError: null,
       categoryError: null,
       choseImage: false,
-      hasImage: false
+      hasImage: false,
+      fileName: 'No file chosen'
     });
 
     document.getElementById('imageupload').value = '';
   }
 
   showAddImageButton() {
+    const files = document.getElementById('imageupload').files;
+    if (!files.length) { return alert('Please choose an image for your event.'); }
+    const fileName = files[0].name;
     this.setState({
-      choseImage: !this.state.choseImage
+      choseImage: true,
+      fileName: fileName
     });
   }
 
@@ -180,100 +186,106 @@ class CreateEventForm extends Component {
   }
 
   render() {
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        labelStyle={styles.buttonLabel}
+        labelColor='#5E35B1'
+        onTouchTap={() => { this.clearForm(); this.props.toggleCreateEvent(); }}
+      />,
+      <FlatButton
+        label="Submit"
+        labelStyle={styles.buttonLabel}
+        labelColor='#5E35B1'
+        onTouchTap={this.handleSubmit}
+      />,
+    ];
+
     return (
-      <Card
-        style={styles.container}
-        containerStyle={styles.container}
-      >
+      <Dialog
+        title="Create Event"
+        actions={actions}
+        modal={false}
+        open={this.props.createEventForm.creatingEvent}
+        onRequestClose={this.toggleCreateEvent}
+        autoScrollBodyContent={true} >
+        <GridList cellHeight={140} >
+          <div>
+            <TextField
+              autoFocus
+              floatingLabelText="Event Name"
+              inputStyle={styles.text}
+              name="eventName"
+              onChange={this.handleChange}
+              style={styles.textField}
+              value={this.state.eventName}
+              errorText={this.state.eventNameError}
+            />
+            <TextField
+              floatingLabelText="Location"
+              inputStyle={styles.text}
+              name="location"
+              onChange={this.handleChange}
+              value={this.state.location}
+              errorText={this.state.locationError}
+            />
+          </div>
+          <div>
+            <DatePicker
+              minDate={new Date()}
+              autoOk={true}
+              floatingLabelText="Date"
+              inputStyle={styles.text}
+              name="date"
+              value={this.state.date}
+              onChange={this.handleDatePicker}
+              errorText={this.state.dateError}
+            />
+            <TimePicker
+              autoOk={true}
+              defaultTime={null}
+              floatingLabelText="Time"
+              inputStyle={styles.text}
+              name="time"
+              value={this.state.time}
+              onChange={this.handleTimePicker}
+              errorText={this.state.timeError}
+            />
+          </div>
+          <div>
+            <TextField
+              floatingLabelText="Description"
+              name="description"
+              inputStyle={styles.text}
+              onChange={this.handleChange}
+              value={this.state.description}
+              style={{width: 620}}
+            />
+            <SelectField floatingLabelText={this.state.category} errorText={this.state.categoryError}>
+              <MenuItem value="food" primaryText="Food" onTouchTap={this.handleSelect} />
+              <MenuItem value="sports" primaryText="Sports" onTouchTap={this.handleSelect} />
+              <MenuItem value="outdoors" primaryText="Outdoors" onTouchTap={this.handleSelect} />
+              <MenuItem value="nightlife" primaryText="Nightlife" onTouchTap={this.handleSelect} />
+              <MenuItem value="games" primaryText="Games" onTouchTap={this.handleSelect} />
+              <MenuItem value="other" primaryText="Other" onTouchTap={this.handleSelect} />
+            </SelectField>
+          </div>
+          <br />
+        </GridList>
         <div>
-          <TextField
-            autoFocus
-            floatingLabelText="Event Name"
-            inputStyle={styles.text}
-            name="eventName"
-            onChange={this.handleChange}
-            style={styles.textField}
-            value={this.state.eventName}
-            errorText={this.state.eventNameError}
-          />
-        </div>
-        <div>
-          <DatePicker
-            minDate={new Date()}
-            autoOk={true}
-            floatingLabelText="Date"
-            inputStyle={styles.text}
-            name="date"
-            value={this.state.date}
-            onChange={this.handleDatePicker}
-            errorText={this.state.dateError}
-          />
-        </div>
-        <div>
-          <TimePicker
-            autoOk={true}
-            defaultTime={null}
-            floatingLabelText="Time"
-            inputStyle={styles.text}
-            name="time"
-            value={this.state.time}
-            onChange={this.handleTimePicker}
-            errorText={this.state.timeError}
-          />
-        </div>
-        <div>
-          <TextField
-            floatingLabelText="Location"
-            inputStyle={styles.text}
-            name="location"
-            onChange={this.handleChange}
-            value={this.state.location}
-            errorText={this.state.locationError}
-          />
-        </div>
-        <div>
-          <TextField
-            floatingLabelText="Description"
-            name="description"
-            inputStyle={styles.text}
-            onChange={this.handleChange}
-            value={this.state.description}
-          />
-        </div>
-        <div>
-          <SelectField floatingLabelText={this.state.category} errorText={this.state.categoryError}>
-            <MenuItem value="food" primaryText="Food" onTouchTap={this.handleSelect} />
-            <MenuItem value="sports" primaryText="Sports" onTouchTap={this.handleSelect} />
-            <MenuItem value="outdoors" primaryText="Outdoors" onTouchTap={this.handleSelect} />
-            <MenuItem value="nightlife" primaryText="Nightlife" onTouchTap={this.handleSelect} />
-            <MenuItem value="games" primaryText="Games" onTouchTap={this.handleSelect} />
-            <MenuItem value="other" primaryText="Other" onTouchTap={this.handleSelect} />
-          </SelectField>
-        </div>
-        <br />
-        <div>
-          <input type="file" id="imageupload" accept="image/*" onChange={this.showAddImageButton}/>
+          <br />
+          <RaisedButton label="Choose an Image" labelPosition="before" containerElement="label" onTouchTap={this.chooseImage}>
+            <input type="file" id="imageupload" accept="image/*" style={styles.exampleImageInput} onChange={this.showAddImageButton}/>
+          </RaisedButton>
+          <span style={{marginLeft: 15}}>{this.state.fileName}</span>
           {this.state.choseImage ?
-          <button onClick={this.addImage}>
-            Add Event Image
-          </button> : null}
-        </div>
-        <div>
-          {this.state.hasImage ?
-            <img id="eventimage" style={styles.image} src={this.state.imageUrl} /> : null
-          }
-        </div>
-        <br />
-        <div>
-          <RaisedButton
-            label="Create Event"
-            labelStyle={styles.buttonLabel}
-            labelColor={'#5E35B1'}
-            onTouchTap={this.handleSubmit}
-            style={styles.button}
-          />
-        </div>
-      </Card>
+            <RaisedButton label="Add Event Image" onTouchTap={this.addImage} style={{position: 'relative', left: 15}} /> : null}
+            <br />
+            {this.state.hasImage ?
+              <img id="eventimage" style={styles.image} src={this.state.imageUrl} /> : null
+            }
+          </div>
+      </Dialog>
     );
   }
 }
@@ -312,6 +324,16 @@ const styles = {
     height: 'auto',
     'maxWidth': 400,
     'maxHeight': 400
+  },
+  exampleImageInput: {
+    cursor: 'pointer',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    width: '100%',
+    opacity: 0,
   }
 };
 

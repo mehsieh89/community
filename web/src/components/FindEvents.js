@@ -8,17 +8,7 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 class FindEvents extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: 'Select Category...',
-      category: 'All',
-      open: false,
-    };
     this.handleTileClick = this.handleTileClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleTouchTap = this.handleTouchTap.bind(this);
-    this.handleRequestClose = this.handleRequestClose.bind(this);
-    this.handleGeolocationSort = this.handleGeolocationSort.bind(this);
-    this.handlePopularitySort = this.handlePopularitySort.bind(this);
   }
 
   handleTileClick(i) {
@@ -48,93 +38,12 @@ class FindEvents extends Component {
     .catch(err => { console.log(err); });
   }
 
-  handleChange(e) {
-    this.setState({ category: e.target.innerHTML });
-    axios.get('/api/retrieveEventsByCategory?query=' + e.target.innerHTML)
-    .then((data) => {
-      this.props.addEvents(data.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }
-
-  handleTouchTap(event) {
-    event.preventDefault();
-    this.setState({
-      open: true,
-      anchorEl: event.currentTarget,
-    });
-  }
-
-  handleRequestClose() {
-    this.setState({
-      open: false,
-    });
-  }
-
-  handleGeolocationSort() {
-    axios.post('/api/retrieveEventsByLocation', this.props.geolocation[0].position)
-    .then((res) => {
-      this.props.addEvents(res.data);
-      this.handleRequestClose();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }
-
-  handlePopularitySort() {
-    axios.get('/api/retrieveEventsByPopularity')
-    .then((res) => {
-      this.props.addEvents(res.data);
-      this.handleRequestClose();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }
-
   render() {
     return (
       <Card
         style={styles.container}
         containerStyle={styles.container}
-      >
-        <div>
-          <RaisedButton
-            label="Sort By..."
-            onTouchTap={this.handleTouchTap}
-            style={{position: 'relative', left: '-45', bottom: '20'}}
-          />
-            <Popover
-              open={this.state.open}
-              anchorEl={this.state.anchorEl}
-              anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-              targetOrigin={{horizontal: 'left', vertical: 'top'}}
-              onRequestClose={this.handleRequestClose}
-              >
-                <Menu>
-                  <MenuItem primaryText="Location" onTouchTap={this.handleGeolocationSort}/>
-                  <MenuItem primaryText="Popularity" onTouchTap={this.handlePopularitySort}/>
-                </Menu>
-              </Popover>
-          <SelectField
-            floatingLabelText={this.state.value}
-            value={this.state.category}
-            onChange={this.handleChange}
-            style={styles.dropdown}
-            >
-            <MenuItem value="All" primaryText="All" />
-            <MenuItem value="Food" primaryText="Food" />
-            <MenuItem value="Sports" primaryText="Sports" />
-            <MenuItem value="Outdoors" primaryText="Outdoors" />
-            <MenuItem value="Nightlife" primaryText="Nightlife" />
-            <MenuItem value="Games" primaryText="Games" />
-            <MenuItem value="Other" primaryText="Other" />
-          </SelectField>
-          <br />
-        </div>
+        >
         <GridList cellHeight={220} cols={2} style={styles.gridList}>
           {this.props.events.map((tile, i) => (
             <GridTileComponent
@@ -161,7 +70,6 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-    height: '100%',
     // backgroundColor: '#f6f5f0'
   },
   theme: {

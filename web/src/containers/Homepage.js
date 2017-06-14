@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { GridList, Tabs, Tab } from 'material-ui';
+import { GridList, Dialog } from 'material-ui';
 import {
   changeHeader,
   updateForm,
@@ -14,16 +14,19 @@ import {
   setCurrentEventParticipants,
   disableButton,
   incrementLikes,
-  setCurrentEventLikes
+  setCurrentEventLikes,
+  toggleCreateEvent
 } from '../actions';
 import Header from '../components/Header';
 import CreateEventForm from '../components/CreateEventForm';
 import FindEvents from '../components/FindEvents';
 import EventDetails from '../components/EventDetails';
+import Tools from '../components/Tools';
 import Gmap from '../components/GoogleMap';
 import React, { Component } from 'react';
 
 class Homepage extends Component {
+
   componentWillMount() {
     axios.get('/api/retrieveEvents')
     .then((data) => {
@@ -36,43 +39,6 @@ class Homepage extends Component {
       <div>
         <Header header={this.props.header} />
         <GridList>
-          <Tabs
-            contentContainerStyle={styles.container}
-            tabTemplateStyle={styles.gridContainer}
-            inkBarStyle={{backgroundColor: '#3EB1E0'}}
-          >
-            <Tab
-              label="Find Events"
-              style={styles.theme}
-            >
-              <FindEvents
-                events={this.props.events}
-                googleMap={this.props.googleMap}
-                setCurrentEvent={this.props.setCurrentEvent}
-                toggleEventDetails={this.props.toggleEventDetails}
-                setCurrentEventParticipants={this.props.setCurrentEventParticipants}
-                disableButton={this.props.disableButton}
-                changeCenter={this.props.changeCenter}
-                addEvents={this.props.addEvents}
-                setCurrentEventLikes={this.props.setCurrentEventLikes}
-                geolocation={this.props.googleMap.geolocation}
-              />
-            </Tab>
-            <Tab
-              label="Create Event"
-              style={styles.theme}
-            >
-              <CreateEventForm
-                className="createEventForm"
-                createEventForm={this.props.createEventForm}
-                updateForm={this.props.updateForm}
-                markers={this.props.googleMap.markers}
-                changeCenter={this.props.changeCenter}
-                addEvents={this.props.addEvents}
-                events={this.props.events}
-              />
-            </Tab>
-          </Tabs>
           <div>
             <Gmap
               addEvents={this.props.addEvents}
@@ -95,6 +61,15 @@ class Homepage extends Component {
           disableButton={this.props.disableButton}
           incrementLikes={this.props.incrementLikes}
           events={this.props.events}
+        />
+        <CreateEventForm
+          createEventForm={this.props.createEventForm}
+          updateForm={this.props.updateForm}
+          markers={this.props.googleMap.markers}
+          changeCenter={this.props.changeCenter}
+          addEvents={this.props.addEvents}
+          events={this.props.events}
+          toggleCreateEvent={this.props.toggleCreateEvent}
         />
       </div>
     );
@@ -145,7 +120,8 @@ const matchDispatchToProps = (dispatch) => {
     setCurrentEventParticipants: setCurrentEventParticipants,
     disableButton: disableButton,
     setCurrentEventLikes: setCurrentEventLikes,
-    incrementLikes: incrementLikes
+    incrementLikes: incrementLikes,
+    toggleCreateEvent: toggleCreateEvent
   }, dispatch);
 };
 
