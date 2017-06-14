@@ -27,7 +27,7 @@ class Tools extends Component {
 
   handleChange(e) {
     this.setState({ category: e.target.innerHTML });
-    axios.get('/api/retrieveCategoryEvents?query=' + e.target.innerHTML)
+    axios.get('/api/retrieveEventsByCategory?query=' + e.target.innerHTML)
     .then((data) => {
       this.props.addEvents(data.data);
     })

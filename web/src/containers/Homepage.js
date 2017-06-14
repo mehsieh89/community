@@ -40,6 +40,21 @@ class Homepage extends Component {
         <Header header={this.props.header} />
         <GridList>
           <div>
+            <Tools {...this.props} geolocation={this.props.googleMap.geolocation} />
+            <FindEvents
+              events={this.props.events}
+              googleMap={this.props.googleMap}
+              setCurrentEvent={this.props.setCurrentEvent}
+              toggleEventDetails={this.props.toggleEventDetails}
+              setCurrentEventParticipants={this.props.setCurrentEventParticipants}
+              disableButton={this.props.disableButton}
+              changeCenter={this.props.changeCenter}
+              addEvents={this.props.addEvents}
+              setCurrentEventLikes={this.props.setCurrentEventLikes}
+              geolocation={this.props.googleMap.geolocation}
+            />
+          </div>
+          <div>
             <Gmap
               addEvents={this.props.addEvents}
               addGeolocation={this.props.addGeolocation}
