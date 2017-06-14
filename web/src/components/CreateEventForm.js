@@ -109,10 +109,6 @@ class CreateEventForm extends Component {
     const files = document.getElementById('imageupload').files;
     if (!files.length) {
       return alert('Please choose an image for your event.');
-      // TODO: change to form error message
-      // TODO: add label for "Add Event Image"
-      // TODO: show/hide add image button depending on if file input has value
-      // TODO: handle delete image
     }
 
     const file = files[0];
@@ -152,11 +148,11 @@ class CreateEventForm extends Component {
     return new Promise((resolve, reject) => {
       let date = this.state.date;
       let time = this.state.time;
-      if (!this.state.eventName) { throw errorCreator('eventNameError', 'event name cannnot be empty'); }
-      if (!date) { throw errorCreator('dateError', 'please select valid date'); }
-      if (!time) { throw errorCreator('timeError', 'please select valid time'); }
-      if (!this.state.location) { throw errorCreator('locationError', 'location cannnot be empty'); }
-      if (this.state.category === 'select...') { throw errorCreator('categoryError', 'please select category'); }
+      if (!this.state.eventName) { throw errorCreator('eventNameError', 'Event name cannnot be empty'); }
+      if (!date) { throw errorCreator('dateError', 'Please select valid date'); }
+      if (!time) { throw errorCreator('timeError', 'Please select valid time'); }
+      if (!this.state.location) { throw errorCreator('locationError', 'Location cannnot be empty'); }
+      if (this.state.category === 'select...') { throw errorCreator('categoryError', 'Please select category'); }
       let dateTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), time.getSeconds());
       resolve(this.setState({ dateTime: dateTime }));
     })

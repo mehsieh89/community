@@ -34,7 +34,7 @@ router.route('/createEvent')
       if (data.data.results.length === 0) {
         let e = new Error();
         e.name = 'locationError';
-        e.message = 'location cannot be found';
+        e.message = 'Location cannot be found';
         throw e;
       }
       const lat = data.data.results[0].geometry.location.lat;
@@ -106,7 +106,7 @@ router.route('/retrieveMarkers')
 
 router.route('/retrieveEvents')
   .get((req, res) => {
-    return db.knex.select().from('events')
+    return db.knex.select().from('events').orderBy('time', 'desc')
     .then((data) => {
       res.json(data);
     })
@@ -119,7 +119,7 @@ router.route('/retrieveEventsByCategory')
   .get((req, res) => {
     const category = req.query.query;
     if (category === 'All') {
-      return db.knex.select().from('events')
+      return db.knex.select().from('events').orderBy('time', 'desc')
       .then((data) => {
         res.json(data);
       })
