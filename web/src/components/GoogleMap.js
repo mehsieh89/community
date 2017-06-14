@@ -4,7 +4,7 @@ import { Circle, GoogleMap, Marker, withGoogleMap } from 'react-google-maps';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import LocationInput from './LocationInput';
-import LocationSearching from 'material-ui-icons/LocationSearching';
+import GpsFixed from 'material-ui-icons/GpsFixed';
 import Autorenew from 'material-ui-icons/Autorenew';
 import Paper from 'material-ui/Paper';
 import Promise from 'bluebird';
@@ -167,7 +167,7 @@ class Gmap extends Component {
         />
         <IconButton style={styles.recenter}>
           <Paper style={styles.circle} zDepth={2} circle={true} >
-            <LocationSearching
+            <GpsFixed
               onTouchTap={this.recenter}
               color={'#3EB1E0'}
             />

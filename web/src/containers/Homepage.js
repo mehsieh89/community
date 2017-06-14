@@ -39,6 +39,7 @@ class Homepage extends Component {
           <Tabs
             contentContainerStyle={styles.container}
             tabTemplateStyle={styles.gridContainer}
+            inkBarStyle={{backgroundColor: '#3EB1E0'}}
           >
             <Tab
               label="Find Events"
@@ -111,7 +112,6 @@ const styles = {
   },
   theme: {
     borderColor: '#ddd',
-    backgroundColor: 'white',
     fontFamily: 'Roboto',
     color: '#3EB1E0',
     borderRightStyle: 'solid',

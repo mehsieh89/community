@@ -19,8 +19,7 @@ const muiTheme = getMuiTheme({
   },
   tabs: {
     backgroundColor: 'white',
-  }
-
+  },
 });
 
 const styles = {

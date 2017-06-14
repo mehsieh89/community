@@ -1,8 +1,10 @@
-import { AppBar, Drawer, MenuItem } from 'material-ui';
+import { AppBar, MenuItem } from 'material-ui';
 import axios from 'axios';
 import React, { Component } from 'react';
 import Menu from 'material-ui-icons/Menu';
 import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
+import MoreVert from 'material-ui-icons/MoreVert';
 
 class Header extends Component {
   constructor(props) {
@@ -50,44 +52,38 @@ class Header extends Component {
           title="Community"
           style={styles.theme}
           titleStyle={styles.title}
-          iconElementLeft={
-            <IconButton>
-              <Menu color={'#3798db'} />
-            </IconButton>}
-          onLeftIconButtonTouchTap={this.toggleDrawer}
+          showMenuIconButton={false}
+          iconElementRight={
+            <IconMenu
+              iconButtonElement={
+                <IconButton>
+                  <MoreVert color={'#3EB1E0'}/>
+                </IconButton>}
+              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+              targetOrigin={{horizontal: 'right', vertical: 'top'}}
+              iconStyle={{ fill: 'rgba(62, 177, 224, 1)' }}
+            >
+              <MenuItem
+                onTouchTap={this.handleClose}
+                onTouchTap={this.handleHome}
+                primaryText="Home"
+                href={'/'}
+              />
+              <MenuItem
+                onTouchTap={this.handleClose}
+                onTouchTap={this.handleEditProfile}
+                primaryText="My Profile"
+                href={'/profile'}
+              />
+              <MenuItem
+                onTouchTap={this.handleClose}
+                onTouchTap={this.handleLogout}
+                primaryText="Logout"
+                href={'/login'}
+              />
+            </IconMenu>}
           docked={true}
-          // iconStyleLeft={{icon: {tintColor: '#3EB1E0'}}}
         />
-          <Drawer
-            open={this.state.open}
-            onRequestChange={open => this.setState({ open })}
-            docked={false}
-          >
-            <AppBar
-              title="Community"
-              showMenuIconButton={false}
-              style={styles.theme}
-              titleStyle={styles.title}
-            />
-            <MenuItem
-              onTouchTap={this.handleClose}
-              onTouchTap={this.handleHome}
-              primaryText="Home"
-              href={'/'}
-            />
-            <MenuItem
-              onTouchTap={this.handleClose}
-              onTouchTap={this.handleEditProfile}
-              primaryText="My Profile"
-              href={'/profile'}
-            />
-            <MenuItem
-              onTouchTap={this.handleClose}
-              onTouchTap={this.handleLogout}
-              primaryText="Logout"
-              href={'/login'}
-            />
-          </Drawer>
       </div>
     );
   }
