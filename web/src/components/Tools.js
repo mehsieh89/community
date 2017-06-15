@@ -29,7 +29,6 @@ class Tools extends Component {
     this.setState({ category: e.target.innerHTML });
     axios.get('/api/retrieveEventsByCategory?query=' + e.target.innerHTML)
     .then((data) => {
-      console.log('filtered category', data.data);
       this.props.addEvents(data.data);
       const lat = data.data[0].lat;
       const lng = data.data[0].lng;
