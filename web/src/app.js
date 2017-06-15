@@ -17,16 +17,17 @@ const muiTheme = getMuiTheme({
   palette: {
     accent1Color: deepOrange500
   },
+  raisedButton: {
+    primaryColor: '#3EB1E0'
+  },
   tabs: {
     backgroundColor: 'white',
   },
-});
-
-const styles = {
   theme: {
     fontFamily: 'Roboto'
   }
-};
+});
+
 
 injectTapEventPlugin();
 if (document.getElementById('root')) {
