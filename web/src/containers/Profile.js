@@ -58,33 +58,40 @@ class Profile extends Component {
         {this.props.isLoading ?
           (<div style={styles.loadingContainer}>
             <div style={styles.loadingOverlay}></div>
-            <Spinner name='three-bounce' color="#C22B33" fadeIn="none" style={styles.loading}/>
+            <Spinner
+              name='three-bounce'
+              color="#C22B33"
+              fadeIn="none"
+              style={styles.loading}/>
           </div>) : null
         }
         <Header header={this.props.header}/>
-        <Card style={styles.container} >
-          <div style={styles.welcome} >Welcome, {JSON.parse(window.user).first}</div>
+        <Card style={styles.container}>
+          <div style={styles.welcome}>Welcome, {JSON.parse(window.user).first}</div>
           <Avatar src={JSON.parse(window.user).profile_picture} size={100} />
-          <h3 style={styles.heading} >Upcoming Events</h3>
-          <ProfileGrid
-            events={this.state.upcomingEvents}
-            setCurrentEvent={this.props.setCurrentEvent}
-            eventDetails={this.props.eventDetails}
-            toggleEventDetails={this.props.toggleEventDetails}
-            updateButton={this.props.updateButton}
-            setCurrentEventParticipants={this.props.setCurrentEventParticipants}
-          />
-          <br />
-          <h3 style={styles.heading} >Past Events</h3>
-          <ProfileGrid
-            events={this.state.pastEvents}
-            setCurrentEvent={this.props.setCurrentEvent}
-            eventDetails={this.props.eventDetails}
-            toggleEventDetails={this.props.toggleEventDetails}
-            updateButton={this.props.updateButton}
-            setCurrentEventParticipants={this.props.setCurrentEventParticipants}
-            setCurrentEventLikes={this.props.setCurrentEventLikes}
-          />
+          <h3 style={styles.heading}>Upcoming Events</h3>
+          <div style={styles.container}>
+            <ProfileGrid
+              events={this.state.upcomingEvents}
+              setCurrentEvent={this.props.setCurrentEvent}
+              eventDetails={this.props.eventDetails}
+              toggleEventDetails={this.props.toggleEventDetails}
+              updateButton={this.props.updateButton}
+              setCurrentEventParticipants={this.props.setCurrentEventParticipants}
+            />
+            <br />
+            <h3 style={styles.heading}>Past Events</h3>
+            <ProfileGrid
+              events={this.state.pastEvents}
+              setCurrentEvent={this.props.setCurrentEvent}
+              eventDetails={this.props.eventDetails}
+              toggleEventDetails={this.props.toggleEventDetails}
+              updateButton={this.props.updateButton}
+              setCurrentEventParticipants={this.props.setCurrentEventParticipants}
+              setCurrentEventLikes={this.props.setCurrentEventLikes}
+              style={styles.container}
+            />
+          </div>
         </Card>
         <EventDetails
           toggleEventDetails={this.props.toggleEventDetails}
@@ -103,18 +110,25 @@ class Profile extends Component {
 const styles = {
   container: {
     margin: 10,
-    padding: 10
+    padding: 10,
+    flexDirection: 'row',
+    flexWrap: 'wrap'
   },
   welcome: {
     fontSize: 20,
     fontFamily: 'Roboto',
     align: 'center',
-    color: '#31575B'
+    color: '#31575B',
+    fontWeight: 'bold'
   },
   heading: {
     fontSize: 20,
     fontFamily: 'Roboto',
     color: '#31575B'
+  },
+  gridContainer: {
+    padding: 10,
+    flexDirection: 'row',
   },
   loadingContainer: {
     width: '100%',

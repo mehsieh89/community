@@ -86,22 +86,14 @@ class Comments extends Component {
             underlineStyle={{color: '#31575B'}}
             underlineFocusStyle={styles.underline}
           />
-          {this.state.text === '' ?
           <RaisedButton
             label="Comment"
-            labelColor={'#31575B'}
+            labelColor={'white'}
             onTouchTap={this.handleSubmit}
             style={styles.button}
-            disabled={true}
+            disabled={this.state.text === '' ? true : false}
+            backgroundColor='#31575B'
           />
-          :
-          <RaisedButton
-            label="Comment"
-            labelColor={'#31575B'}
-            onTouchTap={this.handleSubmit}
-            style={styles.button}
-          />
-          }
         </form>
         <div>
           {this.state.comments.map(comment => (
@@ -127,9 +119,8 @@ const styles = {
   container: {
     display: 'inline-block',
     lineHeight: '16px',
-    borderStyle: 'solid',
+    borderBottom: '1px dotted #31575B',
     borderWidth: '1',
-    boxShadow: '0 1 3 rgba(0, 0, 0, 0.15)',
     margin: '5',
     padding: '20',
     width: '673'
@@ -160,7 +151,7 @@ const styles = {
   time: {
     float: 'right',
     display: 'inline-block',
-    color: '#C22B33'
+    color: '#31575B'
   },
   underline: {
     borderColor: '#C22B33'
