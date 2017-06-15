@@ -5,7 +5,7 @@ import { MenuItem, RaisedButton, FlatButton, SelectField, TextField, Dialog, Gri
 import React, { Component } from 'react';
 import TimePicker from 'material-ui/TimePicker';
 import AWS from 'aws-sdk';
-var Spinner = require('react-spinkit');
+const Spinner = require('react-spinkit');
 
 var imageBucketName = 'hr-community-images';
 var bucketRegion = 'us-east-1';
@@ -168,7 +168,12 @@ class CreateEventForm extends Component {
     })
     .then(() => {
       return axios.post('/api/createEvent', this.state)
-      .catch(err => { throw err.response.data; });
+      .catch(err => {
+        this.setState({
+          isLoading: false
+        });
+        throw err.response.data;
+      });
     })
     .then((data) => {
       this.props.updateForm(this.state);
@@ -182,7 +187,7 @@ class CreateEventForm extends Component {
         this.setState({
           isLoading: false
         });
-        alert('New event created!');
+        // alert('New event created!');
       });
     })
     .catch(err => {
