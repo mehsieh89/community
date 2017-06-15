@@ -30,6 +30,9 @@ class Tools extends Component {
     axios.get('/api/retrieveEventsByCategory?query=' + e.target.innerHTML)
     .then((data) => {
       this.props.addEvents(data.data);
+      const lat = data.data[0].lat;
+      const lng = data.data[0].lng;
+      this.props.changeCenter({lat: Number(lat), lng: Number(lng)});
     })
     .catch((err) => {
       console.log(err);

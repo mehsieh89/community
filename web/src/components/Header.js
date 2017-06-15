@@ -57,11 +57,11 @@ class Header extends Component {
             <IconMenu
               iconButtonElement={
                 <IconButton>
-                  <MoreVert color={'#3EB1E0'}/>
+                  <MoreVert/>
                 </IconButton>}
               anchorOrigin={{horizontal: 'right', vertical: 'top'}}
               targetOrigin={{horizontal: 'right', vertical: 'top'}}
-              iconStyle={{ fill: 'rgba(62, 177, 224, 1)' }}
+              iconStyle={{ fill: 'rgba(194, 43, 51, 1)' }}
             >
               <MenuItem
                 onTouchTap={this.handleClose}
