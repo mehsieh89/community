@@ -18,13 +18,33 @@ const muiTheme = getMuiTheme({
     accent1Color: deepOrange500
   },
   raisedButton: {
-    primaryColor: '#3EB1E0'
+    primaryColor: '#31575B',
+    secondaryColor: '#C22B33'
+  },
+  flatButton: {
+    textColor: '#C22B33',
+    primaryTextColor: '#C22B33',
+    secondaryColor: '#C22B33'
   },
   tabs: {
     backgroundColor: 'white',
   },
   theme: {
     fontFamily: 'Roboto'
+  },
+  datePicker: {
+    selectColor: '#31575B',
+  },
+  timePicker: {
+    accentColor: '#31575B',
+    clockColor: '#31575B',
+    headerColor: '#31575B',
+  },
+  textField: {
+    focusColor: '#31575B',
+  },
+  dialog: {
+    textColor: '#C22B33',
   }
 });
 

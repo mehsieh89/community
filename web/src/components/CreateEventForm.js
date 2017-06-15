@@ -304,7 +304,6 @@ const styles = {
   buttonLabel: {
     fontFamily: 'Roboto',
     fontSize: '14px',
-    color: '#3EB1E0',
     textTransform: 'capitalize',
   },
   container: {
