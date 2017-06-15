@@ -41,7 +41,7 @@ class FindEvents extends Component {
   render() {
     return (
       <Card
-        style={styles.container}
+        style={styles.containerChildren}
         containerStyle={styles.container}
         >
         <GridList cellHeight={220} cols={2} style={styles.gridList}>
@@ -66,11 +66,13 @@ class FindEvents extends Component {
 }
 
 const styles = {
-  container: {
+  containerChildren: {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-    // backgroundColor: '#f6f5f0'
+  },
+  container: {
+    height: window.innerHeight * .86,
   },
   theme: {
     fontFamily: 'Roboto',

@@ -5,6 +5,8 @@ import FontIcon from 'material-ui/FontIcon';
 import { Menu, MenuItem, DropDownMenu, RaisedButton, FlatButton, Popover, SelectField } from 'material-ui';
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
 import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
+import SwapVert from 'material-ui-icons/SwapVert';
+import FilterList from 'material-ui-icons/FilterList';
 import axios from 'axios';
 
 class Tools extends Component {
@@ -93,6 +95,8 @@ class Tools extends Component {
           <FlatButton
             label="Sort By"
             onTouchTap={this.toggleSort}
+            icon={<SwapVert />}
+            style={{width: 130}}
             // style={{position: 'relative', left: '-45', bottom: '20'}}
           />
           <Popover
@@ -112,6 +116,8 @@ class Tools extends Component {
           <FlatButton
             label="Filter Category"
             onTouchTap={this.toggleFilter}
+            icon={<FilterList/>}
+            style={{width: 200}}
           />
           <Popover
             open={this.state.showFilterOptions}
@@ -135,7 +141,10 @@ class Tools extends Component {
         </ToolbarGroup>
         <ToolbarGroup>
           <ToolbarSeparator />
-          <RaisedButton label="Create Event" primary={true} onTouchTap={this.props.toggleCreateEvent} />
+          <RaisedButton label="Create Event"
+            style={{width: 175}}
+            primary={true}
+            onTouchTap={this.props.toggleCreateEvent} />
         </ToolbarGroup>
       </Toolbar>
     );
@@ -171,7 +180,7 @@ const styles = {
     left: '120'
   },
   tools: {
-    height: 50,
+    height: window.innerHeight * .06,
     backgroundColor: '#fff'
   }
 };

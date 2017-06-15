@@ -47,12 +47,14 @@ class Header extends Component {
 
   render () {
     return (
-      <div>
         <AppBar
           title="Community"
           style={styles.theme}
           titleStyle={styles.title}
-          showMenuIconButton={false}
+          iconElementLeft={
+            <img src='http://icons.iconarchive.com/icons/icons8/christmas-flat-color/512/penguin-icon.png/'
+            width='30' height='30' style={{marginTop: 6, marginLeft: 5}}/>
+          }
           iconElementRight={
             <IconMenu
               iconButtonElement={
@@ -83,7 +85,6 @@ class Header extends Component {
               />
             </IconMenu>}
         />
-      </div>
     );
   }
 }
@@ -92,7 +93,8 @@ const styles = {
   title: {
     fontFamily: 'Vibur',
     fontSize: '34px',
-    color: '#C22B33'
+    color: '#C22B33',
+    height: window.innerHeight * .08
   },
   theme: {
     backgroundColor: 'white'
