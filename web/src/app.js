@@ -29,6 +29,9 @@ const muiTheme = getMuiTheme({
   tabs: {
     backgroundColor: 'white',
   },
+  tab: {
+    fontWeight: 'bold',
+  },
   theme: {
     fontFamily: 'Roboto'
   },

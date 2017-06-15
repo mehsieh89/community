@@ -377,14 +377,14 @@ const styles = {
     opacity: '0.4'
   },
   loading: {
-    width: '100',
+    width: 100,
     position: 'absolute',
     margin: 'auto',
-    top: '0',
-    bottom: '0',
-    right: '0',
-    left: '0',
-    zIndex: '1000'
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    zIndex: 1000
   }
 };
 
