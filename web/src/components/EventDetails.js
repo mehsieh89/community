@@ -26,7 +26,6 @@ class EventDetails extends Component {
     let currentEvent = this.props.eventDetails.currentEvent;
     axios.post('/api/attendEvent', { eventId: currentEvent.id })
     .then(res => {
-      console.log(res.data);
       this.props.updateButton({ isAttendingEvent: true });
     })
     .then(() => {
@@ -41,7 +40,6 @@ class EventDetails extends Component {
     let currentEvent = this.props.eventDetails.currentEvent;
     axios.post('/api/unattendEvent', { eventId: currentEvent.id })
     .then(res => {
-      console.log(res.data);
       this.props.updateButton({ isAttendingEvent: false });
     })
     .then(() => {
