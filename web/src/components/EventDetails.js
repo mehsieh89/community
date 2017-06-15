@@ -108,14 +108,14 @@ class EventDetails extends Component {
           modal={false}
           open={this.props.eventDetails.showEventDetails}
           onRequestClose={this.handleClose}
-          autoScrollBodyContent='true'
+          autoScrollBodyContent={true}
           >
             <div style={{height: 500}}>
             <Tabs
               inkBarStyle={{backgroundColor: '#C22B33', marginBottom: 20}}
               >
               <Tab
-                label={<span style={{ color: '#31575B' }}>Event Details</span>}
+                label={<span style={{ color: '#31575B', fontWeight: 'bold' }}>Event Details</span>}
                 style={styles.tab}
               >
                 <div style={styles.left}>
@@ -144,7 +144,7 @@ class EventDetails extends Component {
               </Tab>
               <Tab
                 style={styles.tab}
-                label={<span style={{ color: '#31575B' }}>Event Comments</span>}
+                label={<span style={{ color: '#31575B', fontWeight: 'bold' }}>Event Comments</span>}
               >
                 <Comments {...this.props}/>
               </Tab>

@@ -1,6 +1,7 @@
 import { AutoComplete, Card, RaisedButton, TextField } from 'material-ui';
 import axios from 'axios';
 import Promise from 'bluebird';
+import Search from 'material-ui-icons/Search';
 import React, { Component } from 'react';
 
 export default class LocationInput extends Component {
@@ -69,7 +70,7 @@ export default class LocationInput extends Component {
     });
     const filter = () => true;
     return (
-      <Card style={{marginTop: 2}}>
+      <Card style={{marginTop: 2, height: window.innerHeight * .06}}>
         <AutoComplete dataSource={dataSource}
           autoFocus
           filter={filter}
@@ -100,8 +101,8 @@ const styles = {
     border: '1px solid #31575B',
     marginLeft: '18px',
     float: 'right',
-    marginRight: '10',
-    marginTop: '3',
+    marginRight: 10,
+    marginTop: 3,
   },
   buttonLabel: {
     fontFamily: 'Roboto',
@@ -114,7 +115,7 @@ const styles = {
     fontSize: '16px',
     marginLeft: '14px',
     marginRight: '8px',
-    width: '700px'
+    width: 700
   },
   underline: {
     borderColor: '#C22B33'
