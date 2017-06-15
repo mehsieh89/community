@@ -78,6 +78,7 @@ class EventDetails extends Component {
           onRequestClose={this.handleClose}
           autoScrollBodyContent='true'
           >
+            <div style={{height: 500}}>
             <Tabs
               inkBarStyle={{backgroundColor: '#C22B33', marginBottom: 20}}
               >
@@ -116,6 +117,7 @@ class EventDetails extends Component {
                 <Comments {...this.props}/>
               </Tab>
             </Tabs>
+          </div>
         </Dialog>
       );
     } else { return null; }
