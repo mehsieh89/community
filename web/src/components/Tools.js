@@ -184,13 +184,11 @@ const styles = {
     left: '120'
   },
   tools: {
-    height: '100%',
+    height: window.innerHeight * .06,
     backgroundColor: '#fff',
   },
   text: {
     color: '#31575B',
-    height: window.innerHeight * .06,
-    backgroundColor: '#fff'
   }
 };
 
