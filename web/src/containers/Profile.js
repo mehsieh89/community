@@ -79,6 +79,7 @@ class Profile extends Component {
                 toggleEventDetails={this.props.toggleEventDetails}
                 updateButton={this.props.updateButton}
                 setCurrentEventParticipants={this.props.setCurrentEventParticipants}
+                setCurrentEventLikes={this.props.setCurrentEventLikes}
               />
             </Card>
             <br />
