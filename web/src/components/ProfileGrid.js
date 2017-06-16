@@ -71,7 +71,7 @@ const styles = {
     flexWrap: 'nowrap',
     flexDirection: 'row',
     alignItems: 'flex-start',
-    width: window.innerWidth * .92,
+    width: window.innerWidth * .87,
     height: 200,
     overflowX: 'auto',
     padding: 10,

@@ -200,13 +200,13 @@ class CreateEventForm extends Component {
   render() {
     const actions = [
       <FlatButton
-        label="Cancel"
+        label="CANCEL"
         labelStyle={styles.buttonLabel}
         labelColor='#5E35B1'
         onTouchTap={() => { this.clearForm(); this.props.toggleCreateEvent(); }}
       />,
       <FlatButton
-        label="Submit"
+        label="SUBMIT"
         labelStyle={styles.buttonLabel}
         labelColor='#5E35B1'
         onTouchTap={this.handleSubmit}
