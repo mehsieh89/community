@@ -22,8 +22,8 @@ const muiTheme = getMuiTheme({
     secondaryColor: '#C22B33'
   },
   flatButton: {
-    textColor: '#C22B33',
-    primaryTextColor: '#C22B33',
+    textColor: '#31575B',
+    primaryTextColor: '#31575B',
     secondaryColor: '#C22B33'
   },
   tabs: {
