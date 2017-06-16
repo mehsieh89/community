@@ -41,57 +41,59 @@ class FindEvents extends Component {
   render() {
     return (
       <Card
-        containerStyle={styles.gridList}
-      >
-          <GridList cellHeight={220} cols={2} style={styles.container}>
-            {this.props.events.map((tile, i) => (
-              <GridTileComponent
-                key={i}
-                indexID={i}
-                title={tile.event_name}
-                // titleBackground="linear-gradient(to top, rgba(94,53,177,0.7) 0%,rgba(94,53,177,0.3) 70%,rgba(94,53,177,0) 100%)"
-                style={styles.tile}
-                actionIcon={<IconButton><StarBorder color='white' /></IconButton>}
-                imageSRC={tile.image}
-                data={this.props.events}
-                onClick={() => this.handleTileClick(i)}
-                >
-                </GridTileComponent>
-              ))}
-            </GridList>
+        style={styles.containerChildren}
+        containerStyle={styles.container}
+        >
+        <GridList cellHeight={200} cols={2} style={styles.gridList} padding={15}>
+          {this.props.events.map((tile, i) => (
+            <GridTileComponent
+              key={i}
+              indexID={i}
+              title={tile.event_name}
+              style={styles.tile}
+              actionIcon={<IconButton><StarBorder color="f6f5f0" /></IconButton>}
+              imageSRC={tile.image}
+              data={this.props.events}
+              onClick={() => this.handleTileClick(i)}
+            >
+            </GridTileComponent>
+          ))}
+        </GridList>
       </Card>
     );
   }
 }
 
 const styles = {
-  container: {
+  containerChildren: {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-    height: '100%',
-    zIndex: 3
+  },
+  container: {
+    height: window.innerHeight * .86,
   },
   theme: {
     fontFamily: 'Roboto',
     fontSize: '20px'
   },
   gridList: {
-    height: '100%',
-    marginBottom: 0,
-    padding: 15,
-    overflowY: 'auto'
-  },
-  tile: {
-    margin: 10,
-    width: 270,
-    cursor: 'pointer',
+    overflowY: 'auto',
+    paddingTop: window.innerHeight * .036,
+    paddingLeft: window.innerWidth * .04,
+    paddingRight: window.innerWidth * .04,
   },
   dropdown: {
     width: 250,
     position: 'relative',
     left: '120'
-  }
+  },
+  tile: {
+    margin: 10,
+    width: 280,
+    height: 180,
+    cursor: 'pointer'
+  },
 };
 
 export default FindEvents;

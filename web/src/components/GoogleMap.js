@@ -198,7 +198,7 @@ const styles = {
   },
   mapSize: {
     position: 'absolute',
-    height: 'calc(100% - 112px)',
+    height: window.innerHeight * .86,
     width: '50%',
   },
   recenter: {

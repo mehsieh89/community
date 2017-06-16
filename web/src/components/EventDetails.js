@@ -104,13 +104,14 @@ class EventDetails extends Component {
       return (
         <Dialog
           title={currentEvent.event_name}
+          titleStyle={{color: '#31575B'}}
           actions={actions}
           modal={false}
           open={this.props.eventDetails.showEventDetails}
           onRequestClose={this.handleClose}
-          autoScrollBodyContent='true'
+          autoScrollBodyContent={true}
           >
-            <div style={{height: 500}}>
+            <div style={{height: 450}}>
             <Tabs
               inkBarStyle={{backgroundColor: '#C22B33', marginBottom: 20}}
               >
