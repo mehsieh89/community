@@ -2,6 +2,8 @@
 
 What if I told you there's an app that scans your surrounding and lets you know all of the events happening around you? 
 
+https://warriors-community.herokuapp.com/login
+
 ![community](https://thumbs.gfycat.com/PrestigiousArcticLabradorretriever-size_restricted.gif)
 
 ## Team
