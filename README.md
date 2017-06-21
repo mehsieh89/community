@@ -4,7 +4,7 @@ Community
 
 What if I told you there's an app that scans your surrounding and lets you know all of the events happening around you? 
 
-![community](https://gfycat.com/DependableValuableBlackfish)
+![community](https://thumbs.gfycat.com/DependableValuableBlackfish-size_restricted.gif)
 
 ## Team
 
