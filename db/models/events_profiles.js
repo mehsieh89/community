@@ -1,12 +1,12 @@
 const db = require('../');
 
 const Event_Profile = db.Model.extend({
-  tableName: 'profiles_events',
+  tableName: 'events_profiles',
   event: function() {
-    return this.belongsTo(Event);
+    return this.belongsTo('Event');
   },
   profile: function() {
-    return this.belongsTo(Profile);
+    return this.belongsTo('Profile');
   },
 });
 

@@ -1,12 +1,8 @@
-import React, { Component } from 'react';
-import { RaisedButton, TextField, Card, AutoComplete } from 'material-ui';
-import Promise from 'bluebird';
+import { AutoComplete, Card, RaisedButton, TextField } from 'material-ui';
 import axios from 'axios';
-import config from '../../../config/development.json';
-
-const KEY = config.GoogleKey;
-
-const GeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
+import Promise from 'bluebird';
+import Search from 'material-ui-icons/Search';
+import React, { Component } from 'react';
 
 export default class LocationInput extends Component {
   constructor(props) {
@@ -39,37 +35,28 @@ export default class LocationInput extends Component {
   }
 
   handleLocationSearch() {
-    const lat = this.state.autoComplete[0].geometry.location.lat;
-    const lng = this.state.autoComplete[0].geometry.location.lng;
-    const nextMarkers = [
-      ...this.props.markers,
-      {
-        position: {
-          lat: lat,
-          lng: lng,
-        },
-        defaultAnimation: 3,
-        key: Date.now(),
-      },
-    ];
-    this.props.setMarkers(nextMarkers);
-    this.props.changeCenter({lat: lat, lng: lng});
-    this.props.handleReverseGeoCode({lat: lat, lng: lng});
+    this.setState({
+      autoComplete: [],
+    });
+    const string = this.state.location.split(' ').join('+');
+    axios.post('/api/locationInput', {location: string})
+    .then((res) => {
+      const lat = res.data[0].geometry.location.lat;
+      const lng = res.data[0].geometry.location.lng;
+      this.props.changeCenter({lat: lat, lng: lng});
+      this.props.handleReverseGeoCode({lat: lat, lng: lng});
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   handleLocationInput(location) {
     let string = location.split(' ').join('+');
-    axios.get(GeoCodeURL + string + '&key=' + KEY)
+    axios.post('/api/locationInput', {location: string})
     .then((res) => {
-      let acArray = [];
-      for (let i = 0; i < res.data.results.length; i++) {
-        acArray.push(res.data.results[i]);
-      }
-      return acArray;
-    })
-    .then((array) => {
       this.setState({
-        autoComplete: array
+        autoComplete: res.data
       });
     })
     .catch((err) => {
@@ -83,16 +70,54 @@ export default class LocationInput extends Component {
     });
     const filter = () => true;
     return (
-      <Card className="searchLocation">
-        <label> Location: </label>
+      <Card style={{marginTop: 2, height: window.innerHeight * .06}}>
         <AutoComplete dataSource={dataSource}
-          name="address"
-          value={this.state.location}
           autoFocus
           filter={filter}
-          onUpdateInput={this.handleChange}/>
-        <RaisedButton label="search" onTouchTap={this.handleLocationSearch}/>
+          name="address"
+          onUpdateInput={this.handleChange}
+          hintText='Search Location'
+          hintStyle={{color: '#31575B', fontStyle: 'italic'}}
+          textFieldStyle={styles.location}
+          underlineStyle={{color: '#31575B'}}
+          underlineFocusStyle={styles.underline}
+          value={this.state.location}
+        />
+        <RaisedButton
+          label="SEARCH"
+          onTouchTap={this.handleLocationSearch}
+          labelStyle={styles.buttonLabel}
+          labelColor='white'
+          style={styles.button}
+          backgroundColor='#31575B'
+        />
       </Card>
     );
   }
 }
+
+const styles = {
+  button: {
+    border: '1px solid #31575B',
+    marginLeft: '18px',
+    float: 'right',
+    marginRight: 10,
+    marginTop: 3,
+  },
+  buttonLabel: {
+    fontFamily: 'Roboto',
+    fontSize: '14px',
+    textTransform: 'capitalize',
+  },
+  location: {
+    borderColor: '#31575B',
+    fontFamily: 'Roboto',
+    fontSize: '16px',
+    marginLeft: '14px',
+    marginRight: '8px',
+    width: 700
+  },
+  underline: {
+    borderColor: '#C22B33'
+  },
+};

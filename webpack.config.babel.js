@@ -19,6 +19,14 @@ const config = {
             }
           }
         ]
+      },
+      {
+        test: /\.(mp4)$/,
+        loader: 'url-loader?limit=10000'
+      },
+      {
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ]
       }
     ]
   }

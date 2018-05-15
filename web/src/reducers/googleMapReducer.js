@@ -1,9 +1,9 @@
 const initialState = {
   center: {
-    lat: 37.774929,
-    lng: -122.419416
+    lat: 40.758895,
+    lng: -73.985131
   },
-  markers: [],
+  geolocation: [],
 };
 
 export default function(state = initialState, action) {
@@ -14,10 +14,10 @@ export default function(state = initialState, action) {
     CenterState.center = action.payload;
     return CenterState;
 
-  case 'SET_MARKERS' :
-    let MarkerState = Object.assign({}, state);
-    MarkerState.markers = action.payload;
-    return MarkerState;
+  case 'ADD_GEOLOCATION' :
+    let GeoState = Object.assign({}, state);
+    GeoState.geolocation = action.payload;
+    return GeoState;
 
   default:
     return state;

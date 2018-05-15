@@ -1,137 +1,236 @@
-import React, { Component } from 'react';
-import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 import axios from 'axios';
+import canUseDOM from 'can-use-dom';
+import { Circle, GoogleMap, Marker, withGoogleMap } from 'react-google-maps';
+import FontIcon from 'material-ui/FontIcon';
+import IconButton from 'material-ui/IconButton';
 import LocationInput from './LocationInput';
-import config from '../../../config/development.json';
+import GpsFixed from 'material-ui-icons/GpsFixed';
+import Autorenew from 'material-ui-icons/Autorenew';
+import Paper from 'material-ui/Paper';
+import Promise from 'bluebird';
+import React, { Component } from 'react';
 
-const KEY = config.GoogleKey;
-const GeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
-const RevGeoCodeURL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
-const style = {
-  position: 'absolute',
-  height: '100%',
-  width: '100%',
-};
+const geolocation = (
+  canUseDOM && navigator.geolocation ?
+  navigator.geolocation :
+  ({
+    getCurrentPosition(success, failure) {
+      if (failure) {
+        console.log('Your browser does not support geolocation.');
+      }
+    },
+  })
+);
 
 class Gmap extends Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      center: {
+        lat: 40.758895,
+        lng: -73.985131,
+      },
+      userLocation: {
+        lat: '',
+        lng: ''
+      }
+    };
     this.handleMapLoad = this.handleMapLoad.bind(this);
-    this.handleMapClick = this.handleMapClick.bind(this);
     this.handleMarkerClick = this.handleMarkerClick.bind(this);
-    this.handleMarkerRightClick = this.handleMarkerRightClick.bind(this);
     this.handleReverseGeoCode = this.handleReverseGeoCode.bind(this);
+    this.recenter = this.recenter.bind(this);
+    this.onRefresh = this.onRefresh.bind(this);
+    // this.onMapClick = this.onMapClick.bind(this);
   }
 
   componentDidMount() {
-    const nextMarkers = [
-      ...this.props.markers,
-    ];
-    // let holder = [];
-    // let holder2 = [];
-    axios.get('/api/retrieveMarkers')
-    .then((res) => {
-      console.log(res.data);
-        // {
-        //   position: {lat: lat, lng: lng},
-        //   defaultAnimation: 3,
-        //   key: Date.now(),
-        // },
-      // this.props.setMarkers(nextMarkers);
+    let context = this;
+    this.props.toggleLoadingIndicator();
+
+    geolocation.getCurrentPosition((position) => {
+      return new Promise((resolve, reject) => {
+        resolve(this.setState({
+          center: {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          },
+          userLocation: {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          },
+        }));
+      })
+      .then(() => {
+        context.props.addGeolocation([{
+          position: {
+            lat: this.state.center.lat,
+            lng: this.state.center.lng,
+          },
+          defaultAnimation: 3,
+        }]);
+        context.props.changeCenter(this.state.center);
+      })
+      .then(() => {
+        this.props.toggleLoadingIndicator();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     });
   }
-
-  // convertToLatLng(addressStr) {
-  //   let string = addressStr.split(' ').join('+');
-  //   axios.get(GeoCodeURL + string + '&key=' + KEY)
-  //   .then((data) => {
-  //     console.log(data.results[0]);
-  //   });
-  // }
 
   handleMapLoad(map) {
     this._mapComponent = map;
   }
 
-  handleMapClick(event) {
-    const lat = event.latLng.lat();
-    const lng = event.latLng.lng();
-    const nextMarkers = [
-      ...this.props.markers,
-      {
-        position: {lat: lat, lng: lng},
-        defaultAnimation: 3,
-        key: Date.now(),
-      },
-    ];
-    this.props.setMarkers(nextMarkers);
-    this.props.changeCenter({lat: lat, lng: lng});
-    this.handleReverseGeoCode({lat: lat, lng: lng});
-  }
+  handleMarkerClick(targetMarker, i) {
+    this.props.changeCenter({
+      lat: Number(targetMarker.lat),
+      lng: Number(targetMarker.lng)
+    });
 
-  handleMarkerClick(targetMarker) {
+    this.props.toggleEventDetails();
+    this.props.setCurrentEventParticipants([]);
+    this.props.setCurrentEvent(this.props.events[i]);
+    this.props.setCurrentEventLikes(0);
 
-    const latlng = {
-      lat: targetMarker.position.lat,
-      lng: targetMarker.position.lng
-    };
-    // this.handleReverseGeoCode(latlng);
-  }
+    axios.post('/api/connectEventToProfile', { eventId: this.props.events[i].id })
+    .then(res => {
+      this.props.updateButton({
+        isAttendingEvent: !!res.data.is_attending,
+        hasLikedEvent: !!res.data.liked
+      });
+    })
+    .catch(err => { console.log(err); });
 
-  handleMarkerRightClick(targetMarker) {
-    const nextMarkers = this.props.markers.filter(marker => marker !== targetMarker);
-    this.props.setMarkers(nextMarkers);
+    axios.post('/api/retrieveParticipants', { eventId: this.props.events[i].id })
+    .then(res => { this.props.setCurrentEventParticipants(res.data); })
+    .catch(err => { console.log(err); });
+
+    axios.post('/api/countLikes', { eventId: this.props.events[i].id })
+    .then(res => { this.props.setCurrentEventLikes(res.data.like_count); })
+    .catch(err => { console.log(err); });
   }
 
   handleReverseGeoCode(latlng) {
-    axios.get(RevGeoCodeURL + latlng.lat + ',' + latlng.lng + '&key=' + KEY)
+    axios.post('/api/reverseGeoCode', {lat: latlng.lat, lng: latlng.lng})
     .then((res) => {
-      console.log(res.data.results[0].formatted_address);
+      console.log(res.data);
     })
     .catch((err) => {
       console.log(err);
     });
   }
 
+
+  onRefresh() {
+    axios.get('/api/retrieveEvents')
+    .then((data) => {
+      this.props.addEvents(data.data);
+    });
+  }
+
+  recenter() {
+    this._mapComponent.panTo({lat: this.state.userLocation.lat, lng: this.state.userLocation.lng});
+    // this.props.changeCenter(this.state.userLocation);
+  }
+
   render () {
     const Map = withGoogleMap(props => (
       <GoogleMap
         ref={props.onMapLoad}
-        zoom={16}
-        center={this.props.googleMap}
-        onClick={props.onMapClick}
+        zoom={14}
+        center={this.props.center}
+        // onClick={this.onMapClick}
         >
-          {props.markers.map((marker) => (
-            <Marker
-            {...marker}
-            onClick={() => props.onMarkerClick(marker)}
-            onRightClick={() => props.onMarkerRightClick(marker)}
-          />
+        {this.props.events.map((marker, index) => (
+          <Marker
+          defaultAnimation={3}
+          event_name={marker.event_name}
+          position={{lat: Number(marker.lat), lng: Number(marker.lng)}}
+          onClick={() => props.onMarkerClick(marker, index)}
+          icon={'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|C22B33'}
+          key={'marker_' + index}
+          >
+          </Marker>
+        ))}
+        {props.geolocation.map((marker, index) => (
+          <Marker
+            defaultAnimation={3}
+            position={{lat: this.state.center.lat, lng: this.state.center.lng}}
+            key={'geo_' + index}
+            icon={'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'}
+          >
+          </Marker>
         ))}
       </GoogleMap>
     ));
 
     return (
-      <div style={style}>
+      <div style={styles.container}>
         <LocationInput
           markers={this.props.markers}
           setMarkers={this.props.setMarkers}
           changeCenter={this.props.changeCenter}
           handleReverseGeoCode={this.handleReverseGeoCode}
           />
-        <Map style={style}
-          containerElement={ <div className='map-container' style={style}></div>}
-          mapElement={ <div id='map' className='map-section' style={style}></div>}
+        <Map style={styles.container}
+          containerElement={ <div className='map-container' style={styles.container}></div>}
+          mapElement={ <div id='map' className='map-section' style={styles.mapSize}></div>}
           onMapLoad={this.handleMapLoad}
-          onMapClick={this.handleMapClick}
           markers={this.props.markers}
           onMarkerRightClick={this.handleMarkerRightClick}
           onMarkerClick={this.handleMarkerClick}
+          geolocation={this.props.geolocation}
         />
+        <IconButton style={styles.recenter}>
+          <Paper style={styles.circle} zDepth={2} circle={true} >
+            <GpsFixed
+              onTouchTap={this.recenter}
+              color={'#31575B'}
+            />
+          </Paper>
+        </IconButton>
+        <IconButton style={styles.refresh}>
+          <Paper style={styles.circle} zDepth={2} circle={true} >
+            <Autorenew
+              onTouchTap={this.onRefresh}
+              color={'#31575B'}
+            />
+          </Paper>
+        </IconButton>
       </div>
     );
   }
 }
+
+const styles = {
+  container: {
+    width: '100%',
+    height: '100%'
+  },
+  mapSize: {
+    position: 'absolute',
+    height: window.innerHeight * .86,
+    width: '50%',
+  },
+  recenter: {
+    position: 'absolute',
+    top: '112px',
+    right: '0px'
+  },
+  refresh: {
+    position: 'absolute',
+    top: '150px',
+    right: '0px',
+  },
+  circle: {
+    height: 100,
+    width: 100,
+    // margin: 20,
+    display: 'inline-block',
+  }
+};
+
 
 export default Gmap;

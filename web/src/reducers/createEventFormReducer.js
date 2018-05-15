@@ -1,21 +1,20 @@
-import axios from 'axios';
-
 const initialState = {
   eventName: '',
   time: '',
   location: '',
   description: '',
   category: 'Category',
+  creatingEvent: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
 
   case 'UPDATE_FORM':
-    axios.post('/api/createEvent', action.payload)
-    .then((res) => { console.log(res.data); })
-    .catch((err) => { console.log('error when creating event', err); });
     return action.payload;
+
+  case 'TOGGLE_CREATE_EVENT':
+    return Object.assign({}, state, { creatingEvent: !state.creatingEvent });
 
   default:
     return state;
